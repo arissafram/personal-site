@@ -1,12 +1,4 @@
-.board {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 450px;
-  max-height: 450px;
-  margin: 0 auto;
-}
-
-.square {
+.tic-tac-toe .square {
   display: flex;
   align-items: center;
   justify-content: center;
