@@ -1,0 +1,18 @@
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 450px;
+  max-height: 450px;
+  margin: 0 auto;
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 33.33%;
+  height: 150px;
+  width: 150px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
