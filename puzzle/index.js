@@ -30,8 +30,8 @@ class Puzzle {
       piece.setAttribute('id', i);
       piece.setAttribute('draggable', true);
       piece.addEventListener('dragstart', this.onDragstart);
-      piece.style.top = `${this.getRandomPositionString()}px`;
-      piece.style.left = `${this.getRandomPositionString()}px`;
+      piece.style.top = `${this.getRandomPositionString(false)}px`;
+      piece.style.left = `${this.getRandomPositionString(true)}px`;
       piece.style.backgroundImage = `url('../arissa/puzzle/assets/puzzle_${i}.jpg')`;
       this.piecesContainer.append(piece);
     }
@@ -51,14 +51,17 @@ class Puzzle {
       imageDrop.addEventListener('dragenter', this.onDragEnter);
       this.imageDropContainer.append(imageDrop);
     }
+
+    // setTimeout(() => this.imageDropContainer.classList.add('complete'), 500)
   }
 
 
   onDragstart = (e) => {
     this.currentImageEl = e.target;
 
-    this.offsetX = e.clientX - this.currentImageEl.getBoundingClientRect().left;
-    this.offsetY = e.clientY - this.currentImageEl.getBoundingClientRect().top;
+    const board = document.querySelector('.board');
+    this.offsetX = (e.clientX + board.getBoundingClientRect().left) - this.currentImageEl.getBoundingClientRect().left;
+    this.offsetY = (e.clientY + board.getBoundingClientRect().top) - this.currentImageEl.getBoundingClientRect().top;
   }
 
   onDragover = (e) => {
@@ -68,6 +71,9 @@ class Puzzle {
 
   onDrop = (e) => {
     e.preventDefault();
+
+    console.log(e.target)
+    console.log({ offset: e.target.offsetX, client: e.clientX });
 
     const newX = e.clientX - this.offsetX;
     const newY = e.clientY - this.offsetY;
@@ -89,8 +95,8 @@ class Puzzle {
     this.currentImageEl.style.top = '0px';
   }
 
-  getRandomPositionString = () => {
-    const num = Math.floor(Math.random() * 300);
+  getRandomPositionString = (top) => {
+    const num = Math.floor(Math.random() * (top ? 300 : 330));
     return num.toString();
   }
 
