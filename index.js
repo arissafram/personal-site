@@ -1,4 +1,7 @@
 window.addEventListener('load', () => {
-  const game = new TicTacToe();
-  game.init();
+  // const ticTacToe = new TicTacToe();
+  // ticTacToe.init();
+
+  const puzzle = new Puzzle();
+  puzzle.init();
 });
