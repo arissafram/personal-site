@@ -71,9 +71,6 @@ class Puzzle {
   onDrop = (e) => {
     e.preventDefault();
 
-    console.log(e.target)
-    console.log({ offset: e.target.offsetX, client: e.clientX });
-
     const newX = e.clientX - this.offsetX;
     const newY = e.clientY - this.offsetY;
 
