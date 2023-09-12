@@ -31,7 +31,7 @@ class Puzzle {
       piece.addEventListener('dragstart', this.onDragstart);
       piece.style.top = `${this.getRandomPositionString(false)}px`;
       piece.style.left = `${this.getRandomPositionString(true)}px`;
-      piece.style.backgroundImage = `url('../arissa/assets/puzzle_${i}.jpg')`;
+      piece.style.backgroundImage = `url('./public/puzzle_${i}.jpg')`;
       this.piecesContainer.append(piece);
     }
 
