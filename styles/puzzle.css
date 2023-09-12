@@ -1,16 +1,17 @@
-.board.puzzle {
+.board {
   display: flex;
   position: relative;;
   height: 460px;
 }
 
-.puzzle .pieces-container {
+.pieces-container {
   position: relative;
   display: flex;
   flex-wrap: wrap;
+  width: inherit;
 }
 
-.puzzle .piece {
+.piece {
   align-self: center;
   background-size: contain;
   background-position: center;
@@ -21,14 +22,15 @@
   pointer-events: none;
 }
 
-.puzzle .piece[draggable=true] {
+.piece[draggable=true] {
   position: absolute;
   pointer-events: auto;
   border: 1px solid limegreen;
   z-index: 2;
+  cursor: pointer;
 }
 
-.puzzle .image-drop-container {
+.image-drop-container {
   position: absolute;
   top: 0;
   right: 0;
@@ -44,11 +46,11 @@
   padding: 50px;
 }
 
-.puzzle .image-drop-container.complete {
+.image-drop-container.complete {
   animation: completeAnimation 2s linear forwards;
 }
 
-.puzzle .image-drop {
+.image-drop {
   position: relative;
   align-self: center;
   background-size: contain;
@@ -60,15 +62,8 @@
   border: 1px solid rgba(0,0,0,.1);
 }
 
-@keyframes completeAnimation {
-  0% {
-    /* padding: 50px; */
-    border: 5px solid transparent;
-  }
-  100% {
-    /* padding: 0px; */
-    border: 5px solid black;
-  }
+.complete .image-drop {
+  border: none;
 }
 
 @media screen and (max-width: 850px) {
