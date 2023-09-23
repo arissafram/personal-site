@@ -5,6 +5,7 @@ class Puzzle {
     this.currentImageEl = null;
     this.piecesContainer = null;
     this.imageDropContainer = null;
+    this.zIndex = 1;
 
     this.offsetX = null;
     this.offsetY = null;
@@ -26,9 +27,12 @@ class Puzzle {
       i++
       const piece = document.createElement('div');
       piece.classList.add('piece');
+      piece.style.zIndex = 1;
       piece.setAttribute('id', i);
       piece.setAttribute('draggable', true);
       piece.addEventListener('dragstart', this.onDragstart);
+      piece.addEventListener('drop', this.onDrop);
+      piece.addEventListener('dragover', this.onDragover);
       piece.style.top = `${this.getRandomPositionString(false)}px`;
       piece.style.left = `${this.getRandomPositionString(true)}px`;
       piece.style.backgroundImage = `url('./public/puzzle_${i}.jpg')`;
@@ -78,11 +82,17 @@ class Puzzle {
     this.currentImageEl.style.top = `${newY}px`;
     this.currentImageEl.style.position = 'absolute';
 
-    if (this.currentImageEl.id === this.imageDropId) {
-      this.currentImageEl.setAttribute('draggable', false);
-      e.target.appendChild(this.currentImageEl);
-      this.snapIntoPlace(e);
-      this.checkWin();
+    this.zIndex += 1;
+    this.currentImageEl.style.zIndex = this.zIndex;
+
+    if (!e.target.classList.contains('piece')) {
+      if (this.currentImageEl.id === this.imageDropId) {
+        this.currentImageEl.setAttribute('draggable', false);
+        this.currentImageEl.style.zIndex = 0;
+        e.target.appendChild(this.currentImageEl);
+        this.snapIntoPlace(e);
+        this.checkWin();
+      }
     }
   }
 
