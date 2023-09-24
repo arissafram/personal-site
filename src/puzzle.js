@@ -95,8 +95,8 @@ class Puzzle {
   }
 
   getRandomPositionString = (isHeight) => {
-    const boardHeight = parseFloat(getComputedStyle(this.board).height);
-    const boardWidth = parseFloat(getComputedStyle(this.board).width);
+    const boardHeight = parseFloat(getComputedStyle(this.board).height) - 120;
+    const boardWidth = parseFloat(getComputedStyle(this.board).width) - 100;
     const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
   }
