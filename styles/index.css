@@ -87,7 +87,7 @@ body {
   opacity: .6;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .container {
     height: 100vh;
     flex-direction: row;
@@ -102,6 +102,8 @@ body {
     color: white;
     opacity: .8;
     padding: 50px;
+    max-width: unset;
+    flex: 1;
   }
 
   .content-container p {
@@ -116,15 +118,23 @@ body {
     font-size: 54px;
     font-weight: bold;
     font-family: 'Albert Sans', sans-serif;
-    margin-bottom: 24px;
+    margin-bottom: 36px;
   }
 
   .header.header-mobile {
     display: none;
   }
 
+  .promocode {
+    opacity: unset;
+  }
+
   .links {
     justify-content: flex-start;
+  }
+
+  .link a {
+    font-size: 20px;
   }
 
   .content-container p {
