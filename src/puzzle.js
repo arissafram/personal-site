@@ -1,28 +1,46 @@
 class Puzzle {
   constructor() {
     this.totalImages = 9;
-    this.imageDropId = '';
-    this.currentImageEl = null;
-    this.piecesContainer = null;
-    this.imageDropContainer = null;
+    // this.imageDropId = '';
+    // this.currentImageEl = null;
+    // this.piecesContainer = null;
+    // this.imageDropContainer = null;
     this.zIndex = 1;
+    this.board = null;
+    this.imageDropContainer = null;
 
     this.offsetX = null;
     this.offsetY = null;
-
-    this.onDragstart = this.onDragstart.bind(this);
-    this.onDragover = this.onDragover.bind(this);
-    this.onDrop = this.onDrop.bind(this);
   }
 
-  init = () => {
-    const board = document.querySelector('.board');
+   init = () => {
+    this.board = document.querySelector('.board');
+    this.makeImageDropContainer();
+    this.makePuzzlePieces();
+    this.board.addEventListener('drop', this.onDrop);
+    this.board.addEventListener('dragover', this.onDragover);
+  }
+
+  makeImageDropContainer = () => {
+    this.imageDropContainer = document.createElement('div');
+    this.imageDropContainer.classList.add('image-drop-container');
+    this.imageDropContainer.setAttribute('id', 'drop-container');
+
     let i = 0;
+    while (this.totalImages > i) {
+      i++
+      const imageDrop = document.createElement('div');
+      imageDrop.classList.add('image-drop');
+      imageDrop.setAttribute('id', `${i}-drop`);
+      imageDrop.addEventListener('dragenter', this.onDragEnter);
+      this.imageDropContainer.append(imageDrop);
+    }
 
-    this.piecesContainer = document.createElement('div');
-    this.piecesContainer.classList.add('pieces-container');
-    board.appendChild(this.piecesContainer);
+    this.board.appendChild(this.imageDropContainer);
+  }
 
+  makePuzzlePieces = () => {
+    let i = 0;
     while (this.totalImages > i) {
       i++
       const piece = document.createElement('div');
@@ -36,35 +54,16 @@ class Puzzle {
       piece.style.top = `${this.getRandomPositionString(false)}px`;
       piece.style.left = `${this.getRandomPositionString(true)}px`;
       piece.style.backgroundImage = `url('./public/puzzle_${i}.jpg')`;
-      this.piecesContainer.append(piece);
+      this.board.append(piece);
     }
-
-    this.imageDropContainer = document.createElement('div');
-    this.imageDropContainer.classList.add('image-drop-container');
-    this.imageDropContainer.setAttribute('id', 'drop-container');
-    this.imageDropContainer.addEventListener('drop', this.onDrop);
-    this.imageDropContainer.addEventListener('dragover', this.onDragover);
-    board.appendChild(this.imageDropContainer);
-    let n = 0;
-    while (this.totalImages > n) {
-      n++
-      const imageDrop = document.createElement('div');
-      imageDrop.classList.add('image-drop');
-      imageDrop.setAttribute('id', `${n}-drop`);
-      imageDrop.addEventListener('dragenter', this.onDragEnter);
-      this.imageDropContainer.append(imageDrop);
-    }
-
-    // setTimeout(() => this.imageDropContainer.classList.add('complete'), 500)
   }
 
-
   onDragstart = (e) => {
+    e.dataTransfer.setData('text/plain', '');
     this.currentImageEl = e.target;
 
-    const board = document.querySelector('.board');
-    this.offsetX = (e.clientX + board.getBoundingClientRect().left) - this.currentImageEl.getBoundingClientRect().left;
-    this.offsetY = (e.clientY + board.getBoundingClientRect().top) - this.currentImageEl.getBoundingClientRect().top;
+    this.offsetX = e.clientX - e.target.getBoundingClientRect().left;
+    this.offsetY = e.clientY - e.target.getBoundingClientRect().top;
   }
 
   onDragover = (e) => {
@@ -74,13 +73,11 @@ class Puzzle {
 
   onDrop = (e) => {
     e.preventDefault();
+    const x = e.clientX - this.offsetX - this.board.getBoundingClientRect().left;
+    const y = e.clientY - this.offsetY - this.board.getBoundingClientRect().top;
 
-    const newX = e.clientX - this.offsetX;
-    const newY = e.clientY - this.offsetY;
-
-    this.currentImageEl.style.left = `${newX}px`;
-    this.currentImageEl.style.top = `${newY}px`;
-    this.currentImageEl.style.position = 'absolute';
+    this.currentImageEl.style.left = `${x}px`;
+    this.currentImageEl.style.top = `${y}px`;
 
     this.zIndex += 1;
     this.currentImageEl.style.zIndex = this.zIndex;
@@ -96,19 +93,19 @@ class Puzzle {
     }
   }
 
-  snapIntoPlace = () => {
-    this.currentImageEl.style.left = '0px';
-    this.currentImageEl.style.top = '0px';
-  }
+  // snapIntoPlace = () => {
+  //   this.currentImageEl.style.left = '0px';
+  //   this.currentImageEl.style.top = '0px';
+  // }
 
   getRandomPositionString = (top) => {
     const num = Math.floor(Math.random() * (top ? 300 : 330));
     return num.toString();
   }
 
-  checkWin = () => {
-    if (!this.piecesContainer.children.length) {
-      this.imageDropContainer.classList.add('complete');
-    }
-  }
+  // checkWin = () => {
+  //   if (!this.piecesContainer.children.length) {
+  //     this.imageDropContainer.classList.add('complete');
+  //   }
+  // }
 }
