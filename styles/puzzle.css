@@ -1,7 +1,6 @@
 .board {
   position: relative;
   display: flex;
-  padding: 20px;
 }
 
 .image-drop-container {
@@ -70,15 +69,9 @@
   border-top: none;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 800px) {
   .piece, .image-drop {
     height: 162.2px;
     width: 135px;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  .board {
-    padding: 50px;
   }
 }
