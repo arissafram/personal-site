@@ -30,7 +30,6 @@
   width: 100px;
   box-sizing: border-box;
   pointer-events: none;
-  border: none;
 }
 
 .piece[draggable=true] {
