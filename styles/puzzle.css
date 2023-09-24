@@ -1,10 +1,8 @@
 .board {
   position: relative;
   display: flex;
-  border: 1px solid red;
   padding: 50px;
 }
-
 
 .image-drop-container {
   display: grid;
@@ -12,7 +10,6 @@
   margin: 0 auto;
 }
 
-
 .image-drop {
   position: relative;
   align-self: center;
@@ -42,74 +39,6 @@
   border: 1px solid limegreen;
   z-index: 2;
   cursor: pointer;
-}
-
-/* .board {
-  display: flex;
-  position: relative;;
-  height: 100%;
-  border: 1px solid red;
-}
-
-.pieces-container {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  width: inherit;
-}
-
-.piece {
-  align-self: center;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 120px;
-  width: 100px;
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
-.piece[draggable=true] {
-  position: absolute;
-  pointer-events: auto;
-  border: 1px solid limegreen;
-  z-index: 2;
-  cursor: pointer;
-}
-
-.image-drop-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  width: 300px;
-  height: 360px;
-  box-sizing: content-box;
-  margin: auto;
-  padding: 50px;
-}
-
-.image-drop-container.complete {
-  animation: completeAnimation 2s linear forwards;
-}
-
-.image-drop {
-  position: relative;
-  align-self: center;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 120px;
-  width: 100px;
-  box-sizing: border-box;
-  border: 1px solid rgba(0,0,0,.1);
-}
-
-.complete .image-drop {
-  border: none;
 }
 
 @media screen and (max-width: 850px) {
@@ -122,4 +51,4 @@
   .image-drop-container {
     padding: 20px;
   }
-} */
+}

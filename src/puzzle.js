@@ -57,9 +57,7 @@ class Puzzle {
   }
 
   onDragstart = (e) => {
-    e.dataTransfer.setData('text/plain', '');
     this.currentImageEl = e.target;
-
     this.offsetX = e.clientX - e.target.getBoundingClientRect().left;
     this.offsetY = e.clientY - e.target.getBoundingClientRect().top;
   }
@@ -91,10 +89,10 @@ class Puzzle {
     }
   }
 
-  // snapIntoPlace = () => {
-  //   this.currentImageEl.style.left = '0px';
-  //   this.currentImageEl.style.top = '0px';
-  // }
+  snapIntoPlace = () => {
+    this.currentImageEl.style.left = '0px';
+    this.currentImageEl.style.top = '0px';
+  }
 
   getRandomPositionString = (isHeight) => {
     const boardHeight = parseFloat(getComputedStyle(this.board).height);
@@ -102,10 +100,4 @@ class Puzzle {
     const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
   }
-
-  // checkWin = () => {
-  //   if (!this.piecesContainer.children.length) {
-  //     this.imageDropContainer.classList.add('complete');
-  //   }
-  // }
 }
