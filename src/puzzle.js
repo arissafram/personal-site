@@ -1,24 +1,19 @@
 class Puzzle {
   constructor() {
+    this.currentImageEl = null;
+    this.imageDropId = '';
     this.totalImages = 9;
-    // this.imageDropId = '';
-    // this.currentImageEl = null;
-    // this.piecesContainer = null;
-    // this.imageDropContainer = null;
-    this.zIndex = 1;
-    this.board = null;
-    this.imageDropContainer = null;
-
     this.offsetX = null;
     this.offsetY = null;
+    this.zIndex = 1;
   }
 
    init = () => {
     this.board = document.querySelector('.board');
-    this.makeImageDropContainer();
-    this.makePuzzlePieces();
     this.board.addEventListener('drop', this.onDrop);
     this.board.addEventListener('dragover', this.onDragover);
+    this.makeImageDropContainer();
+    this.makePuzzlePieces();
   }
 
   makeImageDropContainer = () => {
@@ -48,12 +43,15 @@ class Puzzle {
       piece.style.zIndex = 1;
       piece.setAttribute('id', i);
       piece.setAttribute('draggable', true);
+
       piece.addEventListener('dragstart', this.onDragstart);
       piece.addEventListener('drop', this.onDrop);
       piece.addEventListener('dragover', this.onDragover);
-      piece.style.top = `${this.getRandomPositionString(false)}px`;
-      piece.style.left = `${this.getRandomPositionString(true)}px`;
+
+      piece.style.top = `${this.getRandomPositionString(true)}px`;
+      piece.style.left = `${this.getRandomPositionString(false)}px`;
       piece.style.backgroundImage = `url('./public/puzzle_${i}.jpg')`;
+
       this.board.append(piece);
     }
   }
@@ -98,8 +96,10 @@ class Puzzle {
   //   this.currentImageEl.style.top = '0px';
   // }
 
-  getRandomPositionString = (top) => {
-    const num = Math.floor(Math.random() * (top ? 300 : 330));
+  getRandomPositionString = (isHeight) => {
+    const boardHeight = parseFloat(getComputedStyle(this.board).height) - 118;
+    const boardWidth = parseFloat(getComputedStyle(this.board).width) - 118;
+    const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
   }
 
