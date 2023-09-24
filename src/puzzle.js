@@ -42,7 +42,7 @@ class Puzzle {
     let i = 0;
     while (this.totalImages > i) {
       i++
-      const piece = document.createElement('div');
+      const piece = document.createElement('button');
       piece.classList.add('piece');
       piece.style.zIndex = 1;
       piece.setAttribute('id', i);
@@ -51,6 +51,9 @@ class Puzzle {
       piece.addEventListener('dragstart', this.onDragstart);
       piece.addEventListener('drop', this.onDrop);
       piece.addEventListener('dragover', this.onDragover);
+      piece.addEventListener('keydown', this.onKeyboardMove);
+      piece.addEventListener('focus', () => this.currentImageEl = e.target);
+      piece.addEventListener('blur', () => this.currentImageEl = null);
 
       piece.style.top = `${this.getRandomPositionString(true)}px`;
       piece.style.left = `${this.getRandomPositionString(false)}px`;
@@ -99,8 +102,8 @@ class Puzzle {
   }
 
   getRandomPositionString = (isHeight) => {
-    const boardHeight = parseFloat(getComputedStyle(this.board).height) - 120;
-    const boardWidth = parseFloat(getComputedStyle(this.board).width) - 100;
+    const boardHeight = parseFloat(getComputedStyle(this.board).height) - 50;
+    const boardWidth = parseFloat(getComputedStyle(this.board).width);
     const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
   }
@@ -113,5 +116,30 @@ class Puzzle {
         piece.style.left = `${this.getRandomPositionString(false)}px`;
       }
     })
+  }
+
+  onKeyboardMove = (e) => {
+    if ([37, 38, 39, 40].includes(e.which)) {
+      console.log('on keyboard move', e.which)
+      this.currentImageEl = e.target;
+
+      const x = parseFloat(this.currentImageEl.style.left);
+      const y = parseFloat(this.currentImageEl.style.top);
+
+      switch(e.which) {
+        case 37:
+          this.currentImageEl.style.left = `${x - 5}px`;
+          break;
+        case 38:
+          this.currentImageEl.style.top = `${y - 5}px`;
+          break;
+        case 39:
+          this.currentImageEl.style.left = `${x + 5}px`;
+          break;
+        case 40:
+          this.currentImageEl.style.top = `${y + 5}px`;
+          break;
+      }
+    }
   }
 }
