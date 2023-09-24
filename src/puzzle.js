@@ -6,12 +6,16 @@ class Puzzle {
     this.offsetX = null;
     this.offsetY = null;
     this.zIndex = 1;
+
+    window.addEventListener('resize', this.movePiecesIntoView)
   }
 
    init = () => {
+    const body = document.querySelector('body');
     this.board = document.querySelector('.board');
-    this.board.addEventListener('drop', this.onDrop);
-    this.board.addEventListener('dragover', this.onDragover);
+    body.addEventListener('drop', this.onDrop);
+    body.addEventListener('dragover', this.onDragover);
+
     this.makeImageDropContainer();
     this.makePuzzlePieces();
   }
@@ -99,5 +103,15 @@ class Puzzle {
     const boardWidth = parseFloat(getComputedStyle(this.board).width) - 100;
     const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
+  }
+
+  movePiecesIntoView = () => {
+    const pieces = document.querySelectorAll('.piece')
+    pieces.forEach(piece => {
+      const currentX = piece.getBoundingClientRect().left
+      if (currentX > window.innerWidth) {
+        piece.style.left = `${this.getRandomPositionString(false)}px`;
+      }
+    })
   }
 }
