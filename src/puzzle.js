@@ -6,6 +6,8 @@ class Puzzle {
     this.offsetX = null;
     this.offsetY = null;
     this.zIndex = 1;
+
+    window.addEventListener('resize', this.movePiecesIntoView)
   }
 
    init = () => {
@@ -101,5 +103,15 @@ class Puzzle {
     const boardWidth = parseFloat(getComputedStyle(this.board).width) - 100;
     const num = Math.floor(Math.random() * (isHeight ? boardHeight : boardWidth));
     return num.toString();
+  }
+
+  movePiecesIntoView = () => {
+    const pieces = document.querySelectorAll('.piece')
+    pieces.forEach(piece => {
+      const currentX = piece.getBoundingClientRect().left
+      if (currentX > window.innerWidth) {
+        piece.style.left = `${this.getRandomPositionString(false)}px`;
+      }
+    })
   }
 }
