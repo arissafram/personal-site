@@ -9,9 +9,11 @@ class Puzzle {
   }
 
    init = () => {
+    const body = document.querySelector('body');
     this.board = document.querySelector('.board');
-    this.board.addEventListener('drop', this.onDrop);
-    this.board.addEventListener('dragover', this.onDragover);
+    body.addEventListener('drop', this.onDrop);
+    body.addEventListener('dragover', this.onDragover);
+
     this.makeImageDropContainer();
     this.makePuzzlePieces();
   }
