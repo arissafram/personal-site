@@ -41,12 +41,14 @@
   cursor: pointer;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
   .piece, .image-drop {
     height: 162.2px;
     width: 135px;
   }
+}
 
+@media screen and (min-width: 800px) {
   .board {
     padding: 50px;
   }

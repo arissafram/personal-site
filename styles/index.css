@@ -90,7 +90,6 @@ body {
 @media screen and (min-width: 800px) {
   .container {
     height: 100vh;
-    /* justify-content: space-around; */
     flex-direction: row;
     margin-top: 0;
   }
@@ -114,7 +113,7 @@ body {
 
   .header {
     display: block;
-    font-size: 44px;
+    font-size: 54px;
     font-weight: bold;
     font-family: 'Albert Sans', sans-serif;
     margin-bottom: 24px;
@@ -126,10 +125,6 @@ body {
 
   .links {
     justify-content: flex-start;
-  }
-
-  .promocode {
-    /* opacity: 1; */
   }
 
   .content-container p {
