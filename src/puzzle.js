@@ -15,9 +15,9 @@ class Puzzle {
     this.board = document.querySelector('.board');
     body.addEventListener('drop', this.onDrop);
     body.addEventListener('dragover', this.onDragover);
-
     this.makeImageDropContainer();
     this.makePuzzlePieces();
+    this.getDropPositions()
   }
 
   makeImageDropContainer = () => {
@@ -52,7 +52,7 @@ class Puzzle {
       piece.addEventListener('drop', this.onDrop);
       piece.addEventListener('dragover', this.onDragover);
       piece.addEventListener('keydown', this.onKeyboardMove);
-      piece.addEventListener('focus', () => this.currentImageEl = e.target);
+      piece.addEventListener('focus', (e) => this.currentImageEl = e.target);
       piece.addEventListener('blur', () => this.currentImageEl = null);
 
       piece.style.top = `${this.getRandomPositionString(true)}px`;
@@ -90,15 +90,8 @@ class Puzzle {
         this.currentImageEl.setAttribute('draggable', false);
         this.currentImageEl.style.zIndex = 0;
         e.target.appendChild(this.currentImageEl);
-        this.snapIntoPlace(e);
-        this.checkWin();
       }
     }
-  }
-
-  snapIntoPlace = () => {
-    this.currentImageEl.style.left = '0px';
-    this.currentImageEl.style.top = '0px';
   }
 
   getRandomPositionString = (isHeight) => {
@@ -118,11 +111,24 @@ class Puzzle {
     })
   }
 
+  getDropPositions = () => {
+    const imageDrops = document.querySelectorAll('.image-drop');
+    const imageDropContainer = document.querySelector('.image-drop-container');
+    this.positions = {};
+    imageDrops.forEach(image => {
+      const key = parseFloat(image.getAttribute('id'));
+      this.positions[key] = {
+        x: image.getBoundingClientRect().left - imageDropContainer.getBoundingClientRect().left,
+        y: image.getBoundingClientRect().top - imageDropContainer.getBoundingClientRect().top,
+      }
+    })
+  }
+
   onKeyboardMove = (e) => {
     if ([37, 38, 39, 40].includes(e.which)) {
-      console.log('on keyboard move', e.which)
       this.currentImageEl = e.target;
 
+      const itemNum = parseFloat(this.currentImageEl.getAttribute('id'));
       const x = parseFloat(this.currentImageEl.style.left);
       const y = parseFloat(this.currentImageEl.style.top);
 
@@ -139,6 +145,16 @@ class Puzzle {
         case 40:
           this.currentImageEl.style.top = `${y + 5}px`;
           break;
+      }
+
+      if ((Math.abs(this.positions[itemNum].x - x)) < 10 && (Math.abs(this.positions[itemNum].y - y)) < 10) {
+        this.currentImageEl.setAttribute('draggable', false);
+        this.currentImageEl.style.zIndex = 0;
+        this.currentImageEl.style.position = 'absolute';
+        this.currentImageEl.style.left = this.positions[itemNum].x+'px'
+        this.currentImageEl.style.top = this.positions[itemNum].y+'px'
+        e.target.disabled = true;
+        e.target.appendChild(this.currentImageEl);
       }
     }
   }
