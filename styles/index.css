@@ -1,7 +1,8 @@
 body {
-  background-color: #738678;
+  background-color: #afc4b9;
+  background: linear-gradient(to bottom, #afc4b9 60%, #bdd2c7 100%);
   min-width: 360px;
-  color: white;
+  color: black;
 }
 
 .header {
@@ -76,15 +77,15 @@ body {
   font-size: 16px;
   font-family: "Barlow", sans-serif;
   line-height: 18px;
-  color: white;
+  color: black;
 }
 
 .link a:visted {
-  color: white;
+  color: black;
 }
 
 .link a:hover {
-  color: white;
+  color: black;
   opacity: 0.6;
 }
 
@@ -93,6 +94,7 @@ body {
     height: 100vh;
     flex-direction: row;
     margin-top: 0;
+    gap: 60px;
   }
 
   .game-container {
@@ -100,7 +102,7 @@ body {
   }
 
   .content-container {
-    color: white;
+    color: black;
     opacity: 0.8;
     padding: 30px;
     max-width: 450px;
