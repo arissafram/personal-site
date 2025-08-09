@@ -1,103 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Brooklyn based javascript developer">
-  <meta name="keywords" content="Arissa Fram, JavaScript Developer, Web Development, Software Engineer, Brooklyn, React">
-  <meta name="author" content="Arissa Fram">
-  <meta name="og:title" content="Arissa Fram | JavaScript Developer">
-  <meta name="og:description" content="Brooklyn based javascript developer">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Brooklyn based javascript developer" />
+    <meta
+      name="keywords"
+      content="Arissa Fram, JavaScript Developer, Web Development, Software Engineer, Brooklyn, React"
+    />
+    <meta name="author" content="Arissa Fram" />
+    <meta name="og:title" content="Arissa Fram | JavaScript Developer" />
+    <meta name="og:description" content="Brooklyn based javascript developer" />
 
-  <meta name="og:image" content="https://personal-site-arissa.s3.amazonaws.com/single-piece.ico">
-  <meta name="og:url" content="https://www.arissafram.com">
-  <meta name="og:type" content="website">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:image" content="https://personal-site-arissa.s3.amazonaws.com/single-piece.ico">
-  <meta name="twitter:url" content="https://arissafram.com">
+    <meta
+      name="og:image"
+      content="https://personal-site-arissa.s3.amazonaws.com/single-piece.ico"
+    />
+    <meta name="og:url" content="https://www.arissafram.com" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:image"
+      content="https://personal-site-arissa.s3.amazonaws.com/single-piece.ico"
+    />
+    <meta name="twitter:url" content="https://arissafram.com" />
 
+    <meta name="robots" content="index, follow" />
 
-  <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Barlow&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Barlow&display=swap" rel="stylesheet">
+    <title>Arissa Fram</title>
 
-  <link rel="stylesheet" href="styles/reset.css"></link>
-  <link rel="stylesheet" href="styles/index.css"></link>
-  <link rel="stylesheet" href="styles/puzzle.css"></link>
-
-  <script src="src/puzzle.js"></script>
-  <script src="src/index.js"></script>
-
-  <title>Arissa Fram</title>
-
-  <link rel="icon" type="image/x-icon" href="public/puzzle-piece.png">
-</head>
-<body>
-  <main class="container">
-    <header>
-      <h1 class="header header-mobile">Arissa Fram.</h1>
-    </header>
-    <div class="game-container">
-      <div class="board"></div>
-    </div>
-    <div class="content-container">
-      <header>
-        <h1 class="header">Arissa Fram.</h1>
-      </header>
-      <section class="paragraph">
-        <p class="job-title">
-          Senior software engineer @ Underdog Fantasy
-        </p>
-        <p class="promocode">
-          Promocode: BIGRISS
-        </p>
-        <p class="blurb">
-          I like languages and puzzles and live music. I study French.
-          I live in Brooklyn. I like deadlines and winning as a team.
-          I own a lot of useless domains. I have a lot of half-baked ideas. I love my job.
-        </p>
-        <p class="skills">
-          NodeJS, React, Typescript, Javascript, Webpack, NextJS,
-          REST/Graphql, Jest, etc. etc., iOS dreams.
-        </p>
-      </section>
-      <ul class="links">
-        <li class="link">
-          <a
-          target="_blank"
-          href="https://www.linkedin.com/in/arissafram/"
-        >
-          Linkedin
-        </a>
-        </li>
-        <li class="link">
-          <a
-            target="_blank"
-            href="https://www.linkedin.com/posts/underdogfantasy_udlife-activity-7084570560994652160-1eI4?utm_source=share&utm_medium=member_desktop"
-          >
-            Me at work
-          </a>
-        </li>
-        <li class="link">
-          <a
-            target="_blank"
-            href="https://www.strava.com/athletes/61215365"
-          >
-            Strava
-          </a>
-        </li>
-        <li class="link">
-          <a
-            target="_blank"
-            href="https://medium.com/@arissafram/aws-amplify-with-squarespace-domain-7d6a1505e98c"
-          >
-            Medium
-          </a>
-        </li>
-      </ul>
-    </div>
-  </main>
-</body>
+    <link rel="icon" type="image/x-icon" href="public/puzzle-piece.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
