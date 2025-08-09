@@ -1,31 +1,29 @@
 body {
   background: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
-  min-height: 100vh;
-  min-width: 360px;
-  color: black;
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
 }
 
 .main {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  max-width: 1100px;
-  margin: auto;
   align-items: center;
-  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 880px;
+  height: 100vh;
+  padding: 0 24px;
 }
 
-.game-container {
-  max-width: 360px;
-  position: relative;
-  padding: 20px;
+.puzzle-container {
+  display: flex;
+  align-items: center;
+  width: 50%;
 }
 
 .content-container {
-  margin: 0;
-  max-width: 360px;
-  padding: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 50%;
 }

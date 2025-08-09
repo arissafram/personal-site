@@ -10,12 +10,12 @@ import "./index.css";
 const App = () => {
   return (
     <main className="main">
-      <div className="game-container">
+      <div className="puzzle-container">
         <Puzzle
           image="/puzzle.jpg"
           options={{
             board: {
-              columns: 4,
+              columns: 3,
               rows: 3,
               width: 400,
               height: 450,
