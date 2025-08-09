@@ -4,7 +4,6 @@ import "react-jigsaw/styles";
 import Blurb from "./components/blurb";
 import Header from "./components/header";
 import Links from "./components/links";
-import { PUZZLE_OPTIONS } from "./constants";
 
 import "./index.css";
 
