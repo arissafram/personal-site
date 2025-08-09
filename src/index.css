@@ -1,5 +1,6 @@
 body {
-  /* background-color: #afc4b9s; */
+  background: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
+  min-height: 100vh;
   min-width: 360px;
   color: black;
 }
