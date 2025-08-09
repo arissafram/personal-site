@@ -4,6 +4,7 @@ export const PUZZLE_OPTIONS = {
     rows: 3,
     width: 400,
     height: 300,
+    outlineStrokeColor: "red",
     snapThreshold: 20,
     scatterArea: 50,
     showBoardSlotOutlines: true,
