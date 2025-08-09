@@ -7,15 +7,7 @@ import Links from "./components/links";
 
 import "./index.css";
 
-function App() {
-  const handleComplete = () => {
-    console.log("Puzzle completed!");
-  };
-
-  const handleRefresh = () => {
-    console.log("Puzzle refreshed!");
-  };
-
+const App = () => {
   return (
     <main className="main">
       <div className="game-container">
@@ -27,7 +19,7 @@ function App() {
               rows: 3,
               width: 400,
               height: 450,
-              outlineStrokeColor: "red",
+              outlineStrokeColor: "#a9a9a9",
               snapThreshold: 20,
               scatterArea: 50,
               showBoardSlotOutlines: true,
@@ -46,8 +38,6 @@ function App() {
               strokeEnabled: true,
             },
           }}
-          onComplete={handleComplete}
-          onRefresh={handleRefresh}
           responsive={true}
         />
       </div>
@@ -58,6 +48,6 @@ function App() {
       </div>
     </main>
   );
-}
+};
 
 export default App;
