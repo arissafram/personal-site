@@ -4,6 +4,7 @@ import "react-jigsaw/styles";
 import Blurb from "./components/blurb";
 import Header from "./components/header";
 import Links from "./components/links";
+import { PUZZLE_OPTIONS } from "./constants";
 
 import "./index.css";
 
@@ -20,31 +21,8 @@ function App() {
     <main className="main">
       <div className="game-container">
         <Puzzle
-          image="/puzzle_1.jpg"
-          options={{
-            board: {
-              columns: 4,
-              rows: 3,
-              width: 400,
-              height: 300,
-              snapThreshold: 20,
-              scatterArea: 50,
-              showBoardSlotOutlines: true,
-            },
-            puzzle: {
-              responsive: true,
-              timer: {
-                enabled: true,
-              },
-              refreshButton: {
-                enabled: true,
-              },
-            },
-            puzzlePiece: {
-              strokeColor: "gold",
-              strokeEnabled: true,
-            },
-          }}
+          image="/photo.jpg"
+          options={PUZZLE_OPTIONS}
           onComplete={handleComplete}
           onRefresh={handleRefresh}
           responsive={true}
