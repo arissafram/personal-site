@@ -1,0 +1,26 @@
+.header {
+  font-family: "Albert Sans", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.desktop-header {
+  display: none;
+  letter-spacing: 0.08em;
+}
+
+.mobile-header {
+  display: block;
+  letter-spacing: 0.08em;
+  margin: 80px 0 50px;
+}
+
+@media screen and (min-width: 800px) {
+  .desktop-header {
+    display: block;
+  }
+
+  .mobile-header {
+    display: none;
+  }
+}

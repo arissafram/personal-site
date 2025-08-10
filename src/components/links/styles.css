@@ -1,0 +1,33 @@
+.links {
+  display: flex;
+  column-gap: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 12px;
+}
+
+.link:last-of-type {
+  margin-right: 0;
+}
+
+.link a {
+  color: black;
+  font-family: "Barlow", sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.link a:visted {
+  color: black;
+}
+
+.link a:hover {
+  color: black;
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 800px) {
+  .link a {
+    font-size: 16px;
+  }
+}
