@@ -27,7 +27,7 @@ body {
   margin-bottom: 40px;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 850px) {
   .main {
     flex-direction: row;
     height: 100vh;
