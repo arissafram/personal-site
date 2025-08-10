@@ -1,9 +1,15 @@
 import "./styles.css";
 
-const Header = () => {
+interface HeaderProps {
+  className?: string;
+}
+
+const Header = (props: HeaderProps) => {
+  const { className = "" } = props;
+
   return (
     <header>
-      <h1 className="header">Arissa Fram.</h1>
+      <h1 className={`header ${className}`}>Arissa Fram.</h1>
     </header>
   );
 };

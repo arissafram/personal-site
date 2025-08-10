@@ -3,3 +3,22 @@
   font-weight: bold;
   font-family: "Albert Sans", sans-serif;
 }
+
+.desktopHeader {
+  display: none;
+}
+
+.mobileHeader {
+  display: block;
+  margin: 80px 0 60px;
+}
+
+@media screen and (min-width: 800px) {
+  .desktopHeader {
+    display: block;
+  }
+
+  .mobileHeader {
+    display: none;
+  }
+}

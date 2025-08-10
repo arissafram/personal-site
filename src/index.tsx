@@ -10,6 +10,7 @@ import "./index.css";
 const App = () => {
   return (
     <main className="main">
+      <Header className="mobileHeader" />
       <div className="puzzle-container">
         <Puzzle
           image="/puzzle.jpg"
@@ -42,7 +43,7 @@ const App = () => {
         />
       </div>
       <div className="content-container">
-        <Header />
+        <Header className="desktopHeader" />
         <Blurb />
         <Links />
       </div>

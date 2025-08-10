@@ -1,11 +1,25 @@
+.blurb-container {
+  margin-top: 40px;
+}
+
 .paragraph {
   margin-bottom: 18px;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Barlow", sans-serif;
   text-align: justify;
   opacity: 0.8;
 }
 
-.promocode {
-  opacity: 0.4;
+@media screen and (min-width: 800px) {
+  .blurb-container {
+    margin-top: 0;
+  }
+
+  .paragraph {
+    font-size: 20px;
+  }
+
+  .promocode {
+    opacity: 0.4;
+  }
 }
