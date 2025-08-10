@@ -3,11 +3,11 @@
 }
 
 .paragraph {
-  margin-bottom: 18px;
   font-size: 16px;
   font-family: "Barlow", sans-serif;
-  text-align: justify;
+  margin-bottom: 18px;
   opacity: 0.8;
+  text-align: justify;
 }
 
 @media screen and (min-width: 800px) {

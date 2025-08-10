@@ -1,9 +1,9 @@
 .links {
   display: flex;
+  column-gap: 20px;
   flex-direction: row;
   flex-wrap: wrap;
   row-gap: 12px;
-  column-gap: 20px;
 }
 
 .link:last-of-type {
@@ -11,10 +11,10 @@
 }
 
 .link a {
-  font-size: 16px;
-  font-family: "Barlow", sans-serif;
-  line-height: 18px;
   color: black;
+  font-family: "Barlow", sans-serif;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .link a:visted {
