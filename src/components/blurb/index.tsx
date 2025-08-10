@@ -8,8 +8,8 @@ const Blurb = () => {
       <p className="paragraph">
         I like puzzles and live music. I study French. I live in Brooklyn. I
         value clear communication, thorough code review and winning as a team.
-        Currently supporting Underdog web products, building things and adding
-        to my collection of useless domains.
+        Currently supporting Underdog web products, building fun things on my
+        own time and adding to my collection of useless domains.
       </p>
       <p className="paragraph">
         NodeJS, React, Typescript, Javascript, Webpack, NextJS, REST/Graphql,
