@@ -10,7 +10,7 @@
   text-align: justify;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 850px) {
   .blurb-container {
     margin-top: 0;
   }
