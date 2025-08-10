@@ -9,7 +9,7 @@ const Blurb = () => {
         I like puzzles and live music. I study French. I live in Brooklyn. I
         value meaningful projects, thorough code review and winning as a team.
         Currently supporting Underdog web products, building fun things on my
-        own and adding to a collection of useless domains.
+        own time and adding to a collection of useless domains.
       </p>
       <p className="paragraph">
         NodeJS, React, Typescript, Javascript, Webpack, NextJS, REST/Graphql,
