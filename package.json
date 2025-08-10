@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/arissafram/personal-site#readme",
   "description": "",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
