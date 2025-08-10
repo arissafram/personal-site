@@ -17,6 +17,10 @@ const LINKS = [
     href: "https://medium.com/@arissafram/aws-amplify-with-squarespace-domain-7d6a1505e98c",
     label: "Medium",
   },
+  {
+    href: "https://github.com/arissafram",
+    label: "Github",
+  },
 ];
 
 const Links = () => {
