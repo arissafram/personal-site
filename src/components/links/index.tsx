@@ -5,7 +5,6 @@ const LINKS = [
     href: "https://www.linkedin.com/in/arissafram/",
     label: "Linkedin",
   },
-
   {
     href: "https://medium.com/@arissafram/aws-amplify-with-squarespace-domain-7d6a1505e98c",
     label: "Medium",
