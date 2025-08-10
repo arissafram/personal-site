@@ -4,7 +4,7 @@
 
 React, TypeScript, Vite, CSS/SCSS, [react-jigsaw](https://github.com/arissafram/react-jigsaw) (GitHub package)
 
-Node.js (v16 or higher), npm
+Node.js (v20 or higher), npm
 
 ## Run locally
 
