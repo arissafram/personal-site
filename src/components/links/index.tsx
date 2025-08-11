@@ -10,7 +10,7 @@ const LINKS = [
     label: "Github",
   },
   {
-    href: "https://medium.com/@arissafram/aws-amplify-with-squarespace-domain-7d6a1505e98c",
+    href: "https://medium.com/@arissafram",
     label: "Medium",
   },
   {
