@@ -8,7 +8,7 @@ const Blurb = () => {
         <a className="link" href="https://play.underdogfantasy.com/bigriss-bbbdfc02f9d75f4b">Underdog</a>
       </p>
       <p className="paragraph">
-        Fullstack engineer with a expertise in web technologies: React, TypeScript, NodeJS, REST/GraphQL,
+        Fullstack engineer with expertise in web technologies: React, TypeScript, NodeJS, REST/GraphQL,
         Storybook, testing libraries, etc, etc.
       </p>
       <p className="paragraph">
