@@ -14,8 +14,8 @@ const Blurb = () => {
         own time, and adding to a collection of useless domains.
       </p>
       <p className="paragraph">
-        Fullstack product engineer, with an expertise in Web. Typescript, React/RN, NodeJS, 
-        Swift, Kotlin, Rails, REST/GraphQL, Storybook, testing libraries.
+        Fullstack product engineer with an expertise in Web. Typescript, React/RN, NodeJS, 
+        Swift, Kotlin, Rails, REST/GraphQL, Storybook, testing libraries, etc, etc.
       </p>
     </section>
   );
