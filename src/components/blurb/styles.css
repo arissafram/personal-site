@@ -24,3 +24,8 @@
   overflow-wrap: break-word;
   text-align: justify;
 }
+
+/* One-line statements: justifying them would stretch the gaps when they wrap. */
+.paragraph-short {
+  text-align: left;
+}

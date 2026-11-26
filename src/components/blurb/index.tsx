@@ -3,12 +3,12 @@ import "./styles.css";
 const Blurb = () => {
   return (
     <section className="blurb-container">
-      <p className="paragraph">AI-native fullstack product engineer.</p>
+      <p className="paragraph paragraph-short">AI-native fullstack product engineer.</p>
       <p className="paragraph">
         Expertise in Web. Typescript, React, React Native, NodeJS, Rails,
         REST/GraphQL, Storybook, testing libraries, etc, etc.
       </p>
-      <p className="paragraph">
+      <p className="paragraph paragraph-short">
         Rips @{" "}
         <a className="link" href="https://play.underdogfantasy.com/bigriss-bbbdfc02f9d75f4b">Underdog</a>
       </p>
