@@ -1,9 +1,23 @@
-/* Set like the game names, only bigger: bold, tight tracking, tight leading. */
+/* Set like the game names, but as big as the slide allows: bold, tight
+   tracking and leading, sized so the name runs edge to edge between the
+   24px gutters. "Arissa Fram." is about 5.5em wide. */
 .header {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(56px, 11vw, 128px);
+  font-size: calc((100vw - 48px) / 5.5);
   font-weight: bold;
   letter-spacing: -0.045em;
-  line-height: 0.9;
-  margin: 0;
+  line-height: 0.85;
+  margin: 0 0 0 -0.04em;
+  white-space: nowrap;
+}
+
+/* Phones: one word per line, "Arissa" (about 3em) filling the width. */
+@media (max-width: 760px) {
+  .header {
+    font-size: calc((100vw - 48px) / 3);
+  }
+
+  .header span {
+    display: block;
+  }
 }
