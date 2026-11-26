@@ -125,6 +125,17 @@
   width: 30px;
 }
 
+/* Pressed, or just used by a key or swipe: filled with the ink. */
+.game-row-arrows button:active,
+.game-row-arrows button.is-flashing {
+  background: currentColor;
+}
+
+.game-row-arrows button:active > span,
+.game-row-arrows button.is-flashing > span {
+  color: var(--row-bg, #ffffff);
+}
+
 .game-row :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;

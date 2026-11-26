@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 
 import PlaceholderArt from "../placeholder-art";
 
@@ -26,14 +26,33 @@ interface GameRowProps {
 
 const GameRow = ({ items, current, onSelect }: GameRowProps) => {
   const itemsRef = useRef<HTMLDivElement>(null);
+  // The arrow for the last one-step move (arrow, key or swipe) fills briefly.
+  const [flash, setFlash] = useState<"prev" | "next" | null>(null);
+  const prevCurrent = useRef(current);
+  const jumped = useRef(false);
 
   // A mouse click or tap shouldn't leave the button focused: the next Space
   // (e.g. starting Mike's) would press it again and draw a focus ring around
   // it. Keyboard presses (detail 0) keep focus, so Tab users stay in place.
-  const select = (i: number) => (e: MouseEvent<HTMLButtonElement>) => {
+  const select = (i: number, jump = false) => (e: MouseEvent<HTMLButtonElement>) => {
+    jumped.current = jump;
     onSelect(i);
     if (e.detail > 0) e.currentTarget.blur();
   };
+
+  // Work out which way the carousel stepped (it loops, so last → Home is
+  // "next"). Picking an item in the row is a jump, not a step.
+  useEffect(() => {
+    const n = items.length;
+    const step = (current - prevCurrent.current + n) % n;
+    prevCurrent.current = current;
+    const wasJump = jumped.current;
+    jumped.current = false;
+    if (wasJump || step === 0 || (step !== 1 && step !== n - 1)) return;
+    setFlash(step === 1 ? "next" : "prev");
+    const t = window.setTimeout(() => setFlash(null), 250);
+    return () => window.clearTimeout(t);
+  }, [current, items.length]);
 
   // When the row is wider than the screen (phones), keep the current item in view.
   useEffect(() => {
@@ -53,6 +72,7 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
       style={
         {
           "--row-ink": items[current]?.ink,
+          "--row-bg": items[current]?.color,
         } as CSSProperties
       }
     >
@@ -64,7 +84,7 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
               type="button"
               className="game-row-item"
               aria-current={i === current ? "true" : undefined}
-              onClick={select(i)}
+              onClick={select(i, true)}
             >
               <span
                 className="game-row-square"
@@ -86,16 +106,18 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
           <button
             type="button"
             aria-label="Previous"
+            className={flash === "prev" ? "is-flashing" : undefined}
             onClick={select(current - 1)}
           >
-            ←
+            <span aria-hidden="true">←</span>
           </button>
           <button
             type="button"
             aria-label="Next"
+            className={flash === "next" ? "is-flashing" : undefined}
             onClick={select(current + 1)}
           >
-            →
+            <span aria-hidden="true">→</span>
           </button>
         </div>
       </div>
