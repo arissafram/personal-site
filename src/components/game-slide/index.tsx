@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 
 import type { Game } from "../../games";
 
+import JigsawDemo from "../jigsaw-demo";
 import MikesDemo from "../mikes-demo";
 import PlaceholderArt from "../placeholder-art";
 import WaltDemo from "../walt-demo";
@@ -13,6 +14,7 @@ import "./styles.css";
 const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
   mikes: MikesDemo,
+  jigsaw: JigsawDemo,
 };
 
 const isExternal = (href: string) => /^https?:/.test(href);
@@ -38,7 +40,7 @@ const GameSlide = ({ game }: { game: Game }) => {
   const Demo = game.demo ? DEMOS[game.demo] : undefined;
 
   return (
-    <div className={`game-slide${Demo ? " game-slide-has-demo" : ""}`}>
+    <div className={`game-slide${Demo ? ` game-slide-has-demo game-slide-demo-${game.demo}` : ""}`}>
       {Demo ? (
         <Demo />
       ) : (

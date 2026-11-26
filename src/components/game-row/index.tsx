@@ -7,6 +7,8 @@ import "./styles.css";
 export interface GameRowItem {
   slug: string;
   name: string;
+  /** Used instead of `name` in the row when set. */
+  shortName?: string;
   color: string;
   ink: string;
   image?: string;
@@ -68,7 +70,7 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
                   <span className="game-row-mark">{item.mark}</span>
                 ) : null}
               </span>
-              <span className="game-row-name">{item.name}</span>
+              <span className="game-row-name">{item.shortName ?? item.name}</span>
             </button>
           ))}
         </div>

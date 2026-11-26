@@ -1,0 +1,81 @@
+/* The puzzle in the slide's colors. `color` is the slide ink, the board is
+   transparent over the slide color, and every line is 1px. The photo stays in
+   color. Pieces scatter up to 50/400 of the board width past its edges, so the
+   box keeps that much room on each side. */
+.jigsaw-demo {
+  box-sizing: border-box;
+  justify-self: end;
+  max-width: min(500px, calc((100dvh - var(--game-row-h) - 150px) * 0.89));
+  padding: 0 11%;
+  width: 100%;
+}
+
+.jigsaw-demo-placeholder {
+  aspect-ratio: 400 / 480;
+}
+
+.jigsaw-demo .jigsaw-board {
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  margin: 8px 0 0;
+}
+
+/* Piece outlines: 1px ink. Snapped pieces have no stroke. */
+.jigsaw-demo .jigsaw-board g[tabindex] > path {
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The gaps (empty slots): 1px lines in ink mixed halfway into the slide
+   color, so they read as quieter than the loose pieces. A filled slot draws
+   no line, as before. */
+.jigsaw-demo .jigsaw-board [data-testid="board-outlines"] path:not([class*="_snapped_"]) {
+  stroke: color-mix(in srgb, currentColor 45%, var(--slide-bg, #ffffff));
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* No glow on a focused piece; a keyboard focus gets a heavier line instead. */
+.jigsaw-demo .jigsaw-board g:focus path {
+  filter: none;
+}
+
+.jigsaw-demo .jigsaw-board g:focus-visible > path {
+  stroke-width: 3px;
+}
+
+.jigsaw-demo .jigsaw-timer {
+  color: inherit;
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 400;
+  border-radius: 0;
+}
+
+/* ↻: a small square box in ink. */
+.jigsaw-demo .jigsaw-refresh {
+  align-items: center;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  color: inherit;
+  height: 26px;
+  justify-content: center;
+  padding: 0;
+  width: 26px;
+}
+
+.jigsaw-demo .jigsaw-refresh svg {
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  width: 15px;
+}
+
+@media (max-width: 760px) {
+  .jigsaw-demo {
+    justify-self: center;
+    max-width: 360px;
+  }
+}

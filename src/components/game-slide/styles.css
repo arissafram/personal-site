@@ -88,6 +88,12 @@
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
 }
 
+/* The puzzle is portrait and no wider than the image box, so it keeps the
+   even columns and the name has room for "react-jigsaw" on one line. */
+.game-slide-demo-jigsaw {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
 @media (max-width: 760px) {
   .game-slide-has-demo {
     grid-template-columns: minmax(0, 1fr);

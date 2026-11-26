@@ -1,11 +1,13 @@
 {
   "slug": "react-jigsaw",
   "name": "react-jigsaw",
+  "shortName": "jigsaw",
   "order": 3,
   "color": "#dcdad4",
   "ink": "#111111",
   "art": "grid",
-  "description": "The React component behind the puzzle on the home page. Give it any image and it cuts a drag-and-drop jigsaw.",
-  "link": { "label": "View on npm", "href": "#" },
+  "demo": "jigsaw",
+  "description": "My React component for drag-and-drop jigsaw puzzles. Give it any image and it cuts the pieces. This one is me.",
+  "link": { "label": "Install react-jigsaw", "href": "https://github.com/arissafram/react-jigsaw#installation" },
   "status": "shipped"
 }
