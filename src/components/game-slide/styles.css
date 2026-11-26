@@ -13,9 +13,12 @@
 }
 
 .game-slide-image {
+  align-items: center;
   aspect-ratio: 1;
   border: 1px solid currentColor;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
   justify-self: end;
   max-width: 460px;
   overflow: hidden;
@@ -28,6 +31,11 @@
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+.game-slide-image svg {
+  height: auto;
+  width: 62%;
 }
 
 .game-slide-tag {

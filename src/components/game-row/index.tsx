@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 
+import PlaceholderArt from "../placeholder-art";
+
 import "./styles.css";
 
 export interface GameRowItem {
@@ -8,6 +10,8 @@ export interface GameRowItem {
   color: string;
   ink: string;
   image?: string;
+  /** Placeholder drawing name, used when there is no image. */
+  art?: string;
   /** Text shown in the square when there is no image (Home uses "AF."). */
   mark?: string;
 }
@@ -46,6 +50,8 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
               >
                 {item.image ? (
                   <img src={item.image} alt="" />
+                ) : item.art ? (
+                  <PlaceholderArt name={item.art} />
                 ) : item.mark ? (
                   <span className="game-row-mark">{item.mark}</span>
                 ) : null}

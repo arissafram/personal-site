@@ -1,5 +1,7 @@
 import type { Game } from "../../games";
 
+import PlaceholderArt from "../placeholder-art";
+
 import "./styles.css";
 
 // One game's slide content: a large square image on the left, the name and one
@@ -11,7 +13,10 @@ const GameSlide = ({ game }: { game: Game }) => {
         {game.image ? (
           <img src={game.image} alt={game.name} />
         ) : (
-          <span className="game-slide-tag">mockup</span>
+          <>
+            <span className="game-slide-tag">mockup</span>
+            <PlaceholderArt name={game.art} />
+          </>
         )}
       </div>
       <div className="game-slide-text">

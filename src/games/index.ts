@@ -11,6 +11,8 @@ export interface Game {
   ink: string;
   /** Square image for the slide and the game row. Leave out until it exists. */
   image?: string;
+  /** Placeholder drawing (see components/placeholder-art) shown while there is no image. */
+  art?: string;
   link: { label: string; href: string };
   /** Kept in the data; nothing on the page shows it. */
   status: string;
