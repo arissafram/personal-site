@@ -31,7 +31,7 @@ const Links = () => {
   return (
     <ul className="links">
       {LINKS.map((link) => (
-        <li className="link">
+        <li className="link" key={link.href}>
           <a href={link.href} rel="noopener noreferrer" target="_blank">
             {link.label}
           </a>
