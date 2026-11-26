@@ -62,6 +62,12 @@ body {
   color: #111111;
 }
 
+/* Selected text on Home is highlighted in Free Solo's orange. */
+.slide-home ::selection {
+  background: #e2703f;
+  color: #111111;
+}
+
 
 @media (max-width: 760px) {
   :root {
