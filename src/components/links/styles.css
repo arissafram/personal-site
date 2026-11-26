@@ -11,7 +11,9 @@
 }
 
 .link a {
-  color: black;
+  color: #111111;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
   font-family: "Barlow", sans-serif;
   font-size: 14px;
   line-height: 18px;
@@ -22,8 +24,7 @@
 }
 
 .link a:hover {
-  color: black;
-  opacity: 0.6;
+  text-decoration-thickness: 2px;
 }
 
 @media screen and (min-width: 850px) {

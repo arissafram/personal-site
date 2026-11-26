@@ -1,6 +1,6 @@
 :root {
   /* Room left at the bottom of every slide for the fixed game row. */
-  --game-row-h: 118px;
+  --game-row-h: 150px;
 }
 
 html,
@@ -39,14 +39,19 @@ body {
 }
 
 .slide-home {
-  background-color: #ffffff;
-  background-image: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
+  background: #ffffff;
+  color: #111111;
+}
+
+/* The puzzle's ↻ button: a plain square box in ink. */
+.slide-home [class*="_refreshButton_"] {
+  border: 1px solid #111111;
+  border-radius: 0;
+  color: #111111;
 }
 
 @media (max-width: 760px) {
   :root {
-    --game-row-h: 104px;
+    --game-row-h: 136px;
   }
 }

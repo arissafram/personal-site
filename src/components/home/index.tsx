@@ -35,7 +35,7 @@ const Home = () => {
               },
             },
             puzzlePiece: {
-              strokeColor: "#32cd32",
+              strokeColor: "#111111",
               strokeEnabled: true,
             },
           }}

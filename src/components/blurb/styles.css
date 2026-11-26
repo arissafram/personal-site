@@ -2,12 +2,15 @@
   margin-top: 40px;
 }
 
-.link {
-  color: black;
+.link,
+.link:visited {
+  color: #111111;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
-.link:visited {
-  color: black;
+.link:hover {
+  text-decoration-thickness: 2px;
 }
 
 

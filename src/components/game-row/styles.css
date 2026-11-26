@@ -1,18 +1,26 @@
+/* Registered so the fade's color can transition between slides. */
+@property --row-bg {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #ffffff;
+}
+
 .game-row {
-  /* Same flat color as the current slide, so content scrolling under it stays out of the way. */
-  background: var(--row-bg, #ffffff);
+  /* Slide content scrolls behind the row and fades out into the slide's color above it. */
+  background: linear-gradient(to bottom, transparent, var(--row-bg) 40px);
   bottom: 0;
   color: var(--row-ink, #111111);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   left: 0;
-  padding: 12px max(24px, env(safe-area-inset-right, 0px))
+  padding: 44px max(24px, env(safe-area-inset-right, 0px))
     calc(16px + env(safe-area-inset-bottom, 0px))
     max(24px, env(safe-area-inset-left, 0px));
+  pointer-events: none;
   position: fixed;
   right: 0;
   transition:
     color 0.3s,
-    background-color 0.3s;
+    --row-bg 0.3s;
   z-index: 10;
 }
 
@@ -31,6 +39,7 @@
   min-width: 0;
   overflow-x: auto;
   padding-top: 4px;
+  pointer-events: auto;
   scrollbar-width: none;
 }
 
@@ -102,6 +111,7 @@
   display: flex;
   gap: 6px;
   padding-bottom: 22px;
+  pointer-events: auto;
 }
 
 .game-row-arrows button {
