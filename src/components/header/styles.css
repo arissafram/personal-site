@@ -1,10 +1,10 @@
-/* Set like the game names: bold, tight tracking and leading. Sized so the
-   name spans exactly the game row's width (1040px column, or the window minus
-   its gutters when narrower). 5.46em is the width of "Arissa Fram." in bold
+/* Set like the game names: bold, tight tracking and leading. On narrow
+   windows the name spans the full column (the window minus its gutters); on
+   wide ones it stops growing at 104px instead of filling the 1040px row. 5.46em is the width of "Arissa Fram." in bold
    Helvetica at -0.045em tracking. */
 .header {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: calc(min(1040px, 100vw - 48px) / 5.46);
+  font-size: min(104px, calc((100vw - 48px) / 5.46));
   white-space: nowrap;
   font-weight: bold;
   letter-spacing: -0.045em;
