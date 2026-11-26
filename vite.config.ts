@@ -3,6 +3,27 @@ import path from "node:path";
 
 import { defineConfig, type Connect, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import sharp from "sharp";
+
+// Walt's box PNGs come from the walt-extension package at 900px wide
+// (0.5–1 MB each). The demo never draws them wider than about 220px, so the
+// build shrinks them to 480px (enough for 2x screens), about 10x smaller.
+// Dev serves the originals.
+const WALT_BOX_WIDTH = 480;
+const shrinkWaltBoxes = (): Plugin => ({
+  name: "shrink-walt-boxes",
+  apply: "build",
+  async generateBundle(_options, bundle) {
+    const isWaltBox = (name: string) => /walt-extension[\\/]boxes[\\/][^\\/]+\.png$/.test(name);
+    for (const asset of Object.values(bundle)) {
+      if (asset.type !== "asset" || !asset.originalFileNames.some(isWaltBox)) continue;
+      asset.source = await sharp(asset.source)
+        .resize({ width: WALT_BOX_WIDTH, withoutEnlargement: true })
+        .png({ compressionLevel: 9, effort: 10 })
+        .toBuffer();
+    }
+  },
+});
 
 // Serve folders in public/ that have their own index.html (like public/walt/,
 // Walt's download page) the way the live host does. Without this, Vite's dev
@@ -36,7 +57,7 @@ const publicIndexPages = (): Plugin => {
 };
 
 export default defineConfig({
-  plugins: [react(), publicIndexPages()],
+  plugins: [react(), publicIndexPages(), shrinkWaltBoxes()],
   build: {
     outDir: "dist",
     assetsDir: "assets",
