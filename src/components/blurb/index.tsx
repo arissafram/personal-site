@@ -10,6 +10,8 @@ const Blurb = () => {
       <p className="paragraph">
         I like puzzles and live music. I study French. I live in Brooklyn. I
         value meaningful projects, thorough code review and winning as a team.
+      </p>
+      <p className="paragraph">
         I make small, pointless games that make me laugh. Currently supporting
         Underdog products and adding to a collection of useless domains.
       </p>

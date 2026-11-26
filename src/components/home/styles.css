@@ -3,7 +3,7 @@
    comes from --home-text, which grows smoothly with the window and is capped
    by its height so the whole slide fits above the game row. */
 .main {
-  --home-text: clamp(20px, min(2.9vw, 4.5dvh), 46px);
+  --home-text: clamp(20px, min(2.9vw, 4.2dvh), 46px);
 
   align-content: center;
   box-sizing: border-box;
