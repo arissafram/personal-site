@@ -1,53 +1,46 @@
-import { Puzzle } from "react-jigsaw";
-import "react-jigsaw/styles";
+import type { CSSProperties } from "react";
 
-import Blurb from "./components/blurb";
-import Header from "./components/header";
-import Links from "./components/links";
+import GameRow, { type GameRowItem } from "./components/game-row";
+import Home from "./components/home";
+import { GAMES } from "./games";
+import { useCarousel } from "./hooks/use-carousel";
 
 import "./index.css";
 
+const HOME: GameRowItem = {
+  slug: "home",
+  name: "Home",
+  color: "#ffffff",
+  ink: "#111111",
+  mark: "AF.",
+};
+
+const ITEMS: GameRowItem[] = [HOME, ...GAMES];
+const SLUGS = ITEMS.map((item) => item.slug);
+
 const App = () => {
+  const { trackRef, current, go } = useCarousel(SLUGS);
+
   return (
-    <main className="main">
-      <Header className="mobile-header" />
-      <div className="puzzle-container">
-        <Puzzle
-          image="/puzzle.jpg"
-          options={{
-            board: {
-              columns: 3,
-              height: 450,
-              outlineStrokeColor: "#a9a9a9",
-              rows: 3,
-              snapThreshold: 20,
-              scatterArea: 50,
-              showBoardSlotOutlines: true,
-              width: 400,
-            },
-            puzzle: {
-              responsive: true,
-              timer: {
-                enabled: true,
-              },
-              refreshButton: {
-                enabled: true,
-              },
-            },
-            puzzlePiece: {
-              strokeColor: "#32cd32",
-              strokeEnabled: true,
-            },
-          }}
-          responsive={true}
-        />
-      </div>
-      <div className="content-container">
-        <Header className="desktop-header" />
-        <Blurb />
-        <Links />
-      </div>
-    </main>
+    <>
+      <main className="track" ref={trackRef} aria-label="Arissa Fram, home and games">
+        <section className="slide slide-home" id="home" aria-label="Home">
+          <Home />
+        </section>
+        {GAMES.map((game) => (
+          <section
+            key={game.slug}
+            className="slide"
+            id={game.slug}
+            aria-label={game.name}
+            style={{ "--slide-bg": game.color, "--slide-ink": game.ink } as CSSProperties}
+          >
+            {/* Game slide content (image, name, link) comes in step 2. */}
+          </section>
+        ))}
+      </main>
+      <GameRow items={ITEMS} current={current} onSelect={go} />
+    </>
   );
 };
 

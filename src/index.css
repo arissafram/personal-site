@@ -1,50 +1,52 @@
+:root {
+  /* Room left at the bottom of every slide for the fixed game row. */
+  --game-row-h: 118px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
-  background: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
+  overflow: hidden;
+}
+
+/* The whole page is one horizontal row of full-screen slides. */
+.track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  background: var(--slide-bg, #ffffff);
+  color: var(--slide-ink, #111111);
+  flex: 0 0 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.slide-home {
+  background-color: #ffffff;
+  background-image: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
   background-repeat: no-repeat;
   background-size: 100% 100vh;
 }
 
-.main {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 290px;
-  padding: 0 24px 24px;
-}
-
-.puzzle-container {
-  align-items: center;
-  display: flex;
-  z-index: 1;
-}
-
-.content-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  max-width: 400px;
-  margin-bottom: 40px;
-}
-
-@media (min-width: 850px) {
-  .main {
-    flex-direction: row;
-    height: 100vh;
-    margin: 0 auto;
-    max-width: 880px;
-    padding-bottom: 0;
-  }
-
-  .puzzle-container {
-    margin-right: 36px;
-    max-width: 50%;
-  }
-
-  .content-container {
-    gap: 24px;
-    margin-left: 24px;
-    width: 50%;
-    margin-bottom: 0;
+@media (max-width: 760px) {
+  :root {
+    --game-row-h: 104px;
   }
 }
