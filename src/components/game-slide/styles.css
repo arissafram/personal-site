@@ -82,3 +82,19 @@
     width: 100%;
   }
 }
+
+/* A slide with an interactive demo gives it the wider column. */
+.game-slide-has-demo {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+}
+
+@media (max-width: 760px) {
+  .game-slide-has-demo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .game-slide-has-demo .walt-demo {
+    justify-self: center;
+    max-width: 420px;
+  }
+}

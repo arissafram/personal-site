@@ -13,6 +13,8 @@ export interface Game {
   image?: string;
   /** Placeholder drawing (see components/placeholder-art) shown while there is no image. */
   art?: string;
+  /** Interactive demo shown in place of the image (see components/game-slide DEMOS), e.g. "walt". */
+  demo?: string;
   link: { label: string; href: string };
   /** Kept in the data; nothing on the page shows it. */
   status: string;

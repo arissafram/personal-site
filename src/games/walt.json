@@ -5,6 +5,7 @@
   "color": "#f2cf45",
   "ink": "#111111",
   "art": "box",
+  "demo": "walt",
   "link": { "label": "Add to Chrome", "href": "/walt/" },
   "status": "shipped"
 }

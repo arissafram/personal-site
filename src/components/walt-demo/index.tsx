@@ -1,0 +1,421 @@
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent } from "react";
+
+import { BOXES, boxSrc } from "./boxes";
+import { GLYPHS } from "./glyphs";
+
+import "./styles.css";
+
+// A small fake browser with Walt in its extension row. Clicking Walt opens a
+// copy of the extension's popup (walt-extension/popup.html); turning it On
+// makes the chosen box bounce over the fake page, like the real one does on
+// every tab.
+
+type Mode = "on" | "off" | "detect";
+
+const PILL: Record<Mode, string> = { on: "Enabled", off: "Disabled", detect: "Sleep mode" };
+const DELAYS = [
+  { value: 15, label: "15 sec" },
+  { value: 30, label: "30 sec" },
+  { value: 60, label: "1 min" },
+  { value: 120, label: "2 min" },
+  { value: 300, label: "5 min" },
+  { value: 600, label: "10 min" },
+  { value: 900, label: "15 min" },
+];
+const SIZE_MIN = 80;
+const SIZE_MAX = 400;
+// The real box is sized in pixels of a whole browser window. The fake page
+// counts as a window this wide, so sizes and speeds scale down with it.
+const WINDOW_W = 1024;
+// Room kept free under the popup preview's box for its hint text.
+const HINT_SPACE = 22;
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+const subscribeReducedMotion = (onChange: () => void) => {
+  const mq = window.matchMedia(reducedMotionQuery);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+};
+const usePrefersReducedMotion = () =>
+  useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => false
+  );
+
+// A bouncing box's position and speed. `w`/`h` are its last drawn size, so a
+// resize can keep it centered where it was.
+interface Body {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  w: number;
+  h: number;
+  placed: boolean;
+}
+
+const newBody = (vx: number, vy: number): Body => ({ x: 0, y: 0, vx, vy, w: 0, h: 0, placed: false });
+
+// Advance one frame. When `moving` is false the box sits still at (cx, cy).
+const stepBody = (
+  b: Body,
+  dt: number,
+  W: number,
+  H: number,
+  w: number,
+  h: number,
+  speed: number,
+  moving: boolean,
+  cx: number,
+  cy: number
+) => {
+  if (b.placed && (b.w !== w || b.h !== h)) {
+    b.x += (b.w - w) / 2;
+    b.y += (b.h - h) / 2;
+  }
+  b.w = w;
+  b.h = h;
+  if (!moving || !b.placed) {
+    b.x = cx;
+    b.y = cy;
+    b.placed = true;
+    if (!moving) return;
+  }
+  b.x += Math.sign(b.vx) * speed * 1.375 * dt;
+  b.y += Math.sign(b.vy) * speed * dt;
+  if (b.x <= 0) { b.x = 0; b.vx = 1; }
+  else if (b.x + w >= W) { b.x = Math.max(0, W - w); b.vx = -1; }
+  if (b.y <= 0) { b.y = 0; b.vy = 1; }
+  else if (b.y + h >= H) { b.y = Math.max(0, H - h); b.vy = -1; }
+};
+
+const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<Mode>("off");
+  const [boxIndex, setBoxIndex] = useState(0);
+  const [size, setSize] = useState(182);
+  // The real default is 30 sec; 15 is the shortest choice, so a visitor can
+  // see Sleep mode work without waiting long.
+  const [delay, setDelay] = useState(15);
+  const [idle, setIdle] = useState(false);
+  const [pressed, setPressed] = useState<string | null>(null);
+  const reduceMotion = usePrefersReducedMotion();
+
+  const box = BOXES[boxIndex];
+  const onPage = mode === "on" || (mode === "detect" && idle);
+  const delayLabel = DELAYS.find((d) => d.value === delay)?.label ?? "15 sec";
+  const hint = mode === "off" ? "Hidden" : mode === "detect" ? `Shows after ${delayLabel} idle` : "";
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  const pageBoxRef = useRef<HTMLImageElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const miniRef = useRef<HTMLImageElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
+  const waltButtonRef = useRef<HTMLButtonElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  // What the animation loop reads each frame, without restarting it.
+  const live = useRef({ mode, onPage, reduceMotion, size, ratio: box.ratio });
+  useEffect(() => {
+    live.current = { mode, onPage, reduceMotion, size, ratio: box.ratio };
+  });
+
+  // One loop moves both boxes: the one on the fake page and the small preview
+  // in the popup. It only runs while the demo is on screen.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const page = newBody(1, 1);
+    const mini = newBody(1, 1);
+    let frame = 0;
+    let last: number | null = null;
+
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      const dt = last === null ? 0 : Math.min((now - last) / 1000, 0.1);
+      last = now;
+      const { mode, onPage, reduceMotion, size, ratio } = live.current;
+
+      const pageEl = pageRef.current;
+      const pageBox = pageBoxRef.current;
+      if (pageEl && pageBox) {
+        const W = pageEl.clientWidth;
+        const H = pageEl.clientHeight;
+        const scale = W / WINDOW_W;
+        const w = Math.min(Math.round(size * scale), W);
+        const h = Math.min(Math.round(w * ratio), H);
+        // The real box moves at 96 px/s vertically (132 across) in a full window.
+        stepBody(page, dt, W, H, w, h, 96 * scale, onPage && !reduceMotion, (W - w) / 2, (H - h) / 2);
+        pageBox.style.width = `${w}px`;
+        pageBox.style.height = `${h}px`;
+        pageBox.style.transform = `translate(${Math.round(page.x)}px, ${Math.round(page.y)}px)`;
+      }
+
+      const stage = stageRef.current;
+      const miniBox = miniRef.current;
+      if (stage && miniBox) {
+        const W = stage.clientWidth;
+        const H = stage.clientHeight;
+        // Same mapping as the real popup's preview: 80–400px → 22–64px.
+        const w = Math.round(22 + ((size - SIZE_MIN) / (SIZE_MAX - SIZE_MIN)) * 42);
+        const h = Math.round(w * ratio);
+        const cy = Math.max(6, (H - HINT_SPACE - h) / 2 + 2);
+        stepBody(mini, dt, W, H, w, h, 26, mode === "on" && !reduceMotion, (W - w) / 2, cy);
+        miniBox.style.width = `${w}px`;
+        miniBox.style.height = `${h}px`;
+        miniBox.style.transform = `translate(${Math.round(mini.x)}px, ${Math.round(mini.y)}px)`;
+      } else {
+        mini.placed = false;
+      }
+    };
+
+    const start = () => {
+      if (frame) return;
+      last = null;
+      frame = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()));
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, []);
+
+  // Sleep mode: the box shows once the visitor has done nothing for `delay`
+  // seconds, and hides again on any activity, like chrome.idle in the real one.
+  useEffect(() => {
+    if (mode !== "detect") return;
+    let timer = 0;
+    const reset = () => {
+      setIdle(false);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setIdle(true), delay * 1000);
+    };
+    const events = ["pointermove", "pointerdown", "keydown", "wheel", "touchstart"] as const;
+    reset();
+    events.forEach((e) => window.addEventListener(e, reset, { passive: true }));
+    return () => {
+      window.clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, reset));
+    };
+  }, [mode, delay]);
+
+  // Close the popup on a click outside it or on Escape, like Chrome does.
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (popupRef.current?.contains(target) || waltButtonRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    const onKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      waltButtonRef.current?.focus();
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  // Keep the chosen thumbnail in view in the strip.
+  useEffect(() => {
+    const strip = stripRef.current;
+    const thumb = strip?.children[boxIndex] as HTMLElement | undefined;
+    if (!strip || !thumb) return;
+    const left = thumb.offsetLeft - strip.offsetLeft;
+    if (left < strip.scrollLeft) strip.scrollLeft = left - 4;
+    else if (left + thumb.offsetWidth > strip.scrollLeft + strip.clientWidth)
+      strip.scrollLeft = left + thumb.offsetWidth - strip.clientWidth + 4;
+  }, [boxIndex, open]);
+
+  const stepBox = (delta: number, focus: boolean) => {
+    const next = (boxIndex + delta + BOXES.length) % BOXES.length;
+    setBoxIndex(next);
+    if (focus) (stripRef.current?.children[next] as HTMLElement | undefined)?.focus({ preventScroll: true });
+  };
+
+  const onStripKey = (e: KeyboardEvent) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      stepBox(1, true);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      stepBox(-1, true);
+    }
+  };
+
+  const sizeFill = `${((size - SIZE_MIN) / (SIZE_MAX - SIZE_MIN)) * 100}%`;
+
+  return (
+    <div className="walt-demo" ref={rootRef}>
+      <div className="walt-browser">
+        <div className="walt-toolbar">
+          <div className="walt-address">arissafram.com</div>
+          <span className="walt-ext-label" aria-hidden="true">
+            Extensions →
+          </span>
+          <div className="walt-ext-row" role="toolbar" aria-label="Extensions">
+            <button
+              ref={waltButtonRef}
+              type="button"
+              className="walt-ext walt-ext-walt"
+              aria-label="Walt"
+              aria-expanded={open}
+              aria-haspopup="dialog"
+              onClick={() => {
+                setOpen((o) => !o);
+                setPressed(null);
+              }}
+            >
+              <img src="/games/walt/icon32.png" alt="" width={16} height={16} />
+            </button>
+            {GLYPHS.map((g) => (
+              <button
+                key={g.name}
+                type="button"
+                className="walt-ext"
+                aria-label={g.name}
+                aria-pressed={pressed === g.name}
+                onClick={() => setPressed((p) => (p === g.name ? null : g.name))}
+              >
+                {g.icon}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="walt-page" ref={pageRef}>
+          <div className="walt-page-copy" aria-hidden="true">
+            <span style={{ width: "46%" }} className="walt-page-title" />
+            <span style={{ width: "92%" }} />
+            <span style={{ width: "86%" }} />
+            <span style={{ width: "90%" }} />
+            <span style={{ width: "58%" }} />
+            <span style={{ width: "88%" }} className="walt-page-gap" />
+            <span style={{ width: "80%" }} />
+            <span style={{ width: "40%" }} />
+          </div>
+          <img
+            ref={pageBoxRef}
+            className={`walt-page-box${onPage ? " is-on" : ""}`}
+            src={boxSrc(box)}
+            alt={onPage ? `${box.name} box` : ""}
+            draggable={false}
+          />
+
+          {open && (
+            <div className="walt-popup" ref={popupRef} role="dialog" aria-label="Walt">
+              <header className="walt-popup-head">
+                <div className="walt-popup-brand">
+                  <img src="/games/walt/icon32.png" alt="" width={18} height={18} />
+                  <h3>Walt</h3>
+                </div>
+                <span className="walt-pill" data-mode={mode} aria-live="polite">
+                  {PILL[mode]}
+                </span>
+              </header>
+
+              <section className="walt-picker" aria-label="Box design">
+                <div className="walt-picker-head">
+                  <span>
+                    Box <span className="walt-box-name">{box.name}</span>
+                  </span>
+                  <span className="walt-nav">
+                    <button type="button" aria-label="Previous box" onClick={() => stepBox(-1, false)}>
+                      <svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true">
+                        <path d="M6 1L1.5 6 6 11" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    <button type="button" aria-label="Next box" onClick={() => stepBox(1, false)}>
+                      <svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true">
+                        <path d="M2 1l4.5 5L2 11" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </span>
+                </div>
+                <div className="walt-strip" ref={stripRef} role="radiogroup" aria-label="Box design" onKeyDown={onStripKey}>
+                  {BOXES.map((b, i) => (
+                    <button
+                      key={b.id}
+                      type="button"
+                      className="walt-thumb"
+                      role="radio"
+                      aria-label={b.name}
+                      aria-checked={i === boxIndex}
+                      tabIndex={i === boxIndex ? 0 : -1}
+                      onClick={() => setBoxIndex(i)}
+                    >
+                      <img src={boxSrc(b)} alt="" />
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <div className="walt-stage" ref={stageRef} data-mode={mode} aria-hidden="true">
+                <img ref={miniRef} src={boxSrc(box)} alt="" />
+                <span className="walt-hint">{hint}</span>
+              </div>
+
+              <fieldset className="walt-seg" aria-label="Mode">
+                {(["on", "off", "detect"] as const).map((m) => (
+                  <label key={m}>
+                    <input type="radio" name="walt-mode" value={m} checked={mode === m} onChange={() => setMode(m)} />
+                    <span>{m === "on" ? "On" : m === "off" ? "Off" : "Sleep"}</span>
+                  </label>
+                ))}
+              </fieldset>
+
+              <div className={`walt-delay${mode === "detect" ? "" : " is-disabled"}`}>
+                <label htmlFor="walt-delay">Show after</label>
+                <select
+                  id="walt-delay"
+                  value={delay}
+                  disabled={mode !== "detect"}
+                  onChange={(e) => setDelay(Number(e.target.value))}
+                >
+                  {DELAYS.map((d) => (
+                    <option key={d.value} value={d.value}>
+                      {d.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="walt-size-row">
+                <label htmlFor="walt-size">Size</label>
+                <output htmlFor="walt-size">{size}px</output>
+              </div>
+              <input
+                id="walt-size"
+                type="range"
+                min={SIZE_MIN}
+                max={SIZE_MAX}
+                step={1}
+                value={size}
+                style={{ "--fill": sizeFill } as CSSProperties}
+                onChange={(e) => setSize(Number(e.target.value))}
+              />
+
+              <a className="walt-popup-get" href={downloadHref}>
+                Add to Chrome →
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WaltDemo;
