@@ -1,0 +1,9 @@
+{
+  "slug": "walt",
+  "name": "Walt",
+  "order": 1,
+  "color": "#f2cf45",
+  "ink": "#111111",
+  "link": { "label": "Add to Chrome", "href": "/walt/" },
+  "status": "shipped"
+}

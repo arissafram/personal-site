@@ -1,0 +1,76 @@
+.game-slide {
+  align-items: center;
+  box-sizing: border-box;
+  display: grid;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1040px;
+  min-height: 100%;
+  padding: 56px max(24px, env(safe-area-inset-right, 0px))
+    calc(var(--game-row-h) + 24px) max(24px, env(safe-area-inset-left, 0px));
+}
+
+.game-slide-image {
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  justify-self: end;
+  max-width: 460px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.game-slide-image img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.game-slide-tag {
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 12px;
+  left: 10px;
+  opacity: 0.75;
+  position: absolute;
+  top: 8px;
+}
+
+.game-slide-name {
+  font-size: clamp(44px, 7vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin: 0 0 18px;
+}
+
+.game-slide-link {
+  color: inherit;
+  font-size: 17px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.game-slide-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 760px) {
+  .game-slide {
+    align-content: start;
+    gap: 28px;
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 32px;
+  }
+
+  .game-slide-image,
+  .game-slide-text {
+    justify-self: center;
+    max-width: 360px;
+    width: 100%;
+  }
+}

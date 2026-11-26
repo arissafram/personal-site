@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 import GameRow, { type GameRowItem } from "./components/game-row";
+import GameSlide from "./components/game-slide";
 import Home from "./components/home";
 import { GAMES } from "./games";
 import { useCarousel } from "./hooks/use-carousel";
@@ -35,7 +36,7 @@ const App = () => {
             aria-label={game.name}
             style={{ "--slide-bg": game.color, "--slide-ink": game.ink } as CSSProperties}
           >
-            {/* Game slide content (image, name, link) comes in step 2. */}
+            <GameSlide game={game} />
           </section>
         ))}
       </main>

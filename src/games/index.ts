@@ -9,7 +9,8 @@ export interface Game {
   color: string;
   /** Text color on the slide: "#111111" or "#ffffff". */
   ink: string;
-  image: string;
+  /** Square image for the slide and the game row. Leave out until it exists. */
+  image?: string;
   link: { label: string; href: string };
   /** Kept in the data; nothing on the page shows it. */
   status: string;
