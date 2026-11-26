@@ -1,0 +1,29 @@
+/* A white board with a 1px line, like the slides' image boxes. The game sizes
+   itself from .mikes-board: up to 800px wide, 288-360px tall. */
+.mikes-demo {
+  box-sizing: border-box;
+  justify-self: end;
+  max-width: 620px;
+  width: 100%;
+}
+
+.mikes-board {
+  background: #ffffff;
+  border: 1px solid currentColor;
+  box-sizing: content-box;
+  /* Fits above the game row on short windows, never under the game's 288px */
+  height: clamp(288px, calc(100vh - var(--game-row-h) - 120px), 360px);
+  height: clamp(288px, calc(100dvh - var(--game-row-h) - 120px), 360px);
+  overflow: hidden;
+  /* Taps play: no double-tap zoom, no text selection or tap flash */
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 760px) {
+  .mikes-demo {
+    justify-self: center;
+  }
+}

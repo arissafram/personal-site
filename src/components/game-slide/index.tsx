@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 
 import type { Game } from "../../games";
 
+import MikesDemo from "../mikes-demo";
 import PlaceholderArt from "../placeholder-art";
 import WaltDemo from "../walt-demo";
 
@@ -11,6 +12,7 @@ import "./styles.css";
 // their image.
 const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
+  mikes: MikesDemo,
 };
 
 const isExternal = (href: string) => /^https?:/.test(href);

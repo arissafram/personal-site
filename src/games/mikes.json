@@ -5,7 +5,9 @@
   "color": "#2f6b4c",
   "ink": "#ffffff",
   "art": "dots",
+  "demo": "mikes",
   "description": "A one-button running game. Tap to jump and see how far you get.",
-  "link": { "label": "Play", "href": "#" },
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/mikes-dildos" },
+  "links": [{ "label": "Visit the website", "href": "https://www.mikesdildos.com" }],
   "status": "shipped"
 }
