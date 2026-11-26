@@ -56,13 +56,13 @@ const GameSlide = ({ game }: { game: Game }) => {
         {game.description && (
           <p className="game-slide-description">{renderDescription(game.description)}</p>
         )}
-        <a
-          className="game-slide-link"
-          href={game.link.href}
-          {...externalProps(game.link.href)}
-        >
-          {game.link.label} →
-        </a>
+        <div className="game-slide-links">
+          {[game.link, ...(game.links ?? [])].map((link) => (
+            <a key={link.href} className="game-slide-link" href={link.href} {...externalProps(link.href)}>
+              {link.label} →
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

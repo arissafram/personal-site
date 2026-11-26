@@ -116,3 +116,10 @@
 .game-slide-description a:hover {
   text-decoration-thickness: 2px;
 }
+
+.game-slide-links {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

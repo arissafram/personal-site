@@ -18,6 +18,8 @@ export interface Game {
   /** A sentence or two under the name. `[text](url)` makes a link. */
   description?: string;
   link: { label: string; href: string };
+  /** More links, shown under `link`. */
+  links?: { label: string; href: string }[];
   /** Kept in the data; nothing on the page shows it. */
   status: string;
 }
