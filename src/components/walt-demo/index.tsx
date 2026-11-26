@@ -22,6 +22,8 @@ const DELAYS = [
   { value: 600, label: "10 min" },
   { value: 900, label: "15 min" },
 ];
+// Published to public/walt/ by the walt-extension repo, with version.json.
+const DOWNLOAD_HREF = "/walt/walt.zip";
 const SIZE_MIN = 80;
 const SIZE_MAX = 400;
 // The real box is sized in pixels of a whole browser window. The fake page
@@ -90,7 +92,7 @@ const stepBody = (
   else if (b.y + h >= H) { b.y = Math.max(0, H - h); b.vy = -1; }
 };
 
-const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
+const WaltDemo = () => {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<Mode>("off");
   const [boxIndex, setBoxIndex] = useState(0);
@@ -192,7 +194,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
   // The walt-extension repo publishes version.json next to walt.zip.
   useEffect(() => {
     let cancelled = false;
-    fetch(new URL("version.json", new URL(downloadHref, window.location.href)), { cache: "no-cache" })
+    fetch(new URL("version.json", new URL(DOWNLOAD_HREF, window.location.href)), { cache: "no-cache" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (!cancelled && typeof data?.version === "string") setVersion(data.version);
@@ -201,7 +203,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
     return () => {
       cancelled = true;
     };
-  }, [downloadHref]);
+  }, []);
 
   // Sleep mode: the box shows once the visitor has done nothing for `delay`
   // seconds, and hides again on any activity, like chrome.idle in the real one.
@@ -315,7 +317,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
           <div className="walt-page-copy">
             <h3 className="walt-page-title">Install Walt</h3>
             <div className="walt-download">
-              <a className="walt-download-button" href={downloadHref} download>
+              <a className="walt-download-button" href={DOWNLOAD_HREF} download>
                 Download Walt
               </a>
               <span className="walt-download-version">{version ? `Version ${version} · ` : ""}for Chrome</span>
@@ -434,7 +436,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
                 onChange={(e) => setSize(Number(e.target.value))}
               />
 
-              <a className="walt-popup-get" href={downloadHref} download>
+              <a className="walt-popup-get" href={DOWNLOAD_HREF} download>
                 Download Walt
               </a>
             </div>

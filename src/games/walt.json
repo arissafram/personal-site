@@ -6,6 +6,6 @@
   "ink": "#111111",
   "art": "box",
   "demo": "walt",
-  "link": { "label": "Download for Chrome", "href": "/walt/walt.zip" },
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/walt-extension" },
   "status": "shipped"
 }

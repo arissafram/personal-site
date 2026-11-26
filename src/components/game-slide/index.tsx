@@ -8,8 +8,8 @@ import WaltDemo from "../walt-demo";
 import "./styles.css";
 
 // Games whose JSON sets `"demo": "<name>"` show this component instead of
-// their image. It gets the game's download/play link.
-const DEMOS: Record<string, ComponentType<{ downloadHref: string }>> = {
+// their image.
+const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
 };
 
@@ -21,7 +21,7 @@ const GameSlide = ({ game }: { game: Game }) => {
   return (
     <div className={`game-slide${Demo ? " game-slide-has-demo" : ""}`}>
       {Demo ? (
-        <Demo downloadHref={game.link.href} />
+        <Demo />
       ) : (
         <div className="game-slide-image">
           {game.image ? (
@@ -39,7 +39,7 @@ const GameSlide = ({ game }: { game: Game }) => {
         <a
           className="game-slide-link"
           href={game.link.href}
-          download={/\.zip$/.test(game.link.href) || undefined}
+          {...(/^https?:/.test(game.link.href) && { target: "_blank", rel: "noopener noreferrer" })}
         >
           {game.link.label} →
         </a>
