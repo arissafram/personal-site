@@ -1,12 +1,12 @@
 /* The puzzle in the slide's colors. `color` is the slide ink, the board is
    transparent over the slide color, and every line is 1px. The photo stays in
-   color. Pieces scatter up to 50/400 of the board width past its edges, so the
-   box keeps that much room on each side. */
+   color. The board fills the column; on desktop, loose pieces start in the
+   gap and margin around it. Its width is capped so the board's height (9/8 of
+   its width, plus the timer row) fits above the game row. */
 .jigsaw-demo {
   box-sizing: border-box;
   justify-self: end;
-  max-width: min(500px, calc((100dvh - var(--game-row-h) - 150px) * 0.89));
-  padding: 0 11%;
+  max-width: min(460px, calc((100dvh - var(--game-row-h) - 150px) * 0.8));
   width: 100%;
 }
 

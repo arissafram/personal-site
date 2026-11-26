@@ -4,6 +4,12 @@ import "react-jigsaw/styles";
 
 import "./styles.css";
 
+// Pieces start scattered up to this far past the board's edges (board units,
+// board is 400 wide). Stacked on a phone the board fills the column, so they
+// start on the board instead, or they'd be cut off at the screen edge.
+const SCATTER = 50;
+const STACKED = "(max-width: 760px)";
+
 // The photo puzzle from react-jigsaw, drawn in the slide's own colors: the
 // board is the slide color, and the lines, timer and ↻ are its ink (see
 // styles.css). Lines and the timer use `currentColor`, which is the slide ink.
@@ -14,7 +20,7 @@ const OPTIONS = {
     height: 450,
     outlineStrokeColor: "currentColor",
     rows: 3,
-    scatterArea: 50,
+    scatterArea: SCATTER,
     showBoardSlotOutlines: true,
     snapThreshold: 20,
     width: 400,
@@ -60,7 +66,14 @@ const JigsawDemo = () => {
   return (
     <div className="jigsaw-demo" ref={ref} onPointerUp={blurAfterPointer}>
       {shown ? (
-        <Puzzle image="/puzzle.jpg" options={OPTIONS} />
+        <Puzzle
+          image="/puzzle.jpg"
+          options={
+            window.matchMedia(STACKED).matches
+              ? { ...OPTIONS, board: { ...OPTIONS.board, scatterArea: 0 } }
+              : OPTIONS
+          }
+        />
       ) : (
         <div className="jigsaw-demo-placeholder" aria-hidden="true" />
       )}
