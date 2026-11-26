@@ -3,7 +3,15 @@ import "./styles.css";
 const Blurb = () => {
   return (
     <section className="blurb-container">
-      <p className="paragraph">AI-native fullstack product engineer.</p>
+      <p className="paragraph">
+        AI-native
+        <br />
+        fullstack
+        <br />
+        product
+        <br />
+        engineer.
+      </p>
       <p className="paragraph">
         TypeScript, React, React Native, Node, Rails, REST/GraphQL, Storybook,
         testing libraries, etc, etc.
