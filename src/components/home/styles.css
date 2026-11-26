@@ -13,7 +13,7 @@
   min-height: 100%;
   min-width: 290px;
   padding: 56px max(24px, env(safe-area-inset-right, 0px))
-    24px max(24px, env(safe-area-inset-left, 0px));
+    48px max(24px, env(safe-area-inset-left, 0px));
 }
 
 .content-container {

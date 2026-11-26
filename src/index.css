@@ -9,16 +9,23 @@ body,
   height: 100%;
 }
 
+/* The document itself never scrolls. iOS scrolls the page under its toolbars
+   even with overflow: hidden, which left the slides shifted up and the row
+   floating above a white strip. Only the track and each .slide-scroll scroll. */
+html,
 body {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
-/* The whole page is one horizontal row of full-screen slides. */
+/* The whole page is one horizontal row of full-screen slides, pinned to the
+   visible screen like the game row. */
 .track {
   display: flex;
-  height: 100%;
+  inset: 0;
   overflow-x: auto;
   overflow-y: hidden;
+  position: fixed;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
@@ -43,6 +50,8 @@ body {
   height: calc(100% - var(--game-row-h));
   overflow-x: hidden;
   overflow-y: auto;
+  /* Scrolling to the end of a slide doesn't hand off to the page. */
+  overscroll-behavior-y: contain;
 }
 
 .slide-home {
