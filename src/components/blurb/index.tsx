@@ -21,7 +21,7 @@ const Blurb = () => {
         collection of useless domains.
       </p>
       <p className="paragraph">
-        Web. Typescript, React, React Native, NodeJS, Rails, REST/GraphQL,
+        Web, Typescript, React, React Native, NodeJS, Rails, REST/GraphQL,
         Storybook, testing libraries, etc, etc.
       </p>
     </section>
