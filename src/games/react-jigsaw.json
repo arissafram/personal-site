@@ -9,5 +9,6 @@
   "demo": "jigsaw",
   "description": "My React component for drag-and-drop jigsaw puzzles. Give it any image and it cuts the pieces. This one is me.",
   "link": { "label": "Install react-jigsaw", "href": "https://github.com/arissafram/react-jigsaw#installation" },
+  "links": [{ "label": "See demo", "href": "https://arissafram.github.io/react-jigsaw/demo/" }],
   "status": "shipped"
 }
