@@ -6,6 +6,6 @@
   "ink": "#111111",
   "art": "box",
   "demo": "walt",
-  "link": { "label": "Add to Chrome", "href": "/walt/" },
+  "link": { "label": "Download for Chrome", "href": "/walt/walt.zip" },
   "status": "shipped"
 }

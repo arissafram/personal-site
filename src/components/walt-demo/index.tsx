@@ -100,6 +100,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
   const [delay, setDelay] = useState(15);
   const [idle, setIdle] = useState(false);
   const [pressed, setPressed] = useState<string | null>(null);
+  const [version, setVersion] = useState<string | null>(null);
   const reduceMotion = usePrefersReducedMotion();
 
   const box = BOXES[boxIndex];
@@ -187,6 +188,20 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
       stop();
     };
   }, []);
+
+  // The walt-extension repo publishes version.json next to walt.zip.
+  useEffect(() => {
+    let cancelled = false;
+    fetch(new URL("version.json", new URL(downloadHref, window.location.href)), { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && typeof data?.version === "string") setVersion(data.version);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [downloadHref]);
 
   // Sleep mode: the box shows once the visitor has done nothing for `delay`
   // seconds, and hides again on any activity, like chrome.idle in the real one.
@@ -296,15 +311,16 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
         </div>
 
         <div className="walt-page" ref={pageRef}>
-          {/* The fake tab shows how to install Walt (a short version of /walt/). */}
+          {/* The fake tab is where you get Walt: a download button and the steps. */}
           <div className="walt-page-copy">
             <h3 className="walt-page-title">Install Walt</h3>
-            <p>
-              <a href={`${downloadHref}walt.zip`} download>
-                Download walt.zip
+            <div className="walt-download">
+              <a className="walt-download-button" href={downloadHref} download>
+                Download Walt
               </a>
-              , then:
-            </p>
+              <span className="walt-download-version">{version ? `Version ${version} · ` : ""}for Chrome</span>
+            </div>
+            <p>Then:</p>
             <ol>
               <li>Unzip it. Keep the walt folder somewhere it can stay, like Documents.</li>
               <li>
@@ -314,8 +330,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
               <li>Pin Walt from the puzzle-piece menu in the toolbar.</li>
             </ol>
             <p className="walt-page-note">
-              Chrome on a computer only. Walt isn't in the Web Store, so it's installed by hand.{" "}
-              <a href={downloadHref}>Full instructions</a>
+              Chrome on a computer only. Walt isn't in the Web Store, so it's installed by hand.
             </p>
           </div>
           <img
@@ -419,8 +434,8 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
                 onChange={(e) => setSize(Number(e.target.value))}
               />
 
-              <a className="walt-popup-get" href={downloadHref}>
-                Add to Chrome →
+              <a className="walt-popup-get" href={downloadHref} download>
+                Download Walt
               </a>
             </div>
           )}

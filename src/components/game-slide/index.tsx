@@ -36,7 +36,11 @@ const GameSlide = ({ game }: { game: Game }) => {
       )}
       <div className="game-slide-text">
         <h2 className="game-slide-name">{game.name}</h2>
-        <a className="game-slide-link" href={game.link.href}>
+        <a
+          className="game-slide-link"
+          href={game.link.href}
+          download={/\.zip$/.test(game.link.href) || undefined}
+        >
           {game.link.label} →
         </a>
       </div>
