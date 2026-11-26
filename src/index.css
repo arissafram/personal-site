@@ -62,9 +62,9 @@ body {
   color: #111111;
 }
 
-/* Selected text on Home is highlighted in Free Solo's orange. */
+/* Selected text on Home: a pale Free Solo orange (#e2703f at 30% on white). */
 .slide-home ::selection {
-  background: #e2703f;
+  background: #f6d2c4;
   color: #111111;
 }
 
