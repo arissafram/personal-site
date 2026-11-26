@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
 
 import PlaceholderArt from "../placeholder-art";
 
@@ -26,6 +26,14 @@ interface GameRowProps {
 
 const GameRow = ({ items, current, onSelect }: GameRowProps) => {
   const itemsRef = useRef<HTMLDivElement>(null);
+
+  // A mouse click or tap shouldn't leave the button focused: the next Space
+  // (e.g. starting Mike's) would press it again and draw a focus ring around
+  // it. Keyboard presses (detail 0) keep focus, so Tab users stay in place.
+  const select = (i: number) => (e: MouseEvent<HTMLButtonElement>) => {
+    onSelect(i);
+    if (e.detail > 0) e.currentTarget.blur();
+  };
 
   // When the row is wider than the screen (phones), keep the current item in view.
   useEffect(() => {
@@ -56,7 +64,7 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
               type="button"
               className="game-row-item"
               aria-current={i === current ? "true" : undefined}
-              onClick={() => onSelect(i)}
+              onClick={select(i)}
             >
               <span
                 className="game-row-square"
@@ -78,14 +86,14 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
           <button
             type="button"
             aria-label="Previous"
-            onClick={() => onSelect(current - 1)}
+            onClick={select(current - 1)}
           >
             ←
           </button>
           <button
             type="button"
             aria-label="Next"
-            onClick={() => onSelect(current + 1)}
+            onClick={select(current + 1)}
           >
             →
           </button>
