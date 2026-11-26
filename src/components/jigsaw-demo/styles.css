@@ -6,6 +6,7 @@
 .jigsaw-demo {
   box-sizing: border-box;
   justify-self: end;
+  position: relative;
   max-width: min(460px, calc((100dvh - var(--game-row-h) - 150px) * 0.8));
   width: 100%;
 }
@@ -21,9 +22,10 @@
   margin: 8px 0 0;
 }
 
-/* Piece outlines: 1px ink. Snapped pieces have no stroke. */
+/* Piece outlines: 2px royal blue (set in index.tsx). Snapped pieces have no
+   stroke. */
 .jigsaw-demo .jigsaw-board g[tabindex] > path {
-  stroke-width: 1px;
+  stroke-width: 2px;
   vector-effect: non-scaling-stroke;
 }
 
@@ -42,7 +44,7 @@
 }
 
 .jigsaw-demo .jigsaw-board g:focus-visible > path {
-  stroke-width: 3px;
+  stroke-width: 4px;
 }
 
 .jigsaw-demo .jigsaw-timer {
@@ -71,6 +73,61 @@
   stroke: currentColor;
   stroke-width: 1.6;
   width: 15px;
+}
+
+/* Easy · Medium · Hard. react-jigsaw draws the timer/↻ row itself with no
+   slot for extra controls, so this sits over that row, just left of ↻. The
+   row is 26px tall; the toggle fits beside the timer down to the puzzle's
+   260px minimum, so it never needs to wrap. */
+.jigsaw-difficulty {
+  display: flex;
+  height: 22px;
+  position: absolute;
+  right: 34px;
+  top: 2px;
+  z-index: 1;
+}
+
+.jigsaw-difficulty label {
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.jigsaw-difficulty label + label {
+  margin-left: -1px;
+}
+
+.jigsaw-difficulty input {
+  appearance: none;
+  height: 100%;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.jigsaw-difficulty span {
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  display: block;
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 12px;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 6px;
+}
+
+.jigsaw-difficulty input:checked + span {
+  color: var(--slide-bg, #ffffff);
+  background: var(--slide-ink, #111111);
+  border-color: var(--slide-ink, #111111);
+}
+
+.jigsaw-difficulty input:focus-visible + span {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 @media (max-width: 760px) {
