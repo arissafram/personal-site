@@ -31,7 +31,7 @@
     "mikes": "github:arissafram/mikes#embeddable",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-jigsaw": "github:arissafram/react-jigsaw#main",
+    "react-jigsaw": "github:arissafram/react-jigsaw#af/touch-scroll",
     "walt-extension": "github:arissafram/walt-extension#shared-package"
   },
   "devDependencies": {
