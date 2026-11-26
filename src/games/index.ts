@@ -4,7 +4,7 @@
 export interface Game {
   slug: string;
   name: string;
-  /** Shorter label for the game row only (e.g. "jigsaw"); the slide shows `name`. */
+  /** Shorter label for the game row only (e.g. "Jigsaw"); the slide shows `name`. */
   shortName?: string;
   order: number;
   /** Slide background. */

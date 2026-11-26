@@ -24,3 +24,10 @@
   line-height: 1.2em;
 }
 
+
+@media screen and (min-width: 761px) {
+  .paragraph {
+    font-size: 21px;
+    margin-bottom: 22px;
+  }
+}

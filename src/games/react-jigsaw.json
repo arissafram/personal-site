@@ -1,9 +1,9 @@
 {
   "slug": "react-jigsaw",
   "name": "react-jigsaw",
-  "shortName": "jigsaw",
+  "shortName": "Jigsaw",
   "order": 3,
-  "color": "#dcdad4",
+  "color": "#ece6d8",
   "ink": "#111111",
   "art": "grid",
   "demo": "jigsaw",

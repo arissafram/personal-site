@@ -4,8 +4,7 @@ import Links from "../links";
 
 import "./styles.css";
 
-// Text only: the name on the left, the role, bio and links on the right, on
-// the same two-column grid as the game slides. Stacks on phones.
+// Text only: the name, then the role, bio and links in one wide column.
 const Home = () => {
   return (
     <div className="main">

@@ -53,11 +53,11 @@
   border-radius: 0;
 }
 
-/* ↻: a small square box in ink. */
+/* ↻: just the ink glyph, no box. */
 .jigsaw-demo .jigsaw-refresh {
   align-items: center;
   background: transparent;
-  border: 1px solid currentColor;
+  border: 0;
   border-radius: 0;
   color: inherit;
   height: 26px;

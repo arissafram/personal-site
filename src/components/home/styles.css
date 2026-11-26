@@ -1,10 +1,10 @@
+/* One wide column, left-aligned on the same 1040px frame as the game slides. */
 .main {
   align-content: center;
   box-sizing: border-box;
   display: grid;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   gap: 32px;
-  grid-template-columns: minmax(0, 1fr);
   margin: 0 auto;
   max-width: 1040px;
   min-height: 100%;
@@ -16,26 +16,23 @@
 .content-container {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  gap: 8px;
+  max-width: 680px;
 }
 
-/* Two columns like the game slides: the name sits where a game's picture
-   would, the text in the right column, both starting on the same line. */
 @media (min-width: 761px) {
   .main {
-    align-items: start;
-    gap: 56px;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
   }
 
   .content-container {
-    gap: 24px;
+    gap: 20px;
   }
 }
 
 @media (max-width: 760px) {
   .main {
     align-content: start;
-    padding-top: 80px;
+    padding-top: 72px;
   }
 }
