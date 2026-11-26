@@ -50,12 +50,6 @@ body {
   color: #111111;
 }
 
-/* The puzzle's ↻ button: a plain square box in ink. */
-.slide-home [class*="_refreshButton_"] {
-  border: 1px solid #111111;
-  border-radius: 0;
-  color: #111111;
-}
 
 @media (max-width: 760px) {
   :root {

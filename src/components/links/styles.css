@@ -14,7 +14,7 @@
   color: #111111;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  font-family: "Barlow", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 18px;
 }
@@ -27,7 +27,7 @@
   text-decoration-thickness: 2px;
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 761px) {
   .links {
     column-gap: 20px;
     row-gap: 12px;

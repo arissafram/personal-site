@@ -1,49 +1,16 @@
-import { Puzzle } from "react-jigsaw";
-import "react-jigsaw/styles";
-
 import Blurb from "../blurb";
 import Header from "../header";
 import Links from "../links";
 
 import "./styles.css";
 
+// Text only: the name on the left, the role, bio and links on the right, on
+// the same two-column grid as the game slides. Stacks on phones.
 const Home = () => {
   return (
     <div className="main">
-      <Header className="mobile-header" />
-      <div className="puzzle-container">
-        <Puzzle
-          image="/puzzle.jpg"
-          options={{
-            board: {
-              columns: 3,
-              height: 450,
-              outlineStrokeColor: "#a9a9a9",
-              rows: 3,
-              snapThreshold: 20,
-              scatterArea: 50,
-              showBoardSlotOutlines: true,
-              width: 400,
-            },
-            puzzle: {
-              responsive: true,
-              timer: {
-                enabled: true,
-              },
-              refreshButton: {
-                enabled: true,
-              },
-            },
-            puzzlePiece: {
-              strokeColor: "#111111",
-              strokeEnabled: true,
-            },
-          }}
-          responsive={true}
-        />
-      </div>
+      <Header />
       <div className="content-container">
-        <Header className="desktop-header" />
         <Blurb />
         <Links />
       </div>
