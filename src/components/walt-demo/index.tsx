@@ -94,7 +94,7 @@ const stepBody = (
 
 const WaltDemo = () => {
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<Mode>("off");
+  const [mode, setMode] = useState<Mode>("on");
   const [boxIndex, setBoxIndex] = useState(0);
   const [size, setSize] = useState(182);
   // The real default is 30 sec; 15 is the shortest choice, so a visitor can
