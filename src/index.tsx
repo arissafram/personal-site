@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import GameRow, { type GameRowItem } from "./components/game-row";
+import GameRows, { type GameRowItem } from "./components/game-row";
 import GameSlide from "./components/game-slide";
 import Home from "./components/home";
 import { GAMES } from "./games";
@@ -44,7 +44,7 @@ const App = () => {
           </section>
         ))}
       </main>
-      <GameRow items={ITEMS} current={current} onSelect={go} />
+      <GameRows items={ITEMS} current={current} onSelect={go} trackRef={trackRef} />
     </>
   );
 };
