@@ -20,7 +20,13 @@
   display: flex;
   flex-direction: column;
   gap: calc(var(--home-text) * 0.6);
-  max-width: 1400px;
+}
+
+/* Same column as the game row: 1040px wide, centered. */
+.main > * {
+  justify-self: center;
+  max-width: 1040px;
+  width: 100%;
 }
 
 @media (max-width: 760px) {
