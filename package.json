@@ -31,7 +31,8 @@
     "mikes": "github:arissafram/mikes#embeddable",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-jigsaw": "github:arissafram/react-jigsaw#main"
+    "react-jigsaw": "github:arissafram/react-jigsaw#main",
+    "walt-extension": "file:../../../../../walt-shared"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",

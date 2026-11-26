@@ -44,4 +44,10 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  // walt-extension finds its box PNGs next to its own index.js
+  // (new URL("./boxes/…", import.meta.url)). Pre-bundling would move that
+  // file into .vite/deps and break those URLs in dev, so serve it as is.
+  optimizeDeps: {
+    exclude: ["walt-extension"],
+  },
 });
