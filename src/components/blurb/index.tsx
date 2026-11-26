@@ -10,12 +10,13 @@ const Blurb = () => {
       <p className="paragraph">
         I like puzzles and live music. I study French. I live in Brooklyn. I
         value meaningful projects, thorough code review and winning as a team.
-        Currently supporting Underdog products, building fun things on my
-        own time, and adding to a collection of useless domains.
+        I make small, pointless games that make me laugh. Currently supporting
+        Underdog products and adding to a collection of useless domains.
       </p>
       <p className="paragraph">
-        Fullstack product engineer with an expertise in Web. Typescript, React/RN, NodeJS, 
-        Swift, Kotlin, Rails, REST/GraphQL, Storybook, testing libraries, etc, etc.
+        AI-native fullstack product engineer with an expertise in Web.
+        Typescript, React, React Native, NodeJS, Rails, REST/GraphQL, Storybook,
+        testing libraries, etc, etc.
       </p>
     </section>
   );
