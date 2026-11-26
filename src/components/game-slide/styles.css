@@ -55,12 +55,14 @@
   margin: 0 0 18px;
 }
 
+/* Same size and underline as Home's links. */
 .game-slide-link {
   color: inherit;
-  font-size: 17px;
+  font-size: var(--link-text);
+  line-height: 1.12;
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 0.12em;
 }
 
 .game-slide-link:hover {
@@ -127,5 +129,6 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.3em;
+  font-size: var(--link-text);
 }

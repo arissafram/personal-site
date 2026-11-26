@@ -1,4 +1,7 @@
 :root {
+  /* Home's body text size. Home's links, and the game slides' links, are 0.6×. */
+  --home-text: clamp(20px, min(2.9vw, 3.1dvh), 42px);
+  --link-text: max(16px, calc(var(--home-text) * 0.6));
   /* Height of the fixed game row. Each slide scrolls only in the space above it. */
   --game-row-h: calc(120px + env(safe-area-inset-bottom, 0px));
 }

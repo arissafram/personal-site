@@ -1,10 +1,8 @@
 /* One column against the left gutter. The body text is set large and runs
    the full width, so Home reads as a wall of text under the name. Every size
-   comes from --home-text, which grows smoothly with the window and is capped
-   by its height so the whole slide fits above the game row. */
+   comes from --home-text (src/index.css), which grows smoothly with the window
+   and is capped by its height so the whole slide fits above the game row. */
 .main {
-  --home-text: clamp(20px, min(2.9vw, 3.1dvh), 42px);
-
   align-content: center;
   box-sizing: border-box;
   display: grid;

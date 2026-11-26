@@ -4,7 +4,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   /* Smaller than the bio: the links are a footnote to it. */
-  font-size: max(16px, calc(var(--home-text, 16px) * 0.6));
+  font-size: var(--link-text);
   row-gap: 0.3em;
 }
 
