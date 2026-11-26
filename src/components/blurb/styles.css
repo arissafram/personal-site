@@ -14,18 +14,16 @@
 }
 
 
+/* Flush left, ragged right, no hyphenation: at this size a phone line holds
+   only ~25 characters, and justifying that opens wide gaps. `pretty` keeps a
+   lone word off the last line. */
 .paragraph {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: var(--home-text, 16px);
-  hyphens: auto;
   letter-spacing: -0.01em;
-  line-height: 1.12;
+  line-height: 1.18;
   margin: 0 0 0.6em;
   overflow-wrap: break-word;
-  text-align: justify;
-}
-
-/* One-line statements: justifying them would stretch the gaps when they wrap. */
-.paragraph-short {
   text-align: left;
+  text-wrap: pretty;
 }
