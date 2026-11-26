@@ -261,7 +261,7 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
     <div className="walt-demo" ref={rootRef}>
       <div className="walt-browser">
         <div className="walt-toolbar">
-          <div className="walt-address">arissafram.com</div>
+          <div className="walt-address">arissafram.com/walt</div>
           <span className="walt-ext-label" aria-hidden="true">
             Extensions →
           </span>
@@ -296,15 +296,27 @@ const WaltDemo = ({ downloadHref }: { downloadHref: string }) => {
         </div>
 
         <div className="walt-page" ref={pageRef}>
-          <div className="walt-page-copy" aria-hidden="true">
-            <span style={{ width: "46%" }} className="walt-page-title" />
-            <span style={{ width: "92%" }} />
-            <span style={{ width: "86%" }} />
-            <span style={{ width: "90%" }} />
-            <span style={{ width: "58%" }} />
-            <span style={{ width: "88%" }} className="walt-page-gap" />
-            <span style={{ width: "80%" }} />
-            <span style={{ width: "40%" }} />
+          {/* The fake tab shows how to install Walt (a short version of /walt/). */}
+          <div className="walt-page-copy">
+            <h3 className="walt-page-title">Install Walt</h3>
+            <p>
+              <a href={`${downloadHref}walt.zip`} download>
+                Download walt.zip
+              </a>
+              , then:
+            </p>
+            <ol>
+              <li>Unzip it. Keep the walt folder somewhere it can stay, like Documents.</li>
+              <li>
+                Open <code>chrome://extensions</code> and turn on Developer mode.
+              </li>
+              <li>Click Load unpacked and choose the walt folder.</li>
+              <li>Pin Walt from the puzzle-piece menu in the toolbar.</li>
+            </ol>
+            <p className="walt-page-note">
+              Chrome on a computer only. Walt isn't in the Web Store, so it's installed by hand.{" "}
+              <a href={downloadHref}>Full instructions</a>
+            </p>
           </div>
           <img
             ref={pageBoxRef}
