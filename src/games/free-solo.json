@@ -5,6 +5,7 @@
   "color": "#e2703f",
   "ink": "#111111",
   "art": "wall",
+  "description": "An endless climbing game. Reach from hold to hold and dodge the rocks falling from above.",
   "link": { "label": "Play", "href": "#" },
   "status": "in-progress"
 }

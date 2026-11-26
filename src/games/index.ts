@@ -15,6 +15,8 @@ export interface Game {
   art?: string;
   /** Interactive demo shown in place of the image (see components/game-slide DEMOS), e.g. "walt". */
   demo?: string;
+  /** A sentence or two under the name. `[text](url)` makes a link. */
+  description?: string;
   link: { label: string; href: string };
   /** Kept in the data; nothing on the page shows it. */
   status: string;

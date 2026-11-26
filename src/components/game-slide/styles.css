@@ -98,3 +98,21 @@
     max-width: 420px;
   }
 }
+
+.game-slide-description {
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 0 0 18px;
+  max-width: 26em;
+}
+
+.game-slide-description a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.game-slide-description a:hover {
+  text-decoration-thickness: 2px;
+}

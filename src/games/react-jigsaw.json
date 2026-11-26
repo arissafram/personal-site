@@ -5,6 +5,7 @@
   "color": "#dcdad4",
   "ink": "#111111",
   "art": "grid",
+  "description": "The React component behind the puzzle on the home page. Give it any image and it cuts a drag-and-drop jigsaw.",
   "link": { "label": "View on npm", "href": "#" },
   "status": "shipped"
 }

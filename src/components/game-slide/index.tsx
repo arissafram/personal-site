@@ -13,6 +13,23 @@ const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
 };
 
+const isExternal = (href: string) => /^https?:/.test(href);
+const externalProps = (href: string) =>
+  isExternal(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+// Turns `[text](url)` in a description into links; the rest stays plain text.
+const renderDescription = (text: string) =>
+  text.split(/(\[[^\]]+\]\([^)]+\))/).map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    return m ? (
+      <a key={i} href={m[2]} {...externalProps(m[2])}>
+        {m[1]}
+      </a>
+    ) : (
+      part
+    );
+  });
+
 // One game's slide content: a large square image on the left, the name and one
 // link on the right. Colors come from the slide's `ink` (set on the section).
 const GameSlide = ({ game }: { game: Game }) => {
@@ -36,10 +53,13 @@ const GameSlide = ({ game }: { game: Game }) => {
       )}
       <div className="game-slide-text">
         <h2 className="game-slide-name">{game.name}</h2>
+        {game.description && (
+          <p className="game-slide-description">{renderDescription(game.description)}</p>
+        )}
         <a
           className="game-slide-link"
           href={game.link.href}
-          {...(/^https?:/.test(game.link.href) && { target: "_blank", rel: "noopener noreferrer" })}
+          {...externalProps(game.link.href)}
         >
           {game.link.label} →
         </a>
