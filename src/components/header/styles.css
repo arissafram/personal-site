@@ -1,14 +1,9 @@
+/* Set like the game names, only bigger: bold, tight tracking, tight leading. */
 .header {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 40px;
+  font-size: clamp(56px, 11vw, 128px);
   font-weight: bold;
-  letter-spacing: 0.08em;
-  line-height: 1.05;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
   margin: 0;
-}
-
-@media screen and (min-width: 761px) {
-  .header {
-    font-size: 64px;
-  }
 }
