@@ -1,9 +1,10 @@
 .links {
   display: flex;
-  column-gap: 12px;
+  column-gap: 0.6em;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 8px;
+  font-size: var(--home-text, 16px);
+  row-gap: 0.2em;
 }
 
 .link:last-of-type {
@@ -13,10 +14,10 @@
 .link a {
   color: #111111;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: inherit;
+  line-height: 1.12;
+  text-underline-offset: 0.12em;
 }
 
 .link a:visted {
@@ -25,16 +26,4 @@
 
 .link a:hover {
   text-decoration-thickness: 2px;
-}
-
-@media screen and (min-width: 761px) {
-  .links {
-    column-gap: 20px;
-    row-gap: 12px;
-  }
-
-  .link a {
-    font-size: 19px;
-    line-height: 24px;
-  }
 }

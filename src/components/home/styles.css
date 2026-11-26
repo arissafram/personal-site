@@ -1,11 +1,15 @@
-/* One column against the left gutter. The name spans the whole slide; the
-   text under it stays a readable width. */
+/* One column against the left gutter. The body text is set large and runs
+   the full width, so Home reads as a wall of text under the name. Every size
+   comes from --home-text, which grows smoothly with the window and is capped
+   by its height so the whole slide fits above the game row. */
 .main {
+  --home-text: clamp(20px, min(2.9vw, 4.5dvh), 46px);
+
   align-content: center;
   box-sizing: border-box;
   display: grid;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  gap: 32px;
+  gap: calc(var(--home-text) * 1.1);
   min-height: 100%;
   min-width: 290px;
   padding: 56px max(24px, env(safe-area-inset-right, 0px))
@@ -15,23 +19,13 @@
 .content-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-width: 680px;
-}
-
-@media (min-width: 761px) {
-  .main {
-    gap: 40px;
-  }
-
-  .content-container {
-    gap: 20px;
-  }
+  gap: calc(var(--home-text) * 0.6);
+  max-width: 1400px;
 }
 
 @media (max-width: 760px) {
   .main {
     align-content: start;
-    padding-top: 72px;
+    padding-top: 56px;
   }
 }
