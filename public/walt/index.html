@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Walt</title>
+  <meta name="description" content="A box that bounces across your web pages. Download Walt for Chrome.">
+  <style>
+    :root {
+      --bg: #faf9f6;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b68;
+      --hairline: rgba(0, 0, 0, 0.09);
+      --stage: #f1efe9;
+      --yellow: #febd17;
+      --yellow-text: #1a1a1a;
+      --ok-bg: #e6f4ea; --ok-text: #1e6b34;
+      --warn-bg: #fdf0d5; --warn-text: #7a4f00;
+      --code-bg: #efede8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #161616;
+        --card: #1f1f1f;
+        --text: #efefef;
+        --muted: #9b9b98;
+        --hairline: rgba(255, 255, 255, 0.09);
+        --stage: #262626;
+        --ok-bg: #17361f; --ok-text: #8fd6a2;
+        --warn-bg: #3d2f12; --warn-text: #f5c96b;
+        --code-bg: #2c2c2c;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { max-width: 620px; margin: 0 auto; padding: 48px 16px 64px; }
+
+    .stage {
+      position: relative;
+      height: 220px;
+      border-radius: 16px;
+      background: var(--stage);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .stage img { position: absolute; width: 84px; left: 0; top: 0; will-change: transform; }
+
+    h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .lede { color: var(--muted); margin: 0 0 28px; font-size: 18px; }
+
+    .status {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .status.show { display: block; }
+    .status.ok { background: var(--ok-bg); color: var(--ok-text); }
+    .status.warn { background: var(--warn-bg); color: var(--warn-text); }
+
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 40px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--yellow-text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.1s, filter 0.15s;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    .btn:active { transform: scale(0.98); }
+    .btn.secondary { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--hairline); }
+    .version { color: var(--muted); font-size: 14px; }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+    h2 { font-size: 17px; margin: 0 0 12px; }
+    ol { margin: 0; padding-left: 22px; }
+    li { margin-bottom: 8px; }
+    li:last-child { margin-bottom: 0; }
+    code {
+      font: 14px ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+    .note { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="stage" aria-hidden="true">
+      <img id="box" src="box.png" alt="">
+    </div>
+
+    <h1>Walt</h1>
+    <p class="lede">A little box that bounces across your web pages. Turn it on, off, or let it come out when you step away.</p>
+
+    <div id="status" class="status" role="status"></div>
+
+    <div class="actions">
+      <a id="download" class="btn" href="walt.zip" download>Download Walt</a>
+      <span id="latest" class="version">for Chrome</span>
+    </div>
+
+    <section id="install">
+      <h2>Install (takes about a minute)</h2>
+      <ol>
+        <li>Unzip <code>walt.zip</code>. Move the <code>walt</code> folder somewhere it can stay, like Documents. If you delete the folder, Walt stops working.</li>
+        <li>In Chrome, go to <code>chrome://extensions</code> (copy and paste it into the address bar).</li>
+        <li>Turn on <strong>Developer mode</strong> in the top right.</li>
+        <li>Click <strong>Load unpacked</strong> and choose the <code>walt</code> folder.</li>
+        <li>Click the puzzle-piece icon in the toolbar and pin Walt.</li>
+      </ol>
+      <p class="note">Chrome only lets you install extensions from the Chrome Web Store in one click, so this one is installed by hand.</p>
+    </section>
+
+    <section id="update">
+      <h2>Update to a new version</h2>
+      <ol>
+        <li>Download the new <code>walt.zip</code> and unzip it.</li>
+        <li>Replace your old <code>walt</code> folder with the new one, in the same place.</li>
+        <li>In <code>chrome://extensions</code>, click the reload arrow on the Walt card.</li>
+        <li>Refresh any tabs that were already open.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    // Compare dotted versions like "1.0" and "1.2.3". Returns -1, 0 or 1.
+    function compareVersions(a, b) {
+      const pa = a.split('.').map(Number), pb = b.split('.').map(Number);
+      for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+        const d = (pa[i] || 0) - (pb[i] || 0);
+        if (d) return Math.sign(d);
+      }
+      return 0;
+    }
+
+    // Newest published version, from version.json next to this page (built alongside walt.zip).
+    async function latestVersion() {
+      try {
+        const r = await fetch('version.json', { cache: 'no-cache' });
+        if (r.ok) return (await r.json()).version;
+      } catch {}
+      return null;
+    }
+
+    // The installed version, reported by Walt's site-bridge.js. null if Walt isn't installed.
+    function installedVersion() {
+      const now = document.documentElement.dataset.waltVersion;
+      if (now) return Promise.resolve(now);
+      return new Promise((resolve) => {
+        const onMsg = (e) => {
+          if (e.source === window && e.data?.source === 'walt-extension') {
+            window.removeEventListener('message', onMsg);
+            resolve(e.data.version);
+          }
+        };
+        window.addEventListener('message', onMsg);
+        window.postMessage({ source: 'walt-page', type: 'ping' }, location.origin);
+        setTimeout(() => {
+          window.removeEventListener('message', onMsg);
+          resolve(document.documentElement.dataset.waltVersion || null);
+        }, 800);
+      });
+    }
+
+    function showStatus(kind, text) {
+      const el = document.getElementById('status');
+      el.className = `status show ${kind}`;
+      el.textContent = text;
+    }
+
+    (async () => {
+      const [latest, installed] = await Promise.all([latestVersion(), installedVersion()]);
+      const btn = document.getElementById('download');
+      const latestEl = document.getElementById('latest');
+      const install = document.getElementById('install');
+      const update = document.getElementById('update');
+
+      if (latest) latestEl.textContent = `Version ${latest} · for Chrome`;
+
+      if (!installed) {
+        install.hidden = false;
+        update.hidden = true;
+        return;
+      }
+      install.hidden = true;
+      if (latest && compareVersions(installed, latest) < 0) {
+        showStatus('warn', `A new version is out. You have ${installed}, and the latest is ${latest}.`);
+        btn.textContent = `Download update ${latest}`;
+        update.hidden = false;
+      } else {
+        showStatus('ok', `Walt ${installed} is installed. You're up to date.`);
+        btn.textContent = 'Download again';
+        btn.classList.add('secondary');
+        update.hidden = true;
+      }
+    })();
+
+    // The bouncing box in the header: same idea as the extension, at a fixed speed.
+    (() => {
+      const box = document.getElementById('box');
+      const stage = box.parentElement;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        box.style.transform = 'translate(24px, 24px)';
+        return;
+      }
+      let x = 30, y = 20, vx = 110, vy = 80, last = null;
+      function frame(t) {
+        if (last != null) {
+          const dt = Math.min((t - last) / 1000, 0.05);
+          const maxX = stage.clientWidth - box.offsetWidth;
+          const maxY = stage.clientHeight - box.offsetHeight;
+          x += vx * dt; y += vy * dt;
+          if (x <= 0 || x >= maxX) { vx = -vx; x = Math.max(0, Math.min(x, maxX)); }
+          if (y <= 0 || y >= maxY) { vy = -vy; y = Math.max(0, Math.min(y, maxY)); }
+          box.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        last = t;
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
