@@ -1,6 +1,6 @@
 :root {
-  /* Room left at the bottom of every slide for the fixed game row. */
-  --game-row-h: 150px;
+  /* Height of the fixed game row. Each slide scrolls only in the space above it. */
+  --game-row-h: calc(120px + env(safe-area-inset-bottom, 0px));
 }
 
 html,
@@ -32,10 +32,17 @@ body {
   color: var(--slide-ink, #111111);
   flex: 0 0 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* A slide's content scrolls on its own, but only above the game row, so the row
+   never covers it and needs no background. */
+.slide-scroll {
+  height: calc(100% - var(--game-row-h));
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .slide-home {
@@ -52,6 +59,6 @@ body {
 
 @media (max-width: 760px) {
   :root {
-    --game-row-h: 136px;
+    --game-row-h: calc(108px + env(safe-area-inset-bottom, 0px));
   }
 }

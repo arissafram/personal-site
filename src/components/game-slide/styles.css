@@ -9,7 +9,7 @@
   max-width: 1040px;
   min-height: 100%;
   padding: 56px max(24px, env(safe-area-inset-right, 0px))
-    calc(var(--game-row-h) + 24px) max(24px, env(safe-area-inset-left, 0px));
+    24px max(24px, env(safe-area-inset-left, 0px));
 }
 
 .game-slide-image {

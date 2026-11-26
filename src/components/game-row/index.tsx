@@ -43,7 +43,6 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
       style={
         {
           "--row-ink": items[current]?.ink,
-          "--row-bg": items[current]?.color,
         } as CSSProperties
       }
     >

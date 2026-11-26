@@ -1,26 +1,17 @@
-/* Registered so the fade's color can transition between slides. */
-@property --row-bg {
-  syntax: "<color>";
-  inherits: false;
-  initial-value: #ffffff;
-}
-
 .game-row {
-  /* Slide content scrolls behind the row and fades out into the slide's color above it. */
-  background: linear-gradient(to bottom, transparent, var(--row-bg) 40px);
+  /* No background: the squares and names sit directly on the slide. Slides stop
+     their scrolling above the row (see .slide-scroll), so nothing goes under it. */
   bottom: 0;
   color: var(--row-ink, #111111);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   left: 0;
-  padding: 44px max(24px, env(safe-area-inset-right, 0px))
+  padding: 16px max(24px, env(safe-area-inset-right, 0px))
     calc(16px + env(safe-area-inset-bottom, 0px))
     max(24px, env(safe-area-inset-left, 0px));
   pointer-events: none;
   position: fixed;
   right: 0;
-  transition:
-    color 0.3s,
-    --row-bg 0.3s;
+  transition: color 0.3s;
   z-index: 10;
 }
 

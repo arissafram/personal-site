@@ -6,7 +6,7 @@
   justify-content: center;
   min-height: 100%;
   min-width: 290px;
-  padding: 0 24px calc(var(--game-row-h) + 24px);
+  padding: 24px;
 }
 
 .puzzle-container {
@@ -27,7 +27,6 @@
     flex-direction: row;
     margin: 0 auto;
     max-width: 880px;
-    padding-bottom: var(--game-row-h);
   }
 
   .puzzle-container {

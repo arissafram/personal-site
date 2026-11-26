@@ -26,7 +26,9 @@ const App = () => {
     <>
       <main className="track" ref={trackRef} aria-label="Arissa Fram, home and games">
         <section className="slide slide-home" id="home" aria-label="Home">
-          <Home />
+          <div className="slide-scroll">
+            <Home />
+          </div>
         </section>
         {GAMES.map((game) => (
           <section
@@ -36,7 +38,9 @@ const App = () => {
             aria-label={game.name}
             style={{ "--slide-bg": game.color, "--slide-ink": game.ink } as CSSProperties}
           >
-            <GameSlide game={game} />
+            <div className="slide-scroll">
+              <GameSlide game={game} />
+            </div>
           </section>
         ))}
       </main>
