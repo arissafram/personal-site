@@ -58,7 +58,7 @@
 }
 
 .game-row-item:not([aria-current="true"]) {
-  opacity: 0.62;
+  opacity: 0.45;
 }
 
 .game-row-item:hover {
@@ -97,6 +97,11 @@
   line-height: 1.2;
   text-underline-offset: 3px;
   white-space: nowrap;
+}
+
+/* The current item: full strength, a heavier square and an underlined name. */
+.game-row-item[aria-current="true"] .game-row-square {
+  border-width: 2px;
 }
 
 .game-row-item[aria-current="true"] .game-row-name {
