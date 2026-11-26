@@ -29,9 +29,9 @@ const readLevel = (): LevelId => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (LEVELS.some((l) => l.id === saved)) return saved as LevelId;
   } catch {
-    // Storage blocked: start on Easy.
+    // Storage blocked: start on Hard.
   }
-  return "easy";
+  return "hard";
 };
 
 const saveLevel = (id: LevelId) => {
