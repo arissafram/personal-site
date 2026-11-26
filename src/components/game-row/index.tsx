@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 import PlaceholderArt from "../placeholder-art";
 
@@ -23,6 +23,19 @@ interface GameRowProps {
 }
 
 const GameRow = ({ items, current, onSelect }: GameRowProps) => {
+  const itemsRef = useRef<HTMLDivElement>(null);
+
+  // When the row is wider than the screen (phones), keep the current item in view.
+  useEffect(() => {
+    const row = itemsRef.current;
+    const item = row?.children[current] as HTMLElement | undefined;
+    if (!row || !item) return;
+    const left = item.offsetLeft - row.offsetLeft;
+    if (left < row.scrollLeft) row.scrollLeft = left;
+    else if (left + item.offsetWidth > row.scrollLeft + row.clientWidth)
+      row.scrollLeft = left + item.offsetWidth - row.clientWidth;
+  }, [current]);
+
   return (
     <nav
       className="game-row"
@@ -35,7 +48,7 @@ const GameRow = ({ items, current, onSelect }: GameRowProps) => {
       }
     >
       <div className="game-row-inner">
-        <div className="game-row-items">
+        <div className="game-row-items" ref={itemsRef}>
           {items.map((item, i) => (
             <button
               key={item.slug}

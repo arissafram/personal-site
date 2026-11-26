@@ -1,0 +1,10 @@
+{
+  "slug": "score-four",
+  "name": "Score Four",
+  "order": 4,
+  "color": "#2b4fd1",
+  "ink": "#ffffff",
+  "art": "four",
+  "link": { "label": "Play", "href": "#" },
+  "status": "in-progress"
+}

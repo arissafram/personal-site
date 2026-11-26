@@ -1,0 +1,10 @@
+{
+  "slug": "react-jigsaw",
+  "name": "react-jigsaw",
+  "order": 3,
+  "color": "#dcdad4",
+  "ink": "#111111",
+  "art": "grid",
+  "link": { "label": "View on npm", "href": "#" },
+  "status": "shipped"
+}

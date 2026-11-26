@@ -1,0 +1,10 @@
+{
+  "slug": "mikes",
+  "name": "Mike's",
+  "order": 2,
+  "color": "#2f6b4c",
+  "ink": "#ffffff",
+  "art": "dots",
+  "link": { "label": "Play", "href": "#" },
+  "status": "shipped"
+}
