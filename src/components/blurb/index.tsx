@@ -16,7 +16,7 @@ const Blurb = () => {
         I like puzzles and live music. I study French. I live in Brooklyn. I
         value meaningful projects, thorough code review, and winning as a team.
         Currently supporting{" "}
-        <a className="link" href="https://play.underdogfantasy.com/bigriss-bbbdfc02f9d75f4b">Underdog Rips</a>,
+        <a className="link" href="https://play.underdogsports.com/vgwg/ybhlkyip">Underdog Rips</a>,
         building fun things on my own time, and adding to a
         collection of useless domains.
       </p>
