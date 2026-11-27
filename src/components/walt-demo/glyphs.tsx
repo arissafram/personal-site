@@ -1,5 +1,5 @@
 // Made-up extensions for the fake toolbar: plain black-and-white glyphs, not
-// anyone's logo. They can be clicked, but only toggle a pressed look.
+// anyone's logo. They're pictures only: not buttons.
 const svg = { viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", strokeWidth: 1.4, "aria-hidden": true } as const;
 
 export const GLYPHS = [

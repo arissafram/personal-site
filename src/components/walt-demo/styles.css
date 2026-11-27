@@ -67,13 +67,9 @@
   width: 16px;
 }
 
-.walt-ext:hover {
-  border-color: #d6d6d6;
-}
-
-.walt-ext[aria-pressed="true"] {
-  background: #111111;
-  color: #ffffff;
+/* The other extensions' icons don't do anything. */
+.walt-ext-static {
+  cursor: default;
 }
 
 .walt-ext:focus-visible {
@@ -96,20 +92,21 @@
   image-rendering: pixelated;
 }
 
-/* The page under the toolbar: a short version of the install page. It
-   scrolls on its own; the box and popup sit above it, like on a real tab. */
+/* The page under the toolbar: a short version of the install page; the box
+   and popup sit above it, like on a real tab. It never scrolls: it grows to
+   fit its copy instead (on phones the copy is a little taller than 440px).
+   clip, unlike hidden, also stops focus and scripts from scrolling it. */
 .walt-page {
-  height: 440px;
+  min-height: 440px;
   overflow: hidden;
+  overflow: clip;
   position: relative;
 }
 
 .walt-page-copy {
   box-sizing: border-box;
   font-size: 15px;
-  height: 100%;
   line-height: 1.45;
-  overflow-y: auto;
   padding: 28px 28px 24px;
 }
 
@@ -546,7 +543,7 @@
   }
 
   .walt-page {
-    height: 460px;
+    min-height: 460px;
   }
 
   .walt-page-copy {

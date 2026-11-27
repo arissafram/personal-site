@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Puzzle } from "react-jigsaw";
 import "react-jigsaw/styles";
+
+import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
 
@@ -71,24 +73,14 @@ const optionsFor = (size: number, stacked: boolean) => ({
 
 const JigsawDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
-  // The timer starts when the puzzle mounts, so wait until the slide is on
-  // screen. Until then an empty box of the same size holds the space.
+  // The timer starts when the puzzle mounts, so wait until the carousel has
+  // come to rest on the slide (mounting it mid-slide change made the slide
+  // stutter). Until then an empty box of the same size holds the space.
+  const settle = useSlideSettle(ref);
   const [shown, setShown] = useState(false);
+  if (settle === "here" && !shown) setShown(true);
   const [level, setLevel] = useState<LevelId>(readLevel);
   const size = LEVELS.find((l) => l.id === level)!.size;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || shown) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setShown(true);
-      },
-      { threshold: 0.6 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [shown]);
 
   const choose = (id: LevelId) => {
     setLevel(id);

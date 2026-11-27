@@ -30,20 +30,6 @@
   opacity: 0.6;
 }
 
-.mikes-hint-touch {
-  display: none;
-}
-
-@media (hover: none) {
-  .mikes-hint-mouse {
-    display: none;
-  }
-
-  .mikes-hint-touch {
-    display: inline;
-  }
-}
-
 @media (max-width: 760px) {
   .mikes-demo {
     justify-self: center;
