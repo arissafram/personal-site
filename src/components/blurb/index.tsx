@@ -14,7 +14,7 @@ const Blurb = () => {
       </p>
       <p className="paragraph">
         I like puzzles and live music. I study French. I live in Brooklyn. I
-        value meaningful projects, thorough code review, and winning as a team.
+        value meaningful projects, finding the best solution, and winning as a team.
         Currently supporting{" "}
         <a className="link" href="https://play.underdogsports.com/vgwg/ybhlkyip">Underdog Rips</a>,
         building fun things on my own time, and adding to a
