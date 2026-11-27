@@ -4,7 +4,7 @@ import type { Game } from "../../games";
 
 import FreeSoloDemo from "../free-solo-demo";
 import JigsawDemo from "../jigsaw-demo";
-import MikesDemo from "../mikes-demo";
+import HotDogRunDemo from "../hot-dog-run-demo";
 import PlaceholderArt from "../placeholder-art";
 import ScoreFourDemo from "../score-four-demo";
 import WaltDemo from "../walt-demo";
@@ -15,7 +15,7 @@ import "./styles.css";
 // their image.
 const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
-  mikes: MikesDemo,
+  "hot-dog-run": HotDogRunDemo,
   jigsaw: JigsawDemo,
   "score-four": ScoreFourDemo,
   "free-solo": FreeSoloDemo,
