@@ -1,0 +1,14 @@
+{
+  "slug": "magnetic-poem",
+  "name": "Magnetic Poem",
+  "shortName": "Poem",
+  "order": 6,
+  "color": "#a9d6c8",
+  "ink": "#111111",
+  "art": "words",
+  "demo": "magnetic-poem",
+  "description": "A shared fridge poem. Move the words around and click Save. Built with a lightweight AWS Lambda and DynamoDB, your work will persist from session to session.",
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/magnetic-poem" },
+  "links": [{ "label": "Knicks in five", "href": "https://www.nyc.gov/mayors-office/news/2026/06/remarks-as-prepared--mayor-mamdani-hosts-and-delivers-remarks-at" }],
+  "status": "in-progress"
+}

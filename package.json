@@ -31,6 +31,7 @@
     "@types/react-dom": "^19.1.7",
     "free-solo": "github:arissafram/free-solo#main",
     "hot-dog-run": "github:arissafram/hot-dog-run",
+    "magnetic-poem": "github:arissafram/magnetic-poem#main",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-jigsaw": "github:arissafram/react-jigsaw#main",
@@ -38,8 +39,18 @@
     "walt-extension": "github:arissafram/walt-extension#main"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.25.1",
+    "@aws-amplify/backend-cli": "^1.10.1",
+    "@aws-sdk/client-dynamodb": "^3.1178.0",
+    "@aws-sdk/client-lambda": "^3.1178.0",
+    "@aws-sdk/lib-dynamodb": "^3.1178.0",
+    "@types/aws-lambda": "^8.10.164",
     "@vitejs/plugin-react": "^5.0.0",
+    "aws-cdk-lib": "^2.278.0",
+    "constructs": "^10.8.1",
+    "esbuild": "^0.28.2",
     "sharp": "^0.34.5",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.2",
     "vite": "^7.1.1"
   }

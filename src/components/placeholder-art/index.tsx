@@ -45,6 +45,14 @@ const ART = {
       <circle cx="58" cy="44" r="3" fill="currentColor" />
     </svg>
   ),
+  // Three word magnets, a little crooked.
+  words: (
+    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true">
+      <rect x="14" y="22" width="44" height="16" transform="rotate(-4 36 30)" />
+      <rect x="40" y="44" width="46" height="16" transform="rotate(3 63 52)" />
+      <rect x="20" y="66" width="34" height="16" transform="rotate(-2 37 74)" />
+    </svg>
+  ),
 };
 
 export type ArtName = keyof typeof ART;
