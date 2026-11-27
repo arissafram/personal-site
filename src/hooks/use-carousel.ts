@@ -55,10 +55,30 @@ export const useCarousel = (slugs: string[]) => {
     [slugs.length, releaseTargetSoon]
   );
 
-  // Open on the slide named in the hash, before the first paint.
+  // Open on the slide named in the hash, before the first paint, with every
+  // slide (and the window) scrolled to the top. Browsers put scroll positions
+  // back on reload and on back/forward, and Chrome does it for the slides' own
+  // scroll boxes too, sometimes after load, so this runs again then.
   useLayoutEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const toTop = () => {
+      window.scrollTo(0, 0);
+      trackRef.current?.querySelectorAll<HTMLElement>(".slide-scroll").forEach((el) => {
+        el.scrollTop = 0;
+      });
+    };
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) toTop();
+    };
     const track = trackRef.current;
     if (track) track.scrollLeft = currentRef.current * track.clientWidth;
+    toTop();
+    if (document.readyState !== "complete") window.addEventListener("load", toTop, { once: true });
+    window.addEventListener("pageshow", onPageShow);
+    return () => {
+      window.removeEventListener("load", toTop);
+      window.removeEventListener("pageshow", onPageShow);
+    };
   }, []);
 
   // Follow the scroll position to know which slide is on screen.
