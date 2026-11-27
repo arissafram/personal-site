@@ -107,6 +107,30 @@
     justify-self: center;
     max-width: 420px;
   }
+
+  /* Stacked, the text is exactly as wide as the game above it. These match
+     each demo's own phone max-width. */
+  .game-slide-demo-mikes {
+    --demo-w: 620px;
+  }
+
+  .game-slide-demo-walt,
+  .game-slide-demo-score-four {
+    --demo-w: 420px;
+  }
+
+  .game-slide-demo-jigsaw,
+  .game-slide-demo-free-solo {
+    --demo-w: 360px;
+  }
+
+  .game-slide-has-demo .game-slide-text {
+    max-width: var(--demo-w, 360px);
+  }
+
+  .game-slide-has-demo .game-slide-description {
+    max-width: none;
+  }
 }
 
 .game-slide-description {
