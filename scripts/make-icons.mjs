@@ -52,34 +52,37 @@ const art = (name, ink, x, y, size) =>
 // --- "AF." as shapes, so it never depends on a font being installed --------
 // Drawn on Helvetica Bold's proportions: cap height 100, stems about 20.
 
-const MARK_WIDTH = 203;
 const MARK_HEIGHT = 100;
-const MARK_PATH = [
+const AF = [
   // A, with its counter cut out (evenodd)
   "M0 100L36 0H64L100 100H79L71.8 80H28.2L21 100Z",
   "M50 19.4L65.3 62H34.7Z",
   // F
   "M106 0H176V17H126V42H168V58H126V100H106Z",
-  // .
-  "M183 80H203V100H183Z",
 ].join("");
+const DOT = "M183 80H203V100H183Z";
 
-/** "AF." `width` px wide, centered on (cx, cy). */
-const mark = (cx, cy, width, fill = INK) => {
-  const s = width / MARK_WIDTH;
+/**
+ * "AF." (or "AF" with `dot: false`) `width` px wide, centered on (cx, cy).
+ */
+const mark = (cx, cy, width, fill = INK, { dot = true } = {}) => {
+  const markWidth = dot ? 203 : 176;
+  const s = width / markWidth;
   const x = cx - width / 2;
   const y = cy - (MARK_HEIGHT * s) / 2;
-  return `<path transform="translate(${+x.toFixed(2)} ${+y.toFixed(2)}) scale(${+s.toFixed(4)})" fill="${fill}" fill-rule="evenodd" d="${MARK_PATH}"/>`;
+  return `<path transform="translate(${+x.toFixed(2)} ${+y.toFixed(2)}) scale(${+s.toFixed(4)})" fill="${fill}" fill-rule="evenodd" d="${dot ? AF + DOT : AF}"/>`;
 };
 
 // --- Favicon: the Home square ----------------------------------------------
 
-// How wide "AF." is in the square, with and without the border.
-const BORDERED = 0.72;
-const PLAIN = 0.9;
+// The favicons say "AF" without the period, centered. How wide it is in the
+// square, with and without the border.
+const BORDERED = 0.66;
+const PLAIN = 0.84;
+const favMark = (c, width) => mark(c, c, width, INK, { dot: false });
 
 /**
- * A white square with a black border and "AF.". A thin white edge stays
+ * A white square with a black border and "AF". A thin white edge stays
  * outside the border, so it still reads as a square on a dark tab bar.
  */
 const homeSquare = (size, { border = true } = {}) => {
@@ -89,7 +92,7 @@ const homeSquare = (size, { border = true } = {}) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="#ffffff"/>
   ${border ? `<rect x="${rim + b / 2}" y="${rim + b / 2}" width="${size - 2 * rim - b}" height="${size - 2 * rim - b}" fill="none" stroke="${INK}" stroke-width="${b}"/>` : ""}
-  ${mark(size / 2, size / 2, markWidth)}
+  ${favMark(size / 2, markWidth)}
 </svg>
 `;
 };
@@ -119,7 +122,7 @@ const ico = (images) => {
 
 // The SVG is drawn on a 32 grid, so its 1px white edge and 2px black border
 // land on whole pixels in a retina tab. At 16px the border crowds the letters, so a media query (which
-// in an SVG image tests the size it is drawn at) swaps in plain, larger "AF.".
+// in an SVG image tests the size it is drawn at) swaps in plain, larger "AF".
 fs.writeFileSync(
   pub("favicon.svg"),
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
@@ -127,9 +130,9 @@ fs.writeFileSync(
   <rect width="32" height="32" fill="#ffffff"/>
   <g class="big">
     <rect x="2" y="2" width="28" height="28" fill="none" stroke="${INK}" stroke-width="2"/>
-    ${mark(16, 16, 32 * BORDERED)}
+    ${favMark(16, 32 * BORDERED)}
   </g>
-  <g class="small">${mark(16, 16, 32 * PLAIN)}</g>
+  <g class="small">${favMark(16, 32 * PLAIN)}</g>
 </svg>
 `
 );
