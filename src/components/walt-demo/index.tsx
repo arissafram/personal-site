@@ -325,7 +325,7 @@ const WaltDemo = () => {
         <div className="walt-page" ref={pageRef}>
           {/* The fake tab is where you get Walt: a download button and the steps. */}
           <div className="walt-page-copy">
-            <h3 className="walt-page-title">Install Walt Chrome Extension</h3>
+            <h3 className="walt-page-title">Walt Chrome Extension</h3>
             <div className="walt-download">
               <a className="walt-download-button" href={DOWNLOAD_HREF} download>
                 Download Walt

@@ -1,6 +1,7 @@
 {
   "slug": "free-solo",
   "name": "Free Solo",
+  "shortName": "Solo",
   "order": 5,
   "color": "#e2703f",
   "ink": "#111111",

@@ -24,7 +24,7 @@ const MagneticPoemDemo = () => {
   const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
   if ((settle === "here" || afterLoad) && !shown) setShown(true);
-  // Knicks puts the quote back in order without saving it. The package has no
+  // Original (the Knicks layout) puts the quote back in order without saving it. The package has no
   // way to move words from outside, so Knicks reloads the poem and this load
   // hands back the Knicks layout instead of the stored one. The package then
   // treats that layout as already saved, so `knicks` remembers the stored
@@ -113,7 +113,7 @@ const MagneticPoemDemo = () => {
           className="magnetic-poem-demo-save"
           onClick={unlessBusy(showKnicks)}
         >
-          Knicks
+          Original
         </button>
         <p className="magnetic-poem-demo-status" role="status">
           {status === "save-error" && "Couldn't save. Try again in a moment."}
