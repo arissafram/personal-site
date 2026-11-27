@@ -67,13 +67,9 @@
   width: 16px;
 }
 
-.walt-ext:hover {
-  border-color: #d6d6d6;
-}
-
-.walt-ext[aria-pressed="true"] {
-  background: #111111;
-  color: #ffffff;
+/* The other extensions' icons don't do anything. */
+.walt-ext-static {
+  cursor: default;
 }
 
 .walt-ext:focus-visible {

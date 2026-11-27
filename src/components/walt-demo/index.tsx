@@ -121,7 +121,6 @@ const WaltDemo = () => {
   // see Sleep mode work without waiting long.
   const [delay, setDelay] = useState(15);
   const [idle, setIdle] = useState(false);
-  const [pressed, setPressed] = useState<string | null>(null);
   const [version, setVersion] = useState<string | null>(null);
   const reduceMotion = usePrefersReducedMotion();
 
@@ -310,24 +309,15 @@ const WaltDemo = () => {
               aria-label="Walt"
               aria-expanded={open}
               aria-haspopup="dialog"
-              onClick={() => {
-                setOpen((o) => !o);
-                setPressed(null);
-              }}
+              onClick={() => setOpen((o) => !o)}
             >
               <img src="/games/walt/icon32.png" alt="" width={16} height={16} />
             </button>
+            {/* The other extensions are just pictures: only Walt does anything. */}
             {GLYPHS.map((g) => (
-              <button
-                key={g.name}
-                type="button"
-                className="walt-ext"
-                aria-label={g.name}
-                aria-pressed={pressed === g.name}
-                onClick={() => setPressed((p) => (p === g.name ? null : g.name))}
-              >
+              <span key={g.name} className="walt-ext walt-ext-static" aria-hidden="true">
                 {g.icon}
-              </button>
+              </span>
             ))}
           </div>
         </div>
