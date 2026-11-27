@@ -39,6 +39,18 @@ interface GameRowProps {
 
 type Flash = "prev" | "next" | null;
 
+// A short, heavy arrow: the head is most of it, with a stub of a tail.
+const ArrowIcon = ({ right = false }: { right?: boolean }) => (
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    className="game-row-arrow-icon"
+    style={right ? { transform: "scaleX(-1)" } : undefined}
+  >
+    <path d="M13 6 7 12l6 6M7 12h10" />
+  </svg>
+);
+
 const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
   const itemsRef = useRef<HTMLDivElement>(null);
 
@@ -52,8 +64,8 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
       if (e.detail > 0) e.currentTarget.blur();
     };
 
-  // The arrows name where they go (the carousel loops, so Home's ← is the
-  // last slide). Same short names as the row.
+  // Screen readers hear where the arrows go (the carousel loops, so Home's ←
+  // is the last slide). Same short names as the row.
   const label = (i: number) => {
     const item = items[(i + items.length) % items.length];
     return item.shortName ?? item.name;
@@ -181,7 +193,7 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
             className={flash === "prev" ? "is-flashing" : undefined}
             onClick={select(current - 1)}
           >
-            <span aria-hidden="true">← {label(current - 1)}</span>
+            <ArrowIcon />
           </button>
           <button
             type="button"
@@ -189,7 +201,7 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
             className={flash === "next" ? "is-flashing" : undefined}
             onClick={select(current + 1)}
           >
-            <span aria-hidden="true">{label(current + 1)} →</span>
+            <ArrowIcon right />
           </button>
         </div>
       </div>
