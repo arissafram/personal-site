@@ -33,6 +33,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-jigsaw": "github:arissafram/react-jigsaw#af/touch-scroll",
+    "score-four": "github:arissafram/score-four#main",
     "walt-extension": "github:arissafram/walt-extension#shared-package"
   },
   "devDependencies": {

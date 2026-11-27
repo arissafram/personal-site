@@ -5,6 +5,7 @@ import type { Game } from "../../games";
 import JigsawDemo from "../jigsaw-demo";
 import MikesDemo from "../mikes-demo";
 import PlaceholderArt from "../placeholder-art";
+import ScoreFourDemo from "../score-four-demo";
 import WaltDemo from "../walt-demo";
 
 import "./styles.css";
@@ -15,6 +16,7 @@ const DEMOS: Record<string, ComponentType> = {
   walt: WaltDemo,
   mikes: MikesDemo,
   jigsaw: JigsawDemo,
+  "score-four": ScoreFourDemo,
 };
 
 const isExternal = (href: string) => /^https?:/.test(href);
