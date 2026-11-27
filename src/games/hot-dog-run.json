@@ -6,7 +6,7 @@
   "ink": "#ffffff",
   "art": "dots",
   "demo": "hot-dog-run",
-  "description": "Inspired by Chrome Dino. Jump the grills and ketchup and see how long you can survive.",
+  "description": "A hot take on Chrome Dino. Jump over the obstacles and see how long you can survive.",
   "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/hot-dog-run" },
   "status": "shipped"
 }
