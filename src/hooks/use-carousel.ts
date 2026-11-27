@@ -33,7 +33,8 @@ export const useCarousel = (slugs: string[]) => {
     targetTimer.current = window.setTimeout(() => {
       targetRef.current = null;
       const track = trackRef.current;
-      if (!track) return;
+      // Hidden or mid-layout, the track can measure 0 wide: 0 / 0 isn't a slide.
+      if (!track || !track.clientWidth) return;
       const i = Math.round(track.scrollLeft / track.clientWidth);
       setCurrent(Math.min(Math.max(i, 0), slugCount.current - 1));
     }, 200);
@@ -71,8 +72,16 @@ export const useCarousel = (slugs: string[]) => {
       const stop = () => {
         cancelAnimationFrame(state.frame);
         track.style.scrollSnapType = "";
-        ["wheel", "touchstart", "pointerdown"].forEach((e) => track.removeEventListener(e, stop));
+        track.removeEventListener("wheel", onWheel);
+        ["touchstart", "pointerdown"].forEach((e) => track.removeEventListener(e, stop));
         if (glide.current === state) glide.current = null;
+      };
+      // Only a sideways wheel takes over. A trackpad keeps sending up/down
+      // wheel events for a second after a scroll ends (momentum); stopping on
+      // those left the track partway, and snapping then pulled it back to the
+      // slide it started from.
+      const onWheel = (e: WheelEvent) => {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stop();
       };
       const step = (now: number) => {
         const t = Math.min((now - start) / duration, 1);
@@ -86,10 +95,9 @@ export const useCarousel = (slugs: string[]) => {
       };
       const state = { frame: requestAnimationFrame(step), stop };
       glide.current = state;
-      // A swipe, wheel or click on the track takes over from the glide.
-      ["wheel", "touchstart", "pointerdown"].forEach((e) =>
-        track.addEventListener(e, stop, { passive: true })
-      );
+      // A swipe, sideways wheel or click on the track takes over from the glide.
+      track.addEventListener("wheel", onWheel, { passive: true });
+      ["touchstart", "pointerdown"].forEach((e) => track.addEventListener(e, stop, { passive: true }));
     },
     [slugs.length, releaseTargetSoon]
   );
@@ -159,6 +167,7 @@ export const useCarousel = (slugs: string[]) => {
       settleTimer = window.setTimeout(settle, 150);
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
+        if (!track.clientWidth) return;
         const i = Math.round(track.scrollLeft / track.clientWidth);
         if (targetRef.current !== null) {
           releaseTargetSoon();

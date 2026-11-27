@@ -71,8 +71,8 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
   // Screen readers hear where the arrows go (the carousel loops, so Home's ←
   // is the last slide). Same short names as the row.
   const label = (i: number) => {
-    const item = items[(i + items.length) % items.length];
-    return item.shortName ?? item.name;
+    const item = items[(((i % items.length) + items.length) % items.length) || 0];
+    return item ? (item.shortName ?? item.name) : "";
   };
 
   // Whether the row has more items off screen to the left / right (phones).
