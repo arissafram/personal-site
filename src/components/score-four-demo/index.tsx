@@ -11,17 +11,34 @@ const Board = lazy(() => import("./board"));
 // Score Four against the computer, in the slide's blue.
 //
 // The package has no pause(), and its render loop runs every frame while it's
-// mounted. So the board loads and mounts the first time the carousel comes to
-// rest on the slide (not while slides are changing), and while the slide is
-// off screen the 3D view is hidden: the package then sizes its canvas to 1×1,
-// so each frame draws next to nothing. The game, score and camera stay as
-// they were.
+// mounted. But while the slide is off screen the 3D view is hidden: the
+// package then sizes its canvas to 1×1, so each frame draws next to nothing.
+// That makes it cheap to keep around, so the board mounts in the background
+// once the page has loaded and the browser is idle, and is already there when
+// someone arrives. (Coming to rest on the slide before then mounts it at
+// once.) The game, score and camera stay as they were between visits.
 const ScoreFourDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
   const settle = useSlideSettle(ref);
   const [shown, setShown] = useState(false);
   if (settle === "here" && !shown) setShown(true);
   const [onScreen, setOnScreen] = useState(false);
+
+  useEffect(() => {
+    let id: number | undefined;
+    const mount = () => {
+      if ("requestIdleCallback" in window) id = window.requestIdleCallback(() => setShown(true), { timeout: 3000 });
+      else id = setTimeout(() => setShown(true), 500) as unknown as number;
+    };
+    if (document.readyState === "complete") mount();
+    else window.addEventListener("load", mount, { once: true });
+    return () => {
+      window.removeEventListener("load", mount);
+      if (id === undefined) return;
+      if ("requestIdleCallback" in window) window.cancelIdleCallback(id);
+      else clearTimeout(id);
+    };
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
