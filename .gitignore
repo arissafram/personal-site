@@ -37,3 +37,7 @@ coverage/
 
 # Lock files (keep package-lock.json but ignore yarn.lock if using npm)
 yarn.lock 
+
+# Amplify Gen 2: written by `ampx sandbox` / `ampx pipeline-deploy`
+amplify_outputs.json
+.amplify/

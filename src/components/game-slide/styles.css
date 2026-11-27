@@ -115,7 +115,8 @@
   }
 
   .game-slide-demo-walt,
-  .game-slide-demo-score-four {
+  .game-slide-demo-score-four,
+  .game-slide-demo-magnetic-poem {
     --demo-w: 420px;
   }
 

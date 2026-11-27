@@ -3,7 +3,10 @@ import path from "node:path";
 
 import { defineConfig, type Connect, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { handlePoemRequest, memoryStorage } from "magnetic-poem/server";
 import sharp from "sharp";
+
+import { addFillers, knicksWords } from "./src/poem-words";
 
 // Walt's box PNGs come from the walt-extension package at 900px wide
 // (0.5–1 MB each). The demo never draws them wider than about 220px, so the
@@ -56,8 +59,48 @@ const publicIndexPages = (): Plugin => {
   };
 };
 
+// The magnetic poem's save endpoint, for `npm run dev` and `npm run preview`.
+// Live, the poem is saved by a Lambda (amplify/functions/poem) whose URL the
+// slide reads from amplify_outputs.json; without that file it falls back to
+// /api/poem, answered here with the same handler and words, kept in memory
+// (so a restart clears the poem).
+const poemApi = (): Plugin => {
+  const storage = memoryStorage();
+  const middleware: Connect.NextHandleFunction = async (req, res, next) => {
+    const [pathname] = (req.url ?? "").split("?");
+    if (pathname !== "/api/poem") return next();
+    try {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(chunk as Buffer);
+      const hasBody = req.method !== "GET" && req.method !== "HEAD";
+      const request = new Request(`http://${req.headers.host ?? "localhost"}${req.url}`, {
+        method: req.method,
+        headers: Object.entries(req.headers).flatMap(([k, v]) =>
+          v === undefined ? [] : (Array.isArray(v) ? v : [v]).map((value): [string, string] => [k, value])
+        ),
+        body: hasBody ? Buffer.concat(chunks) : undefined,
+      });
+      const response = await handlePoemRequest(request, { words: knicksWords, addFillers, storage });
+      res.statusCode = response.status;
+      response.headers.forEach((value, key) => res.setHeader(key, value));
+      res.end(Buffer.from(await response.arrayBuffer()));
+    } catch (error) {
+      next(error);
+    }
+  };
+  return {
+    name: "poem-api",
+    configureServer(server) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(middleware);
+    },
+  };
+};
+
 export default defineConfig({
-  plugins: [react(), publicIndexPages(), shrinkWaltBoxes()],
+  plugins: [react(), publicIndexPages(), shrinkWaltBoxes(), poemApi()],
   build: {
     outDir: "dist",
     assetsDir: "assets",
