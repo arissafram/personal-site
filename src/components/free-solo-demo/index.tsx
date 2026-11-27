@@ -13,11 +13,11 @@ const load = () => (loading ??= import("free-solo"));
 
 // Free Solo, running in the slide.
 //
-// The package has no pause(), so the game runs only while the carousel is at
-// rest on its slide: it mounts once the slide has stopped moving in, and is
-// torn down as soon as the carousel starts moving away (the run ends; the best
-// height stays in localStorage). Phaser running during a slide change made
-// every frame of it late.
+// The package has no pause(). The game mounts once the carousel has come to
+// rest on its slide (mounting Phaser during a slide change made every frame of
+// it late), and is torn down only once the carousel has come to rest on
+// another slide (the run ends; the best height stays in localStorage). While
+// the track moves (a drag, a peek, a swipe that snaps back) the run carries on.
 //
 // Keys: `keys: "focus"`, so ← → move the carousel until someone clicks or taps
 // the wall. Then the arrow keys climb (the game cancels them, so the carousel
@@ -39,7 +39,7 @@ const FreeSoloDemo = () => {
         if (settleRef.current === "here" && !gameRef.current)
           gameRef.current = mount(board, { keys: "focus", storageKey: "free-solo-best" });
       });
-    } else if (settle !== "here") {
+    } else if (settle === "elsewhere") {
       gameRef.current?.destroy();
       gameRef.current = null;
     }
