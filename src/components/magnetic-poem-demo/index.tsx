@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MagneticPoem, type MagneticPoemHandle, type MagneticPoemStatusInfo } from "magnetic-poem";
 import "magnetic-poem/styles";
 
 import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 import { addFillers, knicksWords } from "../../poem-words";
-import { POEM_ENDPOINT } from "./endpoint";
+import { fetchPoem, savePoem } from "./endpoint";
+import { KNICKS_MAGNETS } from "./knicks-layout";
 
 import "./styles.css";
 
@@ -23,6 +24,47 @@ const MagneticPoemDemo = () => {
   const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
   if ((settle === "here" || afterLoad) && !shown) setShown(true);
+  // Knicks puts the quote back in order without saving it. The package has no
+  // way to move words from outside, so Knicks reloads the poem and this load
+  // hands back the Knicks layout instead of the stored one. The package then
+  // treats that layout as already saved, so `knicks` remembers the stored
+  // version and turns Save on here; Save puts the layout itself. Moving a word
+  // after that hands saving back to the package (from the same version).
+  const knicksNext = useRef(false);
+  const [knicks, setKnicks] = useState<{ version: number } | null>(null);
+  const [knicksStatus, setKnicksStatus] = useState<"saving" | "save-error" | "conflict" | null>(null);
+  const load = useCallback(async () => {
+    const state = await fetchPoem();
+    setKnicksStatus(null);
+    if (!knicksNext.current) {
+      setKnicks(null);
+      return state;
+    }
+    knicksNext.current = false;
+    setKnicks({ version: state.version });
+    return { version: state.version, magnets: KNICKS_MAGNETS };
+  }, []);
+  const showKnicks = () => {
+    knicksNext.current = true;
+    poem.current?.reload();
+  };
+  const saveKnicks = async (version: number) => {
+    setKnicksStatus("saving");
+    try {
+      const res = await savePoem({ baseVersion: version, magnets: KNICKS_MAGNETS });
+      if (!res.ok) {
+        setKnicksStatus("conflict");
+        return;
+      }
+      setKnicks(null);
+      setKnicksStatus(null);
+      poem.current?.reload();
+    } catch (err) {
+      console.error("Knicks save failed", err);
+      setKnicksStatus("save-error");
+    }
+  };
+
   const [info, setInfo] = useState<MagneticPoemStatusInfo>({ status: "loading", dirty: false, canSave: false });
 
   // The package keeps pointer and touch events from reaching the carousel, so
@@ -43,7 +85,12 @@ const MagneticPoemDemo = () => {
     return () => el.removeEventListener("pointerup", onPointerUp, { capture: true });
   }, []);
 
-  const { status } = info;
+  // A word moved after Knicks: the package's own Save takes over.
+  if (knicks && info.dirty) setKnicks(null);
+  const status = knicksStatus ?? info.status;
+  const canSave = knicks
+    ? (info.status === "idle" || info.status === "saved") && knicksStatus !== "saving"
+    : info.canSave;
 
   return (
     <div className="magnetic-poem-demo" ref={ref}>
@@ -51,10 +98,18 @@ const MagneticPoemDemo = () => {
         <button
           type="button"
           className="magnetic-poem-demo-save"
-          disabled={!info.canSave}
-          onClick={() => poem.current?.save()}
+          disabled={!canSave}
+          onClick={() => (knicks ? saveKnicks(knicks.version) : poem.current?.save())}
         >
           Save
+        </button>
+        <button
+          type="button"
+          className="magnetic-poem-demo-save"
+          disabled={status === "loading" || status === "saving"}
+          onClick={showKnicks}
+        >
+          Knicks
         </button>
         <p className="magnetic-poem-demo-status" role="status">
           {status === "saving" && "Saving…"}
@@ -99,7 +154,8 @@ const MagneticPoemDemo = () => {
           ref={poem}
           words={knicksWords}
           addFillers={addFillers}
-          endpoint={POEM_ENDPOINT}
+          load={load}
+          save={savePoem}
           onStatusChange={setInfo}
           magnetSize={1.28}
         />

@@ -24,25 +24,27 @@
   align-items: center;
   display: flex;
   gap: 14px;
-  margin-bottom: 12px;
-  min-height: 30px;
+  height: 26px;
+  margin-bottom: 8px;
 }
 
-/* Save and the status line use the jigsaw timer's typewriter font; Save has
-   the jigsaw difficulty toggle's 1px box, filled in ink on hover. */
+/* The row matches the jigsaw's timer/↻ row: 26px tall, 8px above the board.
+   Save is sized like a jigsaw difficulty button (22px, 12px type), filled in
+   ink on hover. */
 .magnetic-poem-demo-save {
   background: transparent;
   border: 1px solid currentColor;
   border-radius: 0;
   color: inherit;
   cursor: pointer;
+  box-sizing: border-box;
   flex: none;
   font-family: "Courier Prime", "Courier New", monospace;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  height: 24px;
-  line-height: 22px;
-  padding: 0 10px;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 6px;
 }
 
 .magnetic-poem-demo-save:hover:not(:disabled) {

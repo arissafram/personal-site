@@ -57,8 +57,19 @@
   width: 172px;
 }
 
-.score-four-demo .score-four .sf-panel > * {
+.score-four-demo .score-four .sf-panel-body > * {
   padding: 12px;
+}
+
+/* Below 700px the package folds the panel behind a "Settings" toggle. Beside
+   the view there's room for it, so the toggle goes and the panel stays open
+   (phones get the toggle back, below). */
+.score-four-demo .score-four .sf-panel-toggle {
+  display: none;
+}
+
+.score-four-demo .score-four .sf-panel-toggle[aria-expanded] + .sf-panel-body {
+  display: flex;
 }
 
 .score-four-demo .score-four .sf-minimap {
@@ -109,7 +120,7 @@
   min-width: 0;
 }
 
-.score-four-demo .score-four .sf-panel > .sf-score {
+.score-four-demo .score-four .sf-panel-body > .sf-score {
   font-size: 15px;
   letter-spacing: -0.01em;
 }
@@ -152,6 +163,14 @@
     border-top: 1px solid var(--sf-ink);
     overflow: visible;
     width: auto;
+  }
+
+  .score-four-demo .score-four .sf-panel-toggle {
+    display: flex;
+  }
+
+  .score-four-demo .score-four .sf-panel-toggle[aria-expanded="false"] + .sf-panel-body {
+    display: none;
   }
 
   .score-four-demo .score-four .sf-minimap {

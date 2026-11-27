@@ -1,7 +1,7 @@
 {
   "slug": "magnetic-poem",
-  "name": "Magnetic Poem",
-  "shortName": "Poem",
+  "name": "Poetry",
+  "shortName": "Poetry",
   "order": 6,
   "color": "#a9d6c8",
   "ink": "#111111",
