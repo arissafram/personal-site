@@ -29,19 +29,7 @@
   opacity: 0.6;
 }
 
-.free-solo-hint-touch {
-  display: none;
-}
-
 @media (hover: none) {
-  .free-solo-hint-mouse {
-    display: none;
-  }
-
-  .free-solo-hint-touch {
-    display: inline;
-  }
-
   .free-solo-board:focus {
     box-shadow: none;
   }
