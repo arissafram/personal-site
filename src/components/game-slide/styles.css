@@ -92,7 +92,9 @@
 
 /* The puzzle is portrait and no wider than the image box, so it keeps the
    even columns and the name has room for "react-jigsaw" on one line. */
-.game-slide-demo-jigsaw {
+/* Free Solo's wall is portrait too. */
+.game-slide-demo-jigsaw,
+.game-slide-demo-free-solo {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 

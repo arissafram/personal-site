@@ -1,0 +1,63 @@
+/* A portrait wall, 360×520 at its largest, with a 1px ink line like the other
+   slides' boxes. The game fills .free-solo-board and follows its size. Its
+   background is white: the package draws it in WebGL and has no color option.
+   On short windows the wall shrinks to fit above the game row. */
+.free-solo-demo {
+  box-sizing: border-box;
+  justify-self: end;
+  max-width: 100%;
+}
+
+.free-solo-board {
+  aspect-ratio: 360 / 520;
+  background: #ffffff;
+  border: 1px solid currentColor;
+  height: clamp(360px, calc(100dvh - var(--game-row-h) - 150px), 520px);
+  max-width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* While the wall has the arrow keys, its line is thicker. */
+.free-solo-board:focus {
+  box-shadow: 0 0 0 1px currentColor;
+}
+
+.free-solo-hint {
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.3;
+  margin: 8px 0 0;
+  opacity: 0.8;
+}
+
+.free-solo-hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .free-solo-hint-mouse {
+    display: none;
+  }
+
+  .free-solo-hint-touch {
+    display: inline;
+  }
+
+  .free-solo-board:focus {
+    box-shadow: none;
+  }
+}
+
+/* Phone: the full column width (up to 360px), still 360:520. */
+@media (max-width: 760px) {
+  .free-solo-demo {
+    justify-self: center;
+    max-width: 360px;
+    width: 100%;
+  }
+
+  .free-solo-board {
+    height: auto;
+    width: 100%;
+  }
+}
