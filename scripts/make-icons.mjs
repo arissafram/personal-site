@@ -78,13 +78,17 @@ const mark = (cx, cy, width, fill = INK) => {
 const BORDERED = 0.72;
 const PLAIN = 0.9;
 
-/** A white square with a black border and "AF.". */
+/**
+ * A white square with a black border and "AF.". A thin white edge stays
+ * outside the border, so it still reads as a square on a dark tab bar.
+ */
 const homeSquare = (size, { border = true } = {}) => {
+  const rim = Math.max(1, Math.round(size / 32));
   const b = border ? Math.max(1, size / 16) : 0;
   const markWidth = size * (border ? BORDERED : PLAIN);
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="#ffffff"/>
-  ${border ? `<rect x="${b / 2}" y="${b / 2}" width="${size - b}" height="${size - b}" fill="none" stroke="${INK}" stroke-width="${b}"/>` : ""}
+  ${border ? `<rect x="${rim + b / 2}" y="${rim + b / 2}" width="${size - 2 * rim - b}" height="${size - 2 * rim - b}" fill="none" stroke="${INK}" stroke-width="${b}"/>` : ""}
   ${mark(size / 2, size / 2, markWidth)}
 </svg>
 `;
@@ -113,8 +117,8 @@ const ico = (images) => {
   return Buffer.concat([header, ...images.map((img) => img.data)]);
 };
 
-// The SVG is drawn on a 32 grid, so its 2px border lands on whole pixels in
-// a retina tab. At 16px the border crowds the letters, so a media query (which
+// The SVG is drawn on a 32 grid, so its 1px white edge and 2px black border
+// land on whole pixels in a retina tab. At 16px the border crowds the letters, so a media query (which
 // in an SVG image tests the size it is drawn at) swaps in plain, larger "AF.".
 fs.writeFileSync(
   pub("favicon.svg"),
@@ -122,7 +126,7 @@ fs.writeFileSync(
   <style>.small{display:none}@media (max-width:24px){.big{display:none}.small{display:inline}}</style>
   <rect width="32" height="32" fill="#ffffff"/>
   <g class="big">
-    <rect x="1" y="1" width="30" height="30" fill="none" stroke="${INK}" stroke-width="2"/>
+    <rect x="2" y="2" width="28" height="28" fill="none" stroke="${INK}" stroke-width="2"/>
     ${mark(16, 16, 32 * BORDERED)}
   </g>
   <g class="small">${mark(16, 16, 32 * PLAIN)}</g>

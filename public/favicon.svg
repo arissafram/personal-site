@@ -2,7 +2,7 @@
   <style>.small{display:none}@media (max-width:24px){.big{display:none}.small{display:inline}}</style>
   <rect width="32" height="32" fill="#ffffff"/>
   <g class="big">
-    <rect x="1" y="1" width="30" height="30" fill="none" stroke="#111111" stroke-width="2"/>
+    <rect x="2" y="2" width="28" height="28" fill="none" stroke="#111111" stroke-width="2"/>
     <path transform="translate(4.48 10.33) scale(0.1135)" fill="#111111" fill-rule="evenodd" d="M0 100L36 0H64L100 100H79L71.8 80H28.2L21 100ZM50 19.4L65.3 62H34.7ZM106 0H176V17H126V42H168V58H126V100H106ZM183 80H203V100H183Z"/>
   </g>
   <g class="small"><path transform="translate(1.6 8.91) scale(0.1419)" fill="#111111" fill-rule="evenodd" d="M0 100L36 0H64L100 100H79L71.8 80H28.2L21 100ZM50 19.4L65.3 62H34.7ZM106 0H176V17H126V42H168V58H126V100H106ZM183 80H203V100H183Z"/></g>
