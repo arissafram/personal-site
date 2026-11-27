@@ -30,11 +30,15 @@
   max-width: 1040px;
 }
 
+.game-row-scroller {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
 .game-row-items {
   display: flex;
-  flex: 1;
   gap: 14px;
-  min-width: 0;
   overflow-x: auto;
   padding-top: 4px;
   pointer-events: auto;
@@ -46,7 +50,8 @@
 }
 
 .game-row-item,
-.game-row-arrows button {
+.game-row-arrows button,
+.game-row-more {
   background: none;
   border: 0;
   color: inherit;
@@ -143,6 +148,39 @@
   color: var(--row-bg, #ffffff);
 }
 
+/* Shown only when the row has more items off that side (phones). A small
+   square over the row's edge, filled with the slide color and centered on the
+   squares (4px row padding + half the square - 15px). */
+.game-row-more {
+  background: var(--row-bg, #ffffff);
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 15px;
+  height: 30px;
+  line-height: 1;
+  pointer-events: auto;
+  position: absolute;
+  top: 21px;
+  width: 30px;
+}
+
+.game-row-more-left {
+  left: 0;
+}
+
+.game-row-more-right {
+  right: 0;
+}
+
+.game-row-more:active {
+  background: currentColor;
+}
+
+.game-row-more:active > span {
+  color: var(--row-bg, #ffffff);
+}
+
 .game-row :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
@@ -163,6 +201,10 @@
 
   .game-row-arrows {
     display: none;
+  }
+
+  .game-row-more {
+    top: 15px;
   }
 }
 

@@ -45,29 +45,67 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
   // A mouse click or tap shouldn't leave the button focused: the next Space
   // (e.g. starting Mike's) would press it again and draw a focus ring around
   // it. Keyboard presses (detail 0) keep focus, so Tab users stay in place.
-  const select = (i: number, jump = false) => (e: MouseEvent<HTMLButtonElement>) => {
-    onSelect(i, jump);
-    if (e.detail > 0) e.currentTarget.blur();
+  const select =
+    (i: number, jump = false) =>
+    (e: MouseEvent<HTMLButtonElement>) => {
+      onSelect(i, jump);
+      if (e.detail > 0) e.currentTarget.blur();
+    };
+
+  // Whether the row has more items off screen to the left / right (phones).
+  const [more, setMore] = useState({ left: false, right: false });
+  const checkMore = () => {
+    const row = itemsRef.current;
+    if (!row) return;
+    const left = row.scrollLeft > 1;
+    const right = row.scrollLeft < row.scrollWidth - row.clientWidth - 1;
+    setMore((m) => (m.left === left && m.right === right ? m : { left, right }));
   };
 
-  // When the row is wider than the screen (phones), keep the current item in view.
+  useEffect(() => {
+    const row = itemsRef.current;
+    if (!row) return;
+    checkMore();
+    const observer = new ResizeObserver(checkMore);
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, []);
+
+  // When the row is wider than the screen (phones), keep the current item in
+  // view and clear of the "more" arrows (30px + 8px) that sit over the row.
   useEffect(() => {
     const row = itemsRef.current;
     const item = row?.children[current] as HTMLElement | undefined;
     if (!row || !item) return;
     const left = item.offsetLeft - row.offsetLeft;
-    if (left < row.scrollLeft) row.scrollLeft = left;
-    else if (left + item.offsetWidth > row.scrollLeft + row.clientWidth)
-      row.scrollLeft = left + item.offsetWidth - row.clientWidth;
+    const clear = 38;
+    if (left - clear < row.scrollLeft) row.scrollLeft = left - clear;
+    else if (left + item.offsetWidth + clear > row.scrollLeft + row.clientWidth)
+      row.scrollLeft = left + item.offsetWidth + clear - row.clientWidth;
   }, [current]);
 
   // All copies of the row scroll together, so the wipe lines up on phones.
-  const syncScroll = () => {
+  const onScroll = () => {
+    checkMore();
     const row = itemsRef.current;
-    if (!row) return;
+    // Only the copy on screen leads; hidden copies writing back would cancel
+    // its smooth scroll.
+    if (!row || row.closest("[inert]")) return;
     document.querySelectorAll<HTMLElement>(".game-row-items").forEach((other) => {
       if (other !== row && other.scrollLeft !== row.scrollLeft) other.scrollLeft = row.scrollLeft;
     });
+  };
+
+  // The "more" arrows scroll the row by most of its width; the slide stays put.
+  const scrollRow = (dir: 1 | -1) => (e: MouseEvent<HTMLButtonElement>) => {
+    const row = itemsRef.current;
+    if (!row) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    row.scrollBy({
+      left: dir * (row.clientWidth - 76),
+      behavior: reduce ? "auto" : "smooth",
+    });
+    if (e.detail > 0) e.currentTarget.blur();
   };
 
   return (
@@ -82,30 +120,52 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
       }
     >
       <div className="game-row-inner">
-        <div className="game-row-items" ref={itemsRef} onScroll={syncScroll}>
-          {items.map((item, i) => (
-            <button
-              key={item.slug}
-              type="button"
-              className="game-row-item"
-              aria-current={i === shown ? "true" : undefined}
-              onClick={select(i, true)}
-            >
-              <span
-                className="game-row-square"
-                style={{ background: item.color, color: item.ink }}
+        <div className="game-row-scroller">
+          <div className="game-row-items" ref={itemsRef} onScroll={onScroll}>
+            {items.map((item, i) => (
+              <button
+                key={item.slug}
+                type="button"
+                className="game-row-item"
+                aria-current={i === shown ? "true" : undefined}
+                onClick={select(i, true)}
               >
-                {item.image ? (
-                  <img src={item.image} alt="" />
-                ) : item.art ? (
-                  <PlaceholderArt name={item.art} />
-                ) : item.mark ? (
-                  <span className="game-row-mark">{item.mark}</span>
-                ) : null}
-              </span>
-              <span className="game-row-name">{item.shortName ?? item.name}</span>
+                <span
+                  className="game-row-square"
+                  style={{ background: item.color, color: item.ink }}
+                >
+                  {item.image ? (
+                    <img src={item.image} alt="" />
+                  ) : item.art ? (
+                    <PlaceholderArt name={item.art} />
+                  ) : item.mark ? (
+                    <span className="game-row-mark">{item.mark}</span>
+                  ) : null}
+                </span>
+                <span className="game-row-name">{item.shortName ?? item.name}</span>
+              </button>
+            ))}
+          </div>
+          {more.left && (
+            <button
+              type="button"
+              className="game-row-more game-row-more-left"
+              aria-label="Show earlier games"
+              onClick={scrollRow(-1)}
+            >
+              <span aria-hidden="true">←</span>
             </button>
-          ))}
+          )}
+          {more.right && (
+            <button
+              type="button"
+              className="game-row-more game-row-more-right"
+              aria-label="Show more games"
+              onClick={scrollRow(1)}
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          )}
         </div>
         <div className="game-row-arrows">
           <button
