@@ -1,0 +1,166 @@
+.game-slide {
+  align-items: center;
+  box-sizing: border-box;
+  display: grid;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1040px;
+  min-height: 100%;
+  padding: 56px max(24px, env(safe-area-inset-right, 0px))
+    48px max(24px, env(safe-area-inset-left, 0px));
+}
+
+.game-slide-image {
+  align-items: center;
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  justify-self: end;
+  max-width: 460px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.game-slide-image img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.game-slide-image svg {
+  height: auto;
+  width: 62%;
+}
+
+.game-slide-tag {
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 12px;
+  left: 10px;
+  opacity: 0.75;
+  position: absolute;
+  top: 8px;
+}
+
+.game-slide-name {
+  font-size: clamp(44px, 7vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin: 0 0 18px;
+}
+
+/* Same size and underline as Home's links. */
+.game-slide-link {
+  color: inherit;
+  font-size: var(--link-text);
+  line-height: 1.12;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.12em;
+}
+
+.game-slide-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 760px) {
+  .game-slide {
+    align-content: start;
+    gap: 28px;
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 32px;
+  }
+
+  .game-slide-image,
+  .game-slide-text {
+    justify-self: center;
+    max-width: 360px;
+    width: 100%;
+  }
+}
+
+/* A slide with an interactive demo gives it the wider column. */
+.game-slide-has-demo {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+}
+
+/* The puzzle is portrait and no wider than the image box, so it keeps the
+   even columns and the name has room for "react-jigsaw" on one line. */
+/* Free Solo's wall is portrait too. */
+.game-slide-demo-jigsaw,
+.game-slide-demo-free-solo {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+@media (max-width: 760px) {
+  .game-slide-has-demo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .game-slide-has-demo .walt-demo {
+    justify-self: center;
+    max-width: 420px;
+  }
+
+  /* Stacked, the text is exactly as wide as the game above it. These match
+     each demo's own phone max-width. */
+  .game-slide-demo-mikes {
+    --demo-w: 620px;
+  }
+
+  .game-slide-demo-walt,
+  .game-slide-demo-score-four {
+    --demo-w: 420px;
+  }
+
+  .game-slide-demo-jigsaw,
+  .game-slide-demo-free-solo {
+    --demo-w: 360px;
+  }
+
+  .game-slide-has-demo .game-slide-text {
+    max-width: var(--demo-w, 360px);
+  }
+
+  .game-slide-has-demo .game-slide-description {
+    max-width: none;
+  }
+}
+
+.game-slide-description {
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 0 0 18px;
+  max-width: 26em;
+}
+
+.game-slide-description em {
+  font-style: italic;
+}
+
+.game-slide-description a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.game-slide-description a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.game-slide-links {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  /* Smaller than the description and a little apart, so they read as a
+     footnote to it, like the home links do under the bio. */
+  font-size: 12px;
+  gap: 0.55em;
+}

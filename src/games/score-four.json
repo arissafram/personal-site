@@ -1,0 +1,14 @@
+{
+  "slug": "score-four",
+  "name": "Score Four",
+  "shortName": "Four",
+  "order": 4,
+  "color": "#2b4fd1",
+  "ink": "#ffffff",
+  "art": "four",
+  "demo": "score-four",
+  "description": "Take turns dropping beads onto the pegs. The first to get four in a row wins: across, up, or diagonally through the cube.",
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/score-four" },
+  "links": [{ "label": "View the original", "href": "https://en.wikipedia.org/wiki/Score_four" }],
+  "status": "in-progress"
+}

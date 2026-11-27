@@ -1,0 +1,13 @@
+{
+  "slug": "walt",
+  "name": "Walt",
+  "order": 1,
+  "color": "#f2cf45",
+  "ink": "#111111",
+  "art": "box",
+  "demo": "walt",
+  "description": "A Chrome extension inspired by *the* DVD screensaver. Choose a box and let it bounce, or enable Sleep mode to keep your computer awake.",
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/walt-extension" },
+  "links": [{ "label": "Listen on YouTube", "href": "https://youtu.be/nLZj8OtuJYI?t=2035" }],
+  "status": "shipped"
+}

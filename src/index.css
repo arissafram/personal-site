@@ -1,50 +1,76 @@
+:root {
+  /* Home's body text size. Home's links, and the game slides' links, are 0.6×. */
+  --home-text: clamp(20px, min(2.9vw, 3.1dvh), 42px);
+  --link-text: max(16px, calc(var(--home-text) * 0.6));
+  /* Height of the fixed game row. Each slide scrolls only in the space above it. */
+  --game-row-h: calc(120px + env(safe-area-inset-bottom, 0px));
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* The document itself never scrolls. iOS scrolls the page under its toolbars
+   even with overflow: hidden, which left the slides shifted up and the row
+   floating above a white strip. Only the track and each .slide-scroll scroll. */
+html,
 body {
-  background: linear-gradient(to bottom, #e8f4ff 0%, transparent 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-.main {
-  align-items: center;
+/* The whole page is one horizontal row of full-screen slides, pinned to the
+   visible screen like the game row. */
+.track {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 290px;
-  padding: 0 24px 24px;
+  inset: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: fixed;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
-.puzzle-container {
-  align-items: center;
-  display: flex;
-  z-index: 1;
+.track::-webkit-scrollbar {
+  display: none;
 }
 
-.content-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  max-width: 400px;
-  margin-bottom: 40px;
+.slide {
+  background: var(--slide-bg, #ffffff);
+  color: var(--slide-ink, #111111);
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
-@media (min-width: 850px) {
-  .main {
-    flex-direction: row;
-    height: 100vh;
-    margin: 0 auto;
-    max-width: 880px;
-    padding-bottom: 0;
-  }
+/* A slide's content scrolls on its own, but only above the game row, so the row
+   never covers it and needs no background. */
+.slide-scroll {
+  height: calc(100% - var(--game-row-h));
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrolling to the end of a slide doesn't hand off to the page. */
+  overscroll-behavior-y: contain;
+}
 
-  .puzzle-container {
-    margin-right: 36px;
-    max-width: 50%;
-  }
+.slide-home {
+  background: #ffffff;
+  color: #111111;
+}
 
-  .content-container {
-    gap: 24px;
-    margin-left: 24px;
-    width: 50%;
-    margin-bottom: 0;
+/* Selected text on Home: a pale Free Solo orange (#e2703f at 30% on white). */
+.slide-home ::selection {
+  background: #f6d2c4;
+  color: #111111;
+}
+
+
+@media (max-width: 760px) {
+  :root {
+    --game-row-h: calc(108px + env(safe-area-inset-bottom, 0px));
   }
 }

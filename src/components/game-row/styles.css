@@ -1,0 +1,214 @@
+/* One full-screen layer per slide, each holding a copy of the row and cut to
+   its slide's place on screen (clip-path set in index.tsx). */
+.game-row-layer {
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 10;
+}
+
+.game-row {
+  /* No background: the squares and names sit directly on the slide. Slides stop
+     their scrolling above the row (see .slide-scroll), so nothing goes under it. */
+  bottom: 0;
+  color: var(--row-ink, #111111);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  left: 0;
+  padding: 16px max(24px, env(safe-area-inset-right, 0px))
+    calc(16px + env(safe-area-inset-bottom, 0px))
+    max(24px, env(safe-area-inset-left, 0px));
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+.game-row-inner {
+  align-items: flex-end;
+  display: flex;
+  gap: 20px;
+  margin: 0 auto;
+  max-width: 1040px;
+}
+
+.game-row-scroller {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.game-row-items {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-top: 4px;
+  pointer-events: auto;
+  scrollbar-width: none;
+}
+
+.game-row-items::-webkit-scrollbar {
+  display: none;
+}
+
+.game-row-item,
+.game-row-arrows button,
+.game-row-more {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.game-row-item {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 5px;
+  /* As wide as its square, or its name if that is longer. */
+  min-width: 64px;
+  text-align: left;
+}
+
+.game-row-item:not([aria-current="true"]) {
+  opacity: 0.45;
+}
+
+/* Mouse only: on touch screens a tap leaves :hover stuck on whatever ends up
+   under the finger (e.g. after the → scrolls the row). */
+@media (hover: hover) {
+  .game-row-item:hover {
+    opacity: 1;
+  }
+}
+
+.game-row-square {
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  display: grid;
+  height: 64px;
+  overflow: hidden;
+  place-items: center;
+  width: 64px;
+}
+
+.game-row-square img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.game-row-square svg {
+  height: auto;
+  width: 60%;
+}
+
+.game-row-mark {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.game-row-name {
+  font-size: 12px;
+  line-height: 1.2;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* The current item: full strength, a heavier square and an underlined name. */
+.game-row-item[aria-current="true"] .game-row-square {
+  border-width: 2px;
+}
+
+.game-row-item[aria-current="true"] .game-row-name {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.game-row-arrows {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 22px;
+  pointer-events: auto;
+}
+
+.game-row-arrows button {
+  border: 1px solid currentColor;
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 15px;
+  height: 30px;
+  line-height: 1;
+  width: 30px;
+}
+
+/* Pressed, or just used by a key or swipe: filled with the ink. */
+.game-row-arrows button:active,
+.game-row-arrows button.is-flashing {
+  background: currentColor;
+}
+
+.game-row-arrows button:active > span,
+.game-row-arrows button.is-flashing > span {
+  color: var(--row-bg, #ffffff);
+}
+
+/* Shown only when the row has more items off that side (phones). A small
+   square over the row's edge, filled with the slide color and centered on the
+   squares (4px row padding + half the square - 15px). */
+.game-row-more {
+  background: var(--row-bg, #ffffff);
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 15px;
+  height: 30px;
+  line-height: 1;
+  pointer-events: auto;
+  position: absolute;
+  top: 21px;
+  width: 30px;
+}
+
+.game-row-more-left {
+  left: 0;
+}
+
+.game-row-more-right {
+  right: 0;
+}
+
+.game-row-more:active {
+  background: currentColor;
+}
+
+.game-row-more:active > span {
+  color: var(--row-bg, #ffffff);
+}
+
+.game-row :focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .game-row-item {
+    min-width: 52px;
+  }
+
+  .game-row-square {
+    width: 52px;
+  }
+
+  .game-row-square {
+    height: 52px;
+  }
+
+  .game-row-arrows {
+    display: none;
+  }
+
+  .game-row-more {
+    top: 15px;
+  }
+}
+

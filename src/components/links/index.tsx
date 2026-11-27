@@ -21,17 +21,13 @@ const LINKS = [
     href: "https://www.linkedin.com/posts/underdogfantasy_udlife-activity-7084570560994652160-1eI4?utm_source=share&utm_medium=member_desktop",
     label: "Me at work",
   },
-  {
-    href: "https://arissafram.github.io/react-jigsaw/demo/",
-    label: "react-jigsaw",
-  },
 ];
 
 const Links = () => {
   return (
     <ul className="links">
       {LINKS.map((link) => (
-        <li className="link">
+        <li className="link" key={link.href}>
           <a href={link.href} rel="noopener noreferrer" target="_blank">
             {link.label}
           </a>

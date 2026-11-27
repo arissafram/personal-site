@@ -1,17 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <path d="M 12,12 
-           L 26,12 
-           C 26,8 30,4 34,4 
-           C 38,4 42,8 42,12 
-           L 52,12 
-           L 52,26 
-           C 56,26 60,30 60,34 
-           C 60,38 56,42 52,42 
-           L 52,52 
-           L 12,52 
-           Z" 
-        fill="none" 
-        stroke="black" 
-        stroke-width="4" 
-        stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>.small{display:none}@media (max-width:24px){.big{display:none}.small{display:inline}}</style>
+  <rect width="32" height="32" fill="#ffffff"/>
+  <g class="big">
+    <rect x="2" y="2" width="28" height="28" fill="none" stroke="#111111" stroke-width="2"/>
+    <path transform="translate(5.44 10) scale(0.12)" fill="#111111" fill-rule="evenodd" d="M0 100L36 0H64L100 100H79L71.8 80H28.2L21 100ZM50 19.4L65.3 62H34.7ZM106 0H176V17H126V42H168V58H126V100H106Z"/>
+  </g>
+  <g class="small"><path transform="translate(2.56 8.36) scale(0.1527)" fill="#111111" fill-rule="evenodd" d="M0 100L36 0H64L100 100H79L71.8 80H28.2L21 100ZM50 19.4L65.3 62H34.7ZM106 0H176V17H126V42H168V58H126V100H106Z"/></g>
 </svg>

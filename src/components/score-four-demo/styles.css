@@ -1,0 +1,166 @@
+/* Score Four in the slide's colors: the panel is the slide blue with white
+   1px lines and text, and the 3D view keeps the package's own blue (it's
+   drawn in WebGL, not CSS). The box has an explicit height that fits above
+   the game row. */
+.score-four-demo {
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+  height: clamp(420px, calc(100dvh - var(--game-row-h) - 120px), 560px);
+  justify-self: end;
+  max-width: 620px;
+  width: 100%;
+}
+
+.score-four-demo .score-four {
+  --sf-field: #1d3fd6;
+  --sf-ink: var(--slide-ink, #ffffff);
+  --sf-paper: var(--slide-bg, #2b4fd1);
+  background: transparent;
+  min-height: 0;
+}
+
+/* The board is never wide enough for the package's own side-by-side layout
+   (700px+), but stacking would push the board under the buttons. Keep a
+   narrow panel beside the view at every width but a phone's. */
+.score-four-demo .score-four .sf-main {
+  flex-direction: row;
+}
+
+.score-four-demo .score-four .sf-view {
+  min-height: 0;
+}
+
+.score-four-demo .score-four .sf-hint {
+  /* The package colors it with --sf-paper, which is now the slide blue. */
+  color: var(--sf-ink);
+  font-size: 11px;
+  padding: 8px 12px 10px;
+}
+
+.score-four-demo .score-four .sf-header {
+  border-bottom: 1px solid var(--sf-ink);
+  flex-direction: row;
+  padding: 10px 12px;
+}
+
+.score-four-demo .score-four .sf-status {
+  font-size: 14px;
+}
+
+.score-four-demo .score-four .sf-panel {
+  border-left: 1px solid var(--sf-ink);
+  overflow-y: auto;
+  width: 172px;
+}
+
+.score-four-demo .score-four .sf-panel > * {
+  padding: 12px;
+}
+
+.score-four-demo .score-four .sf-minimap {
+  gap: 10px 8px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.score-four-demo .score-four .sf-minimap .layer {
+  font-size: 10px;
+}
+
+.score-four-demo .score-four .sf-buttons {
+  gap: 6px;
+  grid-template-columns: 1fr;
+}
+
+.score-four-demo .score-four button,
+.score-four-demo .score-four select {
+  font-size: 12px;
+}
+
+.score-four-demo .score-four button {
+  padding: 6px 8px;
+}
+
+.score-four-demo .score-four .sf-btn-new:hover {
+  background: var(--sf-paper);
+  border-color: var(--sf-ink);
+  color: var(--sf-ink);
+}
+
+.score-four-demo .score-four button:focus-visible,
+.score-four-demo .score-four select:focus-visible {
+  outline-color: var(--sf-ink);
+}
+
+/* The settings stack: label over its select. */
+.score-four-demo .score-four label {
+  align-items: stretch;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.score-four-demo .score-four select {
+  /* The package's ▾ is black; draw it in white. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0h8L4 5z' fill='%23fff'/%3E%3C/svg%3E");
+  min-width: 0;
+}
+
+.score-four-demo .score-four .sf-panel > .sf-score {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+/* Off screen the view is hidden, so the package draws a 1×1 canvas each
+   frame instead of the full board. */
+.score-four-demo-off .score-four .sf-view-wrap {
+  visibility: hidden;
+}
+
+.score-four-demo-off .score-four .sf-view {
+  display: none;
+}
+
+/* Phone: the view on top, then a compact row of layers and controls under it. */
+@media (max-width: 760px) {
+  .score-four-demo {
+    height: auto;
+    justify-self: center;
+    max-width: 420px;
+  }
+
+  .score-four-demo .score-four .sf-main {
+    flex-direction: column;
+  }
+
+  .score-four-demo .score-four .sf-view {
+    height: min(340px, 90vw);
+    flex: none;
+  }
+
+  .score-four-demo .score-four .sf-panel {
+    border-left: 0;
+    border-top: 1px solid var(--sf-ink);
+    overflow: visible;
+    width: auto;
+  }
+
+  .score-four-demo .score-four .sf-minimap {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .score-four-demo .score-four .sf-buttons {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .score-four-demo .score-four .sf-btn-new {
+    grid-column: auto;
+  }
+
+  .score-four-demo .score-four .sf-settings {
+    flex-direction: row;
+  }
+
+  .score-four-demo .score-four .sf-settings label {
+    flex: 1;
+  }
+}

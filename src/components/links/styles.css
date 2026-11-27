@@ -1,9 +1,11 @@
 .links {
   display: flex;
-  column-gap: 12px;
+  column-gap: 1em;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 8px;
+  /* Smaller than the bio: the links are a footnote to it. */
+  font-size: var(--link-text);
+  row-gap: 0.3em;
 }
 
 .link:last-of-type {
@@ -11,10 +13,12 @@
 }
 
 .link a {
-  color: black;
-  font-family: "Barlow", sans-serif;
-  font-size: 14px;
-  line-height: 18px;
+  color: #111111;
+  text-decoration-thickness: 1px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: inherit;
+  line-height: 1.12;
+  text-underline-offset: 0.12em;
 }
 
 .link a:visted {
@@ -22,17 +26,5 @@
 }
 
 .link a:hover {
-  color: black;
-  opacity: 0.6;
-}
-
-@media screen and (min-width: 850px) {
-  .links {
-    column-gap: 20px;
-    row-gap: 12px;
-  }
-
-  .link a {
-    font-size: 16px;
-  }
+  text-decoration-thickness: 2px;
 }
