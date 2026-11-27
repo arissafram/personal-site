@@ -24,26 +24,6 @@ const LEVELS = [
 ] as const;
 type LevelId = (typeof LEVELS)[number]["id"];
 
-const STORAGE_KEY = "arissafram.jigsaw-difficulty";
-
-const readLevel = (): LevelId => {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (LEVELS.some((l) => l.id === saved)) return saved as LevelId;
-  } catch {
-    // Storage blocked: start on Hard.
-  }
-  return "hard";
-};
-
-const saveLevel = (id: LevelId) => {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, id);
-  } catch {
-    // Not remembered; that's fine.
-  }
-};
-
 // The photo puzzle from react-jigsaw, drawn in the slide's own colors: the
 // board is the slide color, and the lines, timer and ↻ are its ink (see
 // styles.css). Lines and the timer use `currentColor`, which is the slide ink.
@@ -79,12 +59,11 @@ const JigsawDemo = () => {
   const settle = useSlideSettle(ref);
   const [shown, setShown] = useState(false);
   if (settle === "here" && !shown) setShown(true);
-  const [level, setLevel] = useState<LevelId>(readLevel);
+  const [level, setLevel] = useState<LevelId>("easy");
   const size = LEVELS.find((l) => l.id === level)!.size;
 
   const choose = (id: LevelId) => {
     setLevel(id);
-    saveLevel(id);
   };
 
   // Clicking a piece or a difficulty shouldn't leave it focused, or ← → would
