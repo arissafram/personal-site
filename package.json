@@ -29,11 +29,11 @@
   "dependencies": {
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
-    "free-solo": "github:arissafram/free-solo#endless",
+    "free-solo": "github:arissafram/free-solo#claude/pause-5ad59f",
     "hot-dog-run": "github:arissafram/hot-dog-run",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-jigsaw": "github:arissafram/react-jigsaw#af/touch-scroll",
+    "react-jigsaw": "github:arissafram/react-jigsaw#af/timer-paused",
     "score-four": "github:arissafram/score-four#main",
     "walt-extension": "github:arissafram/walt-extension#main"
   },
