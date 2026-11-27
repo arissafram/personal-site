@@ -28,9 +28,13 @@ export interface GameRowItem {
 
 interface GameRowProps {
   items: GameRowItem[];
-  /** The slide this copy of the row sits over: sets its colors and underline. */
+  /** The slide this copy of the row sits over: sets its colors. */
   shown: number;
-  /** The carousel's current slide, for the arrows and keeping it in view. */
+  /**
+   * The carousel's current slide: marks its item (in every copy, so the mark
+   * moves the moment an item is picked instead of waiting for the glide to
+   * bring its slide's copy over), and drives the arrows and keeping it in view.
+   */
   current: number;
   flash: Flash;
   /** `jump` is true for picking an item, false for the arrows. */
@@ -146,7 +150,7 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
                 key={item.slug}
                 type="button"
                 className="game-row-item"
-                aria-current={i === shown ? "true" : undefined}
+                aria-current={i === current ? "true" : undefined}
                 onClick={select(i, true)}
               >
                 <span

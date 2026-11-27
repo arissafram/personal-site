@@ -40,6 +40,11 @@
   display: flex;
   gap: 14px;
   overflow-x: auto;
+  /* Scrolling sideways clips this box top and bottom too, which would cut
+     off the names' underlines. 6px of room below, taken back by the margin,
+     so nothing moves. */
+  margin-bottom: -6px;
+  padding-bottom: 6px;
   padding-top: 4px;
   pointer-events: auto;
   scrollbar-width: none;
@@ -69,15 +74,30 @@
   text-align: left;
 }
 
+/* The others are faded a little, not so much that they look switched off.
+   Hovering or pressing one brings it to full strength and underlines its
+   name. Hover is mouse only: on touch screens a tap leaves :hover stuck on
+   whatever ends up under the finger (e.g. after the → scrolls the row). */
 .game-row-item:not([aria-current="true"]) {
-  opacity: 0.45;
+  opacity: 0.75;
 }
 
-/* Mouse only: on touch screens a tap leaves :hover stuck on whatever ends up
-   under the finger (e.g. after the → scrolls the row). */
+/* Pressing one (touch included) does the same as hovering. */
+.game-row-item:active {
+  opacity: 1;
+}
+
+.game-row-item:active .game-row-name {
+  text-decoration: underline;
+}
+
 @media (hover: hover) {
-  .game-row-item:hover {
+  .game-row-item:not([aria-current="true"]):hover {
     opacity: 1;
+  }
+
+  .game-row-item:not([aria-current="true"]):hover .game-row-name {
+    text-decoration: underline;
   }
 }
 
@@ -111,18 +131,18 @@
 .game-row-name {
   font-size: 12px;
   line-height: 1.2;
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   white-space: nowrap;
 }
 
-/* The current item: full strength, a heavier square and an underlined name. */
+/* The current item: a heavier square and an underlined name. */
 .game-row-item[aria-current="true"] .game-row-square {
   border-width: 2px;
 }
 
 .game-row-item[aria-current="true"] .game-row-name {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
 }
 
 .game-row-arrows {
