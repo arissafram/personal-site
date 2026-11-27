@@ -133,6 +133,6 @@
   flex-direction: column;
   /* Smaller than the description and a little apart, so they read as a
      footnote to it, like the home links do under the bio. */
-  font-size: 14px;
+  font-size: 12px;
   gap: 0.55em;
 }
