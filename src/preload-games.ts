@@ -1,8 +1,6 @@
-// Fetch the puzzle photo and Free Solo's code shortly after the page loads,
-// one at a time while the browser is idle. The games still start only once the
-// carousel comes to rest on their slide, but by then there's nothing left to
-// download, so they appear right away instead of after a wait. (Dogs and
-// Score Four load themselves in the background; see their components.)
+// Fetch the puzzle photo shortly after the page loads, while the browser is
+// idle, so the photo shown before the puzzle mounts is ready. (The games
+// themselves mount in the background; see their components.)
 
 const idle = () =>
   new Promise<void>((resolve) => {
@@ -19,7 +17,6 @@ const loadImage = (src: string) =>
 
 const STEPS: (() => Promise<unknown>)[] = [
   () => loadImage("/puzzle.jpg"),
-  () => import("free-solo"),
 ];
 
 export const preloadGames = () => {

@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Puzzle } from "react-jigsaw";
 import "react-jigsaw/styles";
 
+import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
@@ -73,17 +74,37 @@ const optionsFor = (size: number, stacked: boolean) => ({
 
 const JigsawDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
-  // The timer starts when the puzzle mounts, so wait until the carousel has
-  // come to rest on the slide (mounting it mid-slide change made the slide
-  // stutter). Until then the finished photo holds the space, so the slide
-  // never shows an empty box while it moves in.
+  // The puzzle mounts in the background once the page has loaded (or as soon
+  // as the carousel rests on its slide, if that comes first), so it's already
+  // there on arrival. Until then the finished photo holds the space.
+  //
+  // Its timer starts when it mounts, though. So while nobody has touched it,
+  // it's mounted afresh each time the slide starts to come on screen: the
+  // timer reads 00:00 on arrival. Once someone plays, it's left alone.
   const settle = useSlideSettle(ref);
+  const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
-  if (settle === "here" && !shown) setShown(true);
+  if ((settle === "here" || afterLoad) && !shown) setShown(true);
+  const [round, setRound] = useState(0);
+  const touched = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let onScreen = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !onScreen && !touched.current) setRound((r) => r + 1);
+      onScreen = entry.isIntersecting;
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const [level, setLevel] = useState<LevelId>(readLevel);
   const size = LEVELS.find((l) => l.id === level)!.size;
 
   const choose = (id: LevelId) => {
+    touched.current = false;
     setLevel(id);
     saveLevel(id);
   };
@@ -101,7 +122,13 @@ const JigsawDemo = () => {
   };
 
   return (
-    <div className="jigsaw-demo" ref={ref} onPointerUp={blurAfterPointer}>
+    <div
+      className="jigsaw-demo"
+      ref={ref}
+      onPointerDown={() => (touched.current = true)}
+      onKeyDown={() => (touched.current = true)}
+      onPointerUp={blurAfterPointer}
+    >
       {shown ? (
         <>
           <div className="jigsaw-difficulty" role="radiogroup" aria-label="Difficulty">
@@ -121,7 +148,7 @@ const JigsawDemo = () => {
           {/* rows/columns are read once on mount, so a new key remounts the
               puzzle: new grid, fresh shuffle, timer back to 0. */}
           <Puzzle
-            key={level}
+            key={`${level}-${round}`}
             image="/puzzle.jpg"
             options={optionsFor(size, window.matchMedia(STACKED).matches)}
           />

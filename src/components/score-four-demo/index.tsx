@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type SyntheticEvent } from "react";
 
+import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
@@ -20,25 +21,11 @@ const Board = lazy(() => import("./board"));
 const ScoreFourDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
   const settle = useSlideSettle(ref);
+  const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
-  if (settle === "here" && !shown) setShown(true);
+  if ((settle === "here" || afterLoad) && !shown) setShown(true);
   const [onScreen, setOnScreen] = useState(false);
 
-  useEffect(() => {
-    let id: number | undefined;
-    const mount = () => {
-      if ("requestIdleCallback" in window) id = window.requestIdleCallback(() => setShown(true), { timeout: 3000 });
-      else id = setTimeout(() => setShown(true), 500) as unknown as number;
-    };
-    if (document.readyState === "complete") mount();
-    else window.addEventListener("load", mount, { once: true });
-    return () => {
-      window.removeEventListener("load", mount);
-      if (id === undefined) return;
-      if ("requestIdleCallback" in window) window.cancelIdleCallback(id);
-      else clearTimeout(id);
-    };
-  }, []);
 
   useEffect(() => {
     const el = ref.current;
