@@ -101,10 +101,10 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
     const row = itemsRef.current;
     if (!row) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    row.scrollBy({
-      left: dir * (row.clientWidth - 76),
-      behavior: reduce ? "auto" : "smooth",
-    });
+    // Clamp to the row's ends ourselves: iOS Safari's smooth scroll overshoots.
+    const max = row.scrollWidth - row.clientWidth;
+    const left = Math.min(Math.max(row.scrollLeft + dir * (row.clientWidth - 76), 0), max);
+    row.scrollTo({ left, behavior: reduce ? "auto" : "smooth" });
     if (e.detail > 0) e.currentTarget.blur();
   };
 

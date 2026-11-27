@@ -73,8 +73,12 @@
   opacity: 0.45;
 }
 
-.game-row-item:hover {
-  opacity: 1;
+/* Mouse only: on touch screens a tap leaves :hover stuck on whatever ends up
+   under the finger (e.g. after the → scrolls the row). */
+@media (hover: hover) {
+  .game-row-item:hover {
+    opacity: 1;
+  }
 }
 
 .game-row-square {
