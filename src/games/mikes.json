@@ -8,6 +8,5 @@
   "demo": "mikes",
   "description": "Just like Chrome Dino, jump the boxes and see how long you can survive without getting packaged up.",
   "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/mikes" },
-  "links": [{ "label": "Visit the website", "href": "https://www.mikesdildos.com" }],
   "status": "shipped"
 }
