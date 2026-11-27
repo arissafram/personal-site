@@ -6,7 +6,7 @@
   "ink": "#111111",
   "art": "box",
   "demo": "walt",
-  "description": "A Chrome extension that bounces a box across every tab, like an old DVD screensaver. Turn it on, turn it off, or let it come out when you step away.",
+  "description": "A Chrome extension inspired by the beloved DVD screensaver. Pick a celebrity box, then leave it bouncing and wait for it to hit the corner, or switch on Sleep mode so it comes out whenever your computer sits idle.",
   "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/walt-extension" },
   "links": [{ "label": "Listen on YouTube", "href": "https://youtu.be/nLZj8OtuJYI?t=2035" }],
   "status": "shipped"

@@ -6,7 +6,7 @@
   "ink": "#111111",
   "art": "wall",
   "demo": "free-solo",
-  "description": "An endless climbing game. Reach from hold to hold and dodge the rocks falling from above.",
+  "description": "Inspired by SkiFree. Climb as high as you can without getting knocked off the wall.",
   "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/free-solo" },
   "status": "in-progress"
 }

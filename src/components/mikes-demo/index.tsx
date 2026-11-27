@@ -39,6 +39,10 @@ const MikesDemo = () => {
   return (
     <div className="mikes-demo">
       <div className="mikes-board" ref={boardRef} role="img" aria-label="Mike's, a running game. Tap or press Space to jump." />
+      <p className="mikes-hint" aria-hidden="true">
+        <span className="mikes-hint-mouse">Space or click to start. Double space or double click to boost your jump.</span>
+        <span className="mikes-hint-touch">Tap to start. Double tap to boost your jump.</span>
+      </p>
     </div>
   );
 };

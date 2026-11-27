@@ -7,7 +7,8 @@
   "ink": "#ffffff",
   "art": "four",
   "demo": "score-four",
-  "description": "Four in a row, in 3D: sixteen pegs, four beads high. Line up four through the cube in any direction before the computer does.",
+  "description": "Take turns dropping beads onto the pegs. The first to get four in a row wins: across, up, or diagonally through the cube.",
   "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/score-four" },
+  "links": [{ "label": "View the original", "href": "https://en.wikipedia.org/wiki/Score_four" }],
   "status": "in-progress"
 }

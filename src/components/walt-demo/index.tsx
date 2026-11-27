@@ -335,7 +335,7 @@ const WaltDemo = () => {
         <div className="walt-page" ref={pageRef}>
           {/* The fake tab is where you get Walt: a download button and the steps. */}
           <div className="walt-page-copy">
-            <h3 className="walt-page-title">Install Walt</h3>
+            <h3 className="walt-page-title">Install Walt Chrome Extension</h3>
             <div className="walt-download">
               <a className="walt-download-button" href={DOWNLOAD_HREF} download>
                 Download Walt
@@ -344,16 +344,14 @@ const WaltDemo = () => {
             </div>
             <p>Then:</p>
             <ol>
-              <li>Unzip it. Keep the walt folder somewhere it can stay, like Documents.</li>
+              <li>Unzip it. Save the unzipped folder to Applications.</li>
               <li>
-                Open <code>chrome://extensions</code> and turn on Developer mode.
+                Open <code>chrome://extensions</code> and turn on &ldquo;Developer mode&rdquo;.
               </li>
-              <li>Click Load unpacked and choose the walt folder.</li>
-              <li>Pin Walt from the puzzle-piece menu in the toolbar.</li>
+              <li>Click &ldquo;Load unpacked&rdquo; and choose your Walt Extension folder.</li>
+              <li>Go to your Chrome Extension Manager and pin Walt.</li>
+              <li>Click the extension to change its settings. Try it here: click Walt in the toolbar above.</li>
             </ol>
-            <p className="walt-page-note">
-              Chrome on a computer only. Walt isn't in the Web Store, so it's installed by hand.
-            </p>
           </div>
           <img
             ref={pageBoxRef}
@@ -463,6 +461,7 @@ const WaltDemo = () => {
           )}
         </div>
       </div>
+      <p className="walt-note">Chrome on a computer only. Walt isn't in the Web Store, so it's installed by hand.</p>
     </div>
   );
 };

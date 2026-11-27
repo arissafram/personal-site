@@ -72,7 +72,7 @@ const FreeSoloDemo = () => {
         aria-label="Free Solo, an endless climbing game. Click the wall, then use the arrow keys to climb. Escape to leave."
       />
       <p className="free-solo-hint" aria-hidden="true">
-        <span className="free-solo-hint-mouse">Click the wall, then use the arrow keys</span>
+        <span className="free-solo-hint-mouse">Use ← → to start, or click the holds</span>
         <span className="free-solo-hint-touch">Swipe on the wall to climb</span>
       </p>
     </div>
