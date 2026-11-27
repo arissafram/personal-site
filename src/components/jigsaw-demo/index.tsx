@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Puzzle } from "react-jigsaw";
 import "react-jigsaw/styles";
 
+import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
@@ -73,12 +74,19 @@ const optionsFor = (size: number, stacked: boolean) => ({
 
 const JigsawDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
-  // The timer starts when the puzzle mounts, so wait until the carousel has
-  // come to rest on the slide (mounting it mid-slide change made the slide
-  // stutter). Until then an empty box of the same size holds the space.
+  // The puzzle mounts in the background once the page has loaded (or as soon
+  // as the carousel rests on its slide, if that comes first), so it's already
+  // there on arrival. Until then the finished photo holds the space. Its timer
+  // is held until the carousel comes to rest on the slide, and held again only
+  // once it rests on another one (a drag or a peek doesn't stop the clock).
   const settle = useSlideSettle(ref);
+  const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
-  if (settle === "here" && !shown) setShown(true);
+  if ((settle === "here" || afterLoad) && !shown) setShown(true);
+  const [paused, setPaused] = useState(settle !== "here");
+  if (settle === "here" && paused) setPaused(false);
+  if (settle === "elsewhere" && !paused) setPaused(true);
+
   const [level, setLevel] = useState<LevelId>(readLevel);
   const size = LEVELS.find((l) => l.id === level)!.size;
 
@@ -121,12 +129,15 @@ const JigsawDemo = () => {
               puzzle: new grid, fresh shuffle, timer back to 0. */}
           <Puzzle
             key={level}
+            paused={paused}
             image="/puzzle.jpg"
             options={optionsFor(size, window.matchMedia(STACKED).matches)}
           />
         </>
       ) : (
-        <div className="jigsaw-demo-placeholder" aria-hidden="true" />
+        <div className="jigsaw-demo-placeholder" aria-hidden="true">
+          <img src="/puzzle.jpg" alt="" decoding="async" />
+        </div>
       )}
     </div>
   );

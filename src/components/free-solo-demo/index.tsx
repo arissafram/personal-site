@@ -1,23 +1,23 @@
 import { useEffect, useRef, type KeyboardEvent } from "react";
 import type { FreeSoloGame } from "free-solo";
 
+import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
 
-// Phaser is bundled into free-solo (~1.2 MB), so it loads in its own chunk,
-// and only once the slide comes on screen. The promise is kept, so coming
-// back to the slide doesn't fetch it again.
+// Phaser is bundled into free-solo (~1.2 MB), so it loads in its own chunk
+// after the page. The promise is kept, so it's only fetched once.
 let loading: Promise<typeof import("free-solo")> | null = null;
 const load = () => (loading ??= import("free-solo"));
 
 // Free Solo, running in the slide.
 //
-// The package has no pause(), so the game runs only while the carousel is at
-// rest on its slide: it mounts once the slide has stopped moving in, and is
-// torn down as soon as the carousel starts moving away (the run ends; the best
-// height stays in localStorage). Phaser running during a slide change made
-// every frame of it late.
+// It mounts in the background once the page has loaded (or as soon as the
+// carousel rests on its slide, if that comes first), paused: the wall is drawn
+// but nothing runs. It plays once the carousel comes to rest on its slide, and
+// pauses again only once the carousel has come to rest on another one, so a
+// drag or a swipe that snaps back never interrupts a climb.
 //
 // Keys: `keys: "focus"`, so ← → move the carousel until someone clicks or taps
 // the wall. Then the arrow keys climb (the game cancels them, so the carousel
@@ -30,19 +30,29 @@ const FreeSoloDemo = () => {
   const settle = useSlideSettle(boardRef);
   const settleRef = useRef(settle);
   settleRef.current = settle;
+  const afterLoad = useAfterLoad();
+  const wanted = settle === "here" || afterLoad;
 
   useEffect(() => {
     const board = boardRef.current;
-    if (!board) return;
-    if (settle === "here" && !gameRef.current) {
-      load().then(({ mount }) => {
-        if (settleRef.current === "here" && !gameRef.current)
-          gameRef.current = mount(board, { keys: "focus", storageKey: "free-solo-best" });
+    if (!board || !wanted || gameRef.current) return;
+    let cancelled = false;
+    load().then(({ mount }) => {
+      if (cancelled || gameRef.current) return;
+      gameRef.current = mount(board, {
+        active: settleRef.current === "here",
+        keys: "focus",
+        storageKey: "free-solo-best",
       });
-    } else if (settle !== "here") {
-      gameRef.current?.destroy();
-      gameRef.current = null;
-    }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [wanted]);
+
+  useEffect(() => {
+    if (settle === "here") gameRef.current?.resume();
+    else if (settle === "elsewhere") gameRef.current?.pause();
   }, [settle]);
 
   useEffect(

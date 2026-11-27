@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type SyntheticEvent } from "react";
 
+import { useAfterLoad } from "../../hooks/use-after-load";
 import { useSlideSettle } from "../../hooks/use-slide-settle";
 
 import "./styles.css";
@@ -11,17 +12,20 @@ const Board = lazy(() => import("./board"));
 // Score Four against the computer, in the slide's blue.
 //
 // The package has no pause(), and its render loop runs every frame while it's
-// mounted. So the board loads and mounts the first time the carousel comes to
-// rest on the slide (not while slides are changing), and while the slide is
-// off screen the 3D view is hidden: the package then sizes its canvas to 1×1,
-// so each frame draws next to nothing. The game, score and camera stay as
-// they were.
+// mounted. But while the slide is off screen the 3D view is hidden: the
+// package then sizes its canvas to 1×1, so each frame draws next to nothing.
+// That makes it cheap to keep around, so the board mounts in the background
+// once the page has loaded and the browser is idle, and is already there when
+// someone arrives. (Coming to rest on the slide before then mounts it at
+// once.) The game, score and camera stay as they were between visits.
 const ScoreFourDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
   const settle = useSlideSettle(ref);
+  const afterLoad = useAfterLoad();
   const [shown, setShown] = useState(false);
-  if (settle === "here" && !shown) setShown(true);
+  if ((settle === "here" || afterLoad) && !shown) setShown(true);
   const [onScreen, setOnScreen] = useState(false);
+
 
   useEffect(() => {
     const el = ref.current;
@@ -64,10 +68,14 @@ const ScoreFourDemo = () => {
       onChange={blurAfterPointer}
       onPointerUp={blurAfterPointer}
     >
-      {shown && (
-        <Suspense fallback={null}>
+      {/* Until the board is in, an empty box holds its space (on a phone the
+          panel's height comes from its contents, so it would collapse). */}
+      {shown ? (
+        <Suspense fallback={<div className="score-four-demo-placeholder" aria-hidden="true" />}>
           <Board />
         </Suspense>
+      ) : (
+        <div className="score-four-demo-placeholder" aria-hidden="true" />
       )}
     </div>
   );
