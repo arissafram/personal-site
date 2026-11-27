@@ -1,13 +1,13 @@
 /* A white board with a 1px line, like the slides' image boxes. The game sizes
-   itself from .mikes-board: up to 800px wide, 288-360px tall. */
-.mikes-demo {
+   itself from .hot-dog-run-board: up to 800px wide, 288-360px tall. */
+.hot-dog-run-demo {
   box-sizing: border-box;
   justify-self: end;
   max-width: 620px;
   width: 100%;
 }
 
-.mikes-board {
+.hot-dog-run-board {
   background: #ffffff;
   border: 1px solid currentColor;
   box-sizing: content-box;
@@ -23,7 +23,7 @@
 }
 
 /* Like Free Solo's hint. */
-.mikes-hint {
+.hot-dog-run-hint {
   font-size: 13px;
   line-height: 1.3;
   margin: 6px 0 0;
@@ -31,7 +31,7 @@
 }
 
 @media (max-width: 760px) {
-  .mikes-demo {
+  .hot-dog-run-demo {
     justify-self: center;
   }
 }

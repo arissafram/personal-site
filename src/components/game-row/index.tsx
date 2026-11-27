@@ -43,7 +43,7 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
   const itemsRef = useRef<HTMLDivElement>(null);
 
   // A mouse click or tap shouldn't leave the button focused: the next Space
-  // (e.g. starting Mike's) would press it again and draw a focus ring around
+  // (e.g. starting Dogs) would press it again and draw a focus ring around
   // it. Keyboard presses (detail 0) keep focus, so Tab users stay in place.
   const select =
     (i: number, jump = false) =>
