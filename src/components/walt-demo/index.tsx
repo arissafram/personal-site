@@ -461,7 +461,7 @@ const WaltDemo = () => {
           )}
         </div>
       </div>
-      <p className="walt-note">Only available on desktop. Walt isn't in the Chrome Web Store for copyright reasons and must be installed locally.</p>
+      <p className="walt-note">Desktop only. Walt isn't available on the Chrome Web Store due to copyright restrictions and must be installed locally.</p>
     </div>
   );
 };
