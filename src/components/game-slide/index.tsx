@@ -25,17 +25,19 @@ const isExternal = (href: string) => /^https?:/.test(href);
 const externalProps = (href: string) =>
   isExternal(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
-// Turns `[text](url)` in a description into links; the rest stays plain text.
+// Turns `[text](url)` in a description into links and `*text*` into italics;
+// the rest stays plain text.
 const renderDescription = (text: string) =>
-  text.split(/(\[[^\]]+\]\([^)]+\))/).map((part, i) => {
-    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    return m ? (
-      <a key={i} href={m[2]} {...externalProps(m[2])}>
-        {m[1]}
-      </a>
-    ) : (
-      part
-    );
+  text.split(/(\[[^\]]+\]\([^)]+\)|\*[^*]+\*)/).map((part, i) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link)
+      return (
+        <a key={i} href={link[2]} {...externalProps(link[2])}>
+          {link[1]}
+        </a>
+      );
+    const em = part.match(/^\*([^*]+)\*$/);
+    return em ? <em key={i}>{em[1]}</em> : part;
   });
 
 // One game's slide content: a large square image on the left, the name and one

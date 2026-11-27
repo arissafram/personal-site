@@ -140,6 +140,10 @@
   max-width: 26em;
 }
 
+.game-slide-description em {
+  font-style: italic;
+}
+
 .game-slide-description a {
   color: inherit;
   text-decoration: underline;
