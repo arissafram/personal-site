@@ -52,6 +52,13 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
       if (e.detail > 0) e.currentTarget.blur();
     };
 
+  // The arrows name where they go (the carousel loops, so Home's ← is the
+  // last slide). Same short names as the row.
+  const label = (i: number) => {
+    const item = items[(i + items.length) % items.length];
+    return item.shortName ?? item.name;
+  };
+
   // Whether the row has more items off screen to the left / right (phones).
   const [more, setMore] = useState({ left: false, right: false });
   const checkMore = () => {
@@ -170,19 +177,19 @@ const GameRow = ({ items, shown, current, flash, onSelect }: GameRowProps) => {
         <div className="game-row-arrows">
           <button
             type="button"
-            aria-label="Previous"
+            aria-label={`Previous: ${label(current - 1)}`}
             className={flash === "prev" ? "is-flashing" : undefined}
             onClick={select(current - 1)}
           >
-            <span aria-hidden="true">←</span>
+            <span aria-hidden="true">← {label(current - 1)}</span>
           </button>
           <button
             type="button"
-            aria-label="Next"
+            aria-label={`Next: ${label(current + 1)}`}
             className={flash === "next" ? "is-flashing" : undefined}
             onClick={select(current + 1)}
           >
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">{label(current + 1)} →</span>
           </button>
         </div>
       </div>

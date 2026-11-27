@@ -12,6 +12,14 @@ body,
   height: 100%;
 }
 
+/* iOS Safari enlarges text when the phone turns to landscape and doesn't
+   always shrink it back on returning to portrait. Sizes here are already
+   set for each width, so turn that off. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* The document itself never scrolls. iOS scrolls the page under its toolbars
    even with overflow: hidden, which left the slides shifted up and the row
    floating above a white strip. Only the track and each .slide-scroll scroll. */
