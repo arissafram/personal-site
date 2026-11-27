@@ -128,20 +128,29 @@
 .game-row-arrows {
   display: flex;
   flex: none;
-  gap: 6px;
-  padding-bottom: 22px;
+  gap: 8px;
+  padding-bottom: 19px;
   pointer-events: auto;
 }
 
-/* Each arrow names the slide it goes to: "← Home", "Walt →". */
+/* Big enough to read as the way to move between slides. */
 .game-row-arrows button {
+  align-items: center;
   border: 1px solid currentColor;
-  font-family: "Courier Prime", "Courier New", monospace;
-  font-size: 14px;
-  height: 40px;
-  line-height: 1;
-  padding: 0 14px;
-  white-space: nowrap;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.game-row-arrow-icon {
+  fill: none;
+  height: 24px;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 3;
+  width: 24px;
 }
 
 /* Pressed, or just used by a key or swipe: filled with the ink. */
@@ -150,8 +159,8 @@
   background: currentColor;
 }
 
-.game-row-arrows button:active > span,
-.game-row-arrows button.is-flashing > span {
+.game-row-arrows button:active > svg,
+.game-row-arrows button.is-flashing > svg {
   color: var(--row-bg, #ffffff);
 }
 
@@ -193,15 +202,11 @@
   outline-offset: 3px;
 }
 
-/* The named arrows need about 810px beside the row. Narrower, they go, and
-   the row's own small arrows over its ends take over (as on phones). */
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .game-row-arrows {
     display: none;
   }
-}
 
-@media (max-width: 760px) {
   .game-row-item {
     min-width: 52px;
   }
