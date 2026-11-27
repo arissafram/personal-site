@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState, type SyntheticEvent } from "react";
 
+import { useSlideSettle } from "../../hooks/use-slide-settle";
+
 import "./styles.css";
 
 // Three.js is ~500 kB, so the board loads in its own chunk, and only once the
@@ -9,22 +11,22 @@ const Board = lazy(() => import("./board"));
 // Score Four against the computer, in the slide's blue.
 //
 // The package has no pause(), and its render loop runs every frame while it's
-// mounted. So the board mounts the first time the slide comes on screen, and
-// while the slide is off screen the 3D view is hidden: the package then sizes
-// its canvas to 1×1, so each frame draws next to nothing. The game, score and
-// camera stay as they were.
+// mounted. So the board loads and mounts the first time the carousel comes to
+// rest on the slide (not while slides are changing), and while the slide is
+// off screen the 3D view is hidden: the package then sizes its canvas to 1×1,
+// so each frame draws next to nothing. The game, score and camera stay as
+// they were.
 const ScoreFourDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const settle = useSlideSettle(ref);
   const [shown, setShown] = useState(false);
+  if (settle === "here" && !shown) setShown(true);
   const [onScreen, setOnScreen] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      setOnScreen(entry.isIntersecting);
-      if (entry.isIntersecting) setShown(true);
-    });
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
     observer.observe(el);
     return () => observer.disconnect();
   }, []);

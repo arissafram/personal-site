@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import { memo, type ComponentType } from "react";
 
 import type { Game } from "../../games";
 
@@ -78,4 +78,6 @@ const GameSlide = ({ game }: { game: Game }) => {
   );
 };
 
-export default GameSlide;
+// The slides don't change when the current slide does, so they skip the
+// re-render the carousel does on every slide change.
+export default memo(GameSlide);

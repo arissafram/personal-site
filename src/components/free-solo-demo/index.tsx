@@ -1,6 +1,8 @@
 import { useEffect, useRef, type KeyboardEvent } from "react";
 import type { FreeSoloGame } from "free-solo";
 
+import { useSlideSettle } from "../../hooks/use-slide-settle";
+
 import "./styles.css";
 
 // Phaser is bundled into free-solo (~1.2 MB), so it loads in its own chunk,
@@ -11,9 +13,11 @@ const load = () => (loading ??= import("free-solo"));
 
 // Free Solo, running in the slide.
 //
-// The package has no pause(), so the game runs only while the slide is on
-// screen: it mounts when the slide comes into view and is torn down when it
-// leaves (the run ends; the best height stays in localStorage).
+// The package has no pause(), so the game runs only while the carousel is at
+// rest on its slide: it mounts once the slide has stopped moving in, and is
+// torn down as soon as the carousel starts moving away (the run ends; the best
+// height stays in localStorage). Phaser running during a slide change made
+// every frame of it late.
 //
 // Keys: `keys: "focus"`, so ← → move the carousel until someone clicks or taps
 // the wall. Then the arrow keys climb (the game cancels them, so the carousel
@@ -22,40 +26,32 @@ const load = () => (loading ??= import("free-solo"));
 // it touch-action: none, so they never scroll the carousel.
 const FreeSoloDemo = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const gameRef = useRef<FreeSoloGame | null>(null);
+  const settle = useSlideSettle(boardRef);
+  const settleRef = useRef(settle);
+  settleRef.current = settle;
 
   useEffect(() => {
     const board = boardRef.current;
     if (!board) return;
-    let game: FreeSoloGame | null = null;
-    let onScreen = false;
-    let unmounted = false;
-
-    const start = () => {
+    if (settle === "here" && !gameRef.current) {
       load().then(({ mount }) => {
-        if (unmounted || !onScreen || game) return;
-        game = mount(board, { keys: "focus", storageKey: "free-solo-best" });
+        if (settleRef.current === "here" && !gameRef.current)
+          gameRef.current = mount(board, { keys: "focus", storageKey: "free-solo-best" });
       });
-    };
-    const stop = () => {
-      game?.destroy();
-      game = null;
-    };
+    } else if (settle !== "here") {
+      gameRef.current?.destroy();
+      gameRef.current = null;
+    }
+  }, [settle]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        onScreen = entry.isIntersecting;
-        if (onScreen) start();
-        else stop();
-      },
-      { threshold: 0.6 }
-    );
-    observer.observe(board);
-    return () => {
-      unmounted = true;
-      observer.disconnect();
-      stop();
-    };
-  }, []);
+  useEffect(
+    () => () => {
+      gameRef.current?.destroy();
+      gameRef.current = null;
+    },
+    []
+  );
 
   // Escape lets go of the wall, so ← → move the carousel again.
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
