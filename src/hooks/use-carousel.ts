@@ -121,6 +121,19 @@ export const useCarousel = (slugs: string[]) => {
     };
   }, []);
 
+  // Changing slides lands at the top of the new slide, and leaves the others at
+  // their tops too, so coming back to one never opens it halfway down.
+  const firstSlide = useRef(true);
+  useEffect(() => {
+    if (firstSlide.current) {
+      firstSlide.current = false;
+      return;
+    }
+    trackRef.current?.querySelectorAll<HTMLElement>(".slide-scroll").forEach((el) => {
+      el.scrollTop = 0;
+    });
+  }, [current]);
+
   // Follow the scroll position to know which slide is on screen, and tell the
   // games when the track is moving and which slide it came to rest on.
   useEffect(() => {
