@@ -8,6 +8,6 @@
   "art": "four",
   "demo": "score-four",
   "description": "Four in a row, in 3D: sixteen pegs, four beads high. Line up four through the cube in any direction before the computer does.",
-  "link": { "label": "Play", "href": "#" },
+  "link": { "label": "View on GitHub", "href": "https://github.com/arissafram/score-four" },
   "status": "in-progress"
 }
