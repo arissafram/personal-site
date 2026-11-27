@@ -7,7 +7,12 @@ backend:
     build:
       commands:
         - nvm use 20
-        - npm ci
+        # Not `npm ci`: @aws-amplify/data-construct bundles copies of its
+        # dependencies that don't match its own requirements (semver,
+        # @opentelemetry/core), so npm ci's lockfile check always fails, even
+        # with a freshly generated lockfile. npm install keeps the lockfile's
+        # versions and tolerates it.
+        - npm install --no-audit --no-fund
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
