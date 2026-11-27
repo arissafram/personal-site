@@ -88,9 +88,14 @@ const MagneticPoemDemo = () => {
   // A word moved after Knicks: the package's own Save takes over.
   if (knicks && info.dirty) setKnicks(null);
   const status = knicksStatus ?? info.status;
-  const canSave = knicks
-    ? (info.status === "idle" || info.status === "saved") && knicksStatus !== "saving"
-    : info.canSave;
+  // Loading and saving take a moment. The buttons don't fade out (or say
+  // "Saving…") meanwhile, which flashed on every save and Knicks; clicks
+  // while busy are ignored instead.
+  const busy = status === "loading" || status === "saving";
+  const canSave = !!knicks || info.dirty;
+  const unlessBusy = (action: () => unknown) => () => {
+    if (!busy) action();
+  };
 
   return (
     <div className="magnetic-poem-demo" ref={ref}>
@@ -99,20 +104,18 @@ const MagneticPoemDemo = () => {
           type="button"
           className="magnetic-poem-demo-save"
           disabled={!canSave}
-          onClick={() => (knicks ? saveKnicks(knicks.version) : poem.current?.save())}
+          onClick={unlessBusy(() => (knicks ? saveKnicks(knicks.version) : poem.current?.save()))}
         >
           Save
         </button>
         <button
           type="button"
           className="magnetic-poem-demo-save"
-          disabled={status === "loading" || status === "saving"}
-          onClick={showKnicks}
+          onClick={unlessBusy(showKnicks)}
         >
           Knicks
         </button>
         <p className="magnetic-poem-demo-status" role="status">
-          {status === "saving" && "Saving…"}
           {status === "save-error" && "Couldn't save. Try again in a moment."}
           {status === "load-error" && (
             <>
@@ -138,8 +141,7 @@ const MagneticPoemDemo = () => {
           className="magnetic-poem-demo-refresh"
           title="Load the saved poem"
           aria-label="Load the saved poem"
-          disabled={status === "loading" || status === "saving"}
-          onClick={() => poem.current?.reload()}
+          onClick={unlessBusy(() => poem.current?.reload())}
         >
           <svg viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
