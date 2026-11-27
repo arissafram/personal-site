@@ -9,6 +9,6 @@
   "demo": "jigsaw",
   "description": "A reusable React component for embedding jigsaw puzzles in any React project. Give it an image, choose the number of pieces, and it cuts and shuffles them. This one is me.",
   "link": { "label": "Install react-jigsaw", "href": "https://github.com/arissafram/react-jigsaw#installation" },
-  "links": [{ "label": "See demo", "href": "https://arissafram.github.io/react-jigsaw/demo/" }],
+  "links": [{ "label": "See full demo", "href": "https://arissafram.github.io/react-jigsaw/demo/" }],
   "status": "shipped"
 }
