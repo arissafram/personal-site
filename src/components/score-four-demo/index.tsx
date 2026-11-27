@@ -64,10 +64,14 @@ const ScoreFourDemo = () => {
       onChange={blurAfterPointer}
       onPointerUp={blurAfterPointer}
     >
-      {shown && (
-        <Suspense fallback={null}>
+      {/* Until the board is in, an empty box holds its space (on a phone the
+          panel's height comes from its contents, so it would collapse). */}
+      {shown ? (
+        <Suspense fallback={<div className="score-four-demo-placeholder" aria-hidden="true" />}>
           <Board />
         </Suspense>
+      ) : (
+        <div className="score-four-demo-placeholder" aria-hidden="true" />
       )}
     </div>
   );

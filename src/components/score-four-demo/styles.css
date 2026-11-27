@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.score-four-demo-placeholder {
+  height: 100%;
+}
+
 .score-four-demo .score-four {
   --sf-field: #1d3fd6;
   --sf-ink: var(--slide-ink, #ffffff);
@@ -126,6 +130,12 @@
     height: auto;
     justify-self: center;
     max-width: 420px;
+  }
+
+  /* About the board's height on a phone: the header, the view, then the
+     layers, buttons and settings under it. */
+  .score-four-demo-placeholder {
+    height: calc(min(340px, 90vw) + 260px);
   }
 
   .score-four-demo .score-four .sf-main {
