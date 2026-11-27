@@ -75,7 +75,8 @@ const JigsawDemo = () => {
   const ref = useRef<HTMLDivElement>(null);
   // The timer starts when the puzzle mounts, so wait until the carousel has
   // come to rest on the slide (mounting it mid-slide change made the slide
-  // stutter). Until then an empty box of the same size holds the space.
+  // stutter). Until then the finished photo holds the space, so the slide
+  // never shows an empty box while it moves in.
   const settle = useSlideSettle(ref);
   const [shown, setShown] = useState(false);
   if (settle === "here" && !shown) setShown(true);
@@ -126,7 +127,9 @@ const JigsawDemo = () => {
           />
         </>
       ) : (
-        <div className="jigsaw-demo-placeholder" aria-hidden="true" />
+        <div className="jigsaw-demo-placeholder" aria-hidden="true">
+          <img src="/puzzle.jpg" alt="" decoding="async" />
+        </div>
       )}
     </div>
   );
