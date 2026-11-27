@@ -95,12 +95,12 @@
   width: 15px;
 }
 
-/* Always there, under the board, in the same typewriter font. */
+/* Always there, under the board, styled like Walt's note (.walt-note). */
 .magnetic-poem-demo-caption {
-  font-family: "Courier Prime", "Courier New", monospace;
   font-size: 13px;
-  line-height: 1.4;
-  margin: 10px 0 0;
+  line-height: 1.3;
+  margin: 6px 0 0;
+  opacity: 0.6;
 }
 
 .magnetic-poem-demo-link {
