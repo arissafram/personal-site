@@ -48,7 +48,7 @@ const storage: PoemStorage = {
 // Each saver gets a small item in the same table, pk = "ip#<hash>", holding
 // when they may save next. The IP is stored only as a hash, and DynamoDB's
 // TTL deletes the item an hour later. Loading the poem isn't limited.
-const SAVE_INTERVAL = 5;
+const SAVE_INTERVAL = 1;
 const FORGET_AFTER = 60 * 60;
 
 /** True if this IP may save now (and starts its wait), false if it saved too recently. */
@@ -72,7 +72,7 @@ const takeSaveTurn = async (ip: string) => {
 };
 
 const tooMany = () =>
-  new Response(JSON.stringify({ error: "Too many saves. Try again in a few seconds." }), {
+  new Response(JSON.stringify({ error: "Too many saves. Try again in a second." }), {
     status: 429,
     headers: { "content-type": "application/json", "retry-after": String(SAVE_INTERVAL) },
   });

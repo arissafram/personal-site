@@ -17,7 +17,7 @@ import { poem } from "./functions/poem/resource";
 // `ampx sandbox` write.
 //
 // Spend is capped at about $1/month:
-// - the handler allows one save per visitor every 5 seconds (429 otherwise);
+// - the handler allows one save per visitor every second (429 otherwise);
 // - optionally, at most POEM_CONCURRENCY copies of the function run at once;
 // - the table is provisioned at 1 read / 1 write unit, so a flood is
 //   throttled instead of billed (and stays in the always-free tier);
